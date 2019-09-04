@@ -2,7 +2,7 @@
   "name": "webgl-webpack-boilerplate",
   "version": "1.2.0",
   "private": true,
-  "description": "a boilerplate webpack project for getting started with WebGL.",
+  "description": "A boilerplate webpack project for getting started with WebGL",
   "scripts": {
     "build": "NODE_ENV=production webpack -p --progress --colors",
     "watch": "webpack --progress --colors --watch",
@@ -22,5 +22,8 @@
     "webpack": "^1.12.4",
     "webpack-dev-server": "^1.12.1",
     "webpack-glsl-loader": "^1.0.1"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.1.0"
   }
 }

@@ -5,9 +5,9 @@ import vertexSource from 'shaders/vertex.glsl';
 /** @type {WebGLRenderingContext} */
 var gl = null;
 
-var canvas = null,
-var glProgram = null,
-var fragmentShader = null,
+var canvas = null;
+var glProgram = null;
+var fragmentShader = null;
 var vertexShader = null;
 
 var vertexPositionAttribute = null,

@@ -2,12 +2,13 @@ import { mat4 } from 'gl-matrix'
 import fragmentSource from 'shaders/fragment.glsl';
 import vertexSource from 'shaders/vertex.glsl';
 
-var gl = null,
-    canvas = null,
+/** @type {WebGLRenderingContext} */
+var gl = null;
 
-    glProgram = null,
-    fragmentShader = null,
-    vertexShader = null;
+var canvas = null,
+var glProgram = null,
+var fragmentShader = null,
+var vertexShader = null;
 
 var vertexPositionAttribute = null,
     trianglesVerticeBuffer = null,
@@ -20,11 +21,11 @@ var viewMatrix = mat4.create();
 var projMatrix = mat4.create();
 var rotate_angle = -1.57078;
 
+/** @param {HTMLCanvasElement} canvas */
 function resize(canvas) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-
 
 function initWebGL() {
 

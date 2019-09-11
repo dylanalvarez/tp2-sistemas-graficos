@@ -20,3 +20,7 @@ The following commands are defined in `package.json`:
 #### `npm run build`
 
 Build a production version of `bundle.js` into `dist/`.
+
+#### `npm run dev`
+
+Run a server in port 8080, refresh when source files are modified.

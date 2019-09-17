@@ -50,7 +50,7 @@ module.exports = {
     ]
   },
   debug: debug,
-  devtool: debug ? 'eval-source-map' : 'source-map',
+  devtool: 'eval-source-map',
   devServer: {
     disableHostCheck: true
   }

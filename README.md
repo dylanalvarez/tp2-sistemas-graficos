@@ -1,9 +1,6 @@
-# webpack-webgl-boilerplate
+# TP1 - [Sistemas Gráficos](https://www.sistemasgraficos.xyz/)
 
-This is some boilerplate I wrote to easily start new WebGL projects without having to set up a build
-tool chain. It makes use of [Babel](https://github.com/babel/babel-loader) and
-[webgl-glsl-loader](https://github.com/grieve/webpack-glsl-loader) to compile JavaScript and GLSL
-together into a final JavaScript module.
+[Enunciado](https://www.sistemasgraficos.xyz/files/trabajospracticos/2019/tp1-c2-2019.pdf)
 
 ## Requirements
 

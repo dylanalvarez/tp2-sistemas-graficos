@@ -17,7 +17,7 @@ export default class App {
     }
 
     resize() {
-        this.canvas.width = window.innerWidth;
+        this.canvas.width = window.innerHeight;
         this.canvas.height = window.innerHeight;
     }
 }

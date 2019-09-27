@@ -143,7 +143,7 @@ export default class App {
             let controlPoints = [];
 
             for (let i = 0; i < rows; i++) {
-                let alfa = j / (cols - 1) * Math.PI * 2;
+                let alfa = i / (cols - 1) * Math.PI * 2;
                 let p = getPos(alfa, 0);
                 controlPoints.push(p);
             }

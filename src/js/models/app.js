@@ -118,47 +118,18 @@ export default class App {
             return shader;
         }
 
-        function getPos(alfa, beta) {
-
+        function getPos(alfa, height) {
             let r = 2;
-            let nx = Math.sin(beta) * Math.sin(alfa);
-            let ny = Math.sin(beta) * Math.cos(alfa);
-            let nz = Math.cos(beta);
-
-
-            let g = beta % 0.5;
-            let h = alfa % 1;
-            let f = 1;
-            if (g < 0.25) f = 0.95;
-            if (h < 0.5) f = f * 0.95;
-
-            let x = nx * r * f;
-            let y = ny * r * f;
-            let z = nz * r * f;
-
-            return [x, y, z];
+            let x = r * Math.cos(alfa);
+            let y = r * Math.sin(alfa);
+            return [x, y, height];
         }
 
-        function getNrm(alfa, beta) {
-            let p = getPos(alfa, beta);
-            let v = vec3.create();
-            vec3.normalize(v, p);
-
-            let delta = 0.05;
-            let p1 = getPos(alfa, beta);
-            let p2 = getPos(alfa, beta + delta);
-            let p3 = getPos(alfa + delta, beta);
-
-            let v1 = vec3.fromValues(p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]);
-            let v2 = vec3.fromValues(p3[0] - p1[0], p3[1] - p1[1], p3[2] - p1[2]);
-
+        function getNrm(alfa) {
+            let position = getPos(alfa, 0);
+            let v1 = vec3.fromValues(...position);
             vec3.normalize(v1, v1);
-            vec3.normalize(v2, v2);
-
-            let n = vec3.create();
-            vec3.cross(n, v1, v2);
-            vec3.scale(n, n, -1);
-            return n;
+            return v1;
         }
 
 
@@ -169,21 +140,29 @@ export default class App {
             let rows = 128;	// filas	
             let cols = 256;	// columnas
 
+            let controlPoints = [];
+
+            for (let i = 0; i < rows; i++) {
+                let alfa = j / (cols - 1) * Math.PI * 2;
+                let p = getPos(alfa, 0);
+                controlPoints.push(p);
+            }
+
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
 
                     let alfa = j / (cols - 1) * Math.PI * 2;
-                    let beta = (0.1 + i / (rows - 1) * 0.8) * Math.PI;
+                    let z = i / 64;
 
                     // evaluo la posición sobre la superficie de la esfera a partir de latitud y longitud
-                    let p = getPos(alfa, beta);
+                    let p = getPos(alfa, z);
 
                     pos.push(p[0]);			// lleno el buffer de vértices
                     pos.push(p[1]);
                     pos.push(p[2]);
 
                     // evaluo el vector normal sobre la superficie de la esfera a partir de latitud y longitud
-                    let n = getNrm(alfa, beta);
+                    let n = getNrm(alfa);
 
                     normal.push(n[0]);		// lleno el buffer de normales
                     normal.push(n[1]);

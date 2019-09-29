@@ -34,4 +34,28 @@ export default class TreeNode {
     static buildBuffers() {
         return {}
     }
+
+    static buildIndexBuffer(rowCount, columnCount) {
+        let index = [];
+
+        for (let i = 0; i < rowCount - 1; i++) {
+            index.push(i * columnCount);
+            for (let j = 0; j < columnCount - 1; j++) {
+
+                // lleno el buffer de indices del quad 
+                index.push(i * columnCount + j);
+                index.push((i + 1) * columnCount + j);
+                index.push(i * columnCount + j + 1);
+                index.push((i + 1) * columnCount + j + 1);
+            }
+            index.push((i + 1) * columnCount + columnCount - 1);
+        }
+
+        let trianglesIndexBuffer = gl.createBuffer();
+        trianglesIndexBuffer.number_vertex_point = index.length;
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, trianglesIndexBuffer);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(index), gl.STATIC_DRAW);
+
+        return trianglesIndexBuffer;
+    }
 }

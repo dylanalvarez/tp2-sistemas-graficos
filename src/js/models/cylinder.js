@@ -64,35 +64,14 @@ export default class Cylinder extends TreeNode {
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
 
-
         let trianglesNormalBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesNormalBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
 
-        let index = [];
-
-        for (let i = 0; i < rows - 1; i++) {
-            index.push(i * cols);
-            for (let j = 0; j < cols - 1; j++) {
-
-                // lleno el buffer de indices del quad 
-                index.push(i * cols + j);
-                index.push((i + 1) * cols + j);
-                index.push(i * cols + j + 1);
-                index.push((i + 1) * cols + j + 1);
-            }
-            index.push((i + 1) * cols + cols - 1);
-        }
-
-        let trianglesIndexBuffer = gl.createBuffer();
-        trianglesIndexBuffer.number_vertex_point = index.length;
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, trianglesIndexBuffer);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(index), gl.STATIC_DRAW);
-
         return {
             vertexBuffer: trianglesVerticeBuffer,
             normalBuffer: trianglesNormalBuffer,
-            indexBuffer: trianglesIndexBuffer
+            indexBuffer: this.buildIndexBuffer(rows, cols)
         }
     }
 }

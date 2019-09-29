@@ -1,7 +1,6 @@
 import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
-import Cylinder from './cylinder'
 import Car from './car'
 
 export default class App {
@@ -22,7 +21,6 @@ export default class App {
 
         this.setupWebGL();
         this.initShaders();
-        this.setupBuffers();
     }
 
     run() {
@@ -90,14 +88,5 @@ export default class App {
             console.log("Error compiling shader: " + gl.getShaderInfoLog(shader));
         }
         return shader;
-    }
-
-    setupBuffers() {
-        for (let klass of [Cylinder, Car]) {
-            let { vertexBuffer, normalBuffer, indexBuffer } = klass.buildBuffers();
-            klass.vertexBuffer = vertexBuffer;
-            klass.normalBuffer = normalBuffer;
-            klass.indexBuffer = indexBuffer;
-        }
     }
 }

@@ -1,15 +1,8 @@
-import { vec3, mat4 } from 'gl-matrix'
+import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
 
 export default class Cylinder extends TreeNode {
-    draw(modelMatrix, viewMatrix, projMatrix) {
-        super.draw(
-            modelMatrix, viewMatrix, projMatrix,
-            Cylinder.vertexBuffer, Cylinder.normalBuffer, Cylinder.indexBuffer
-        );
-    }
-
-    static buildBuffers() {
+    buildBuffers() {
         function getPos(alfa, height) {
             let r = 2;
             let x = r * Math.cos(alfa);

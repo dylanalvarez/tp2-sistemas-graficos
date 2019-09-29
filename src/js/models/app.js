@@ -41,13 +41,12 @@ export default class App {
 
     setupWebGL() {
         gl.enable(gl.DEPTH_TEST);
-        //set the clear color
+
+        // set the clear color
         gl.clearColor(0.1, 0.1, 0.2, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-
-        // Matrix de Proyeccion Perspectiva
 
         mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 100.0);
 
@@ -58,14 +57,14 @@ export default class App {
     }
 
     initShaders() {
-        //compile shaders    
+        // compile shaders    
         let vertexShader = this.makeShader(vertexShaderSource, gl.VERTEX_SHADER);
         let fragmentShader = this.makeShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
 
-        //create program
+        // create program
         window.glProgram = gl.createProgram();
 
-        //attach and link shaders to the program
+        // attach and link shaders to the program
         gl.attachShader(glProgram, vertexShader);
         gl.attachShader(glProgram, fragmentShader);
         gl.linkProgram(glProgram);
@@ -74,12 +73,12 @@ export default class App {
             alert("Unable to initialize the shader program.");
         }
 
-        //use program
+        // use program
         gl.useProgram(glProgram);
     }
 
     makeShader(src, type) {
-        //compile the vertex shader
+        // compile the vertex shader
         let shader = gl.createShader(type);
         gl.shaderSource(shader, src);
         gl.compileShader(shader);

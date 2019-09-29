@@ -2,6 +2,7 @@ import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Cylinder from './cylinder'
+import Car from './car'
 
 export default class App {
     constructor() {
@@ -10,7 +11,6 @@ export default class App {
         this.modelMatrix = mat4.create();
         this.viewMatrix = mat4.create();
         this.projMatrix = mat4.create();
-        this.normalMatrix = mat4.create();
 
         /** @type {HTMLCanvasElement} */
         this.canvas = document.getElementById("my-canvas");
@@ -32,18 +32,13 @@ export default class App {
     }
 
     drawScene() {
-        new Cylinder().draw(this.modelMatrix, this.viewMatrix, this.projMatrix, this.normalMatrix);
+        new Car().draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
     }
 
     animate() {
         this.rotate_angle += 0.01;
         mat4.identity(this.modelMatrix);
         mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotate_angle, [1.0, 0.0, 1.0]);
-
-        mat4.identity(this.normalMatrix);
-        mat4.multiply(this.normalMatrix, this.viewMatrix, this.modelMatrix);
-        mat4.invert(this.normalMatrix, this.normalMatrix);
-        mat4.transpose(this.normalMatrix, this.normalMatrix);
     }
 
     setupWebGL() {
@@ -98,7 +93,7 @@ export default class App {
     }
 
     setupBuffers() {
-        for (let klass of [Cylinder]) {
+        for (let klass of [Cylinder, Car]) {
             let { vertexBuffer, normalBuffer, indexBuffer } = klass.buildBuffers();
             klass.vertexBuffer = vertexBuffer;
             klass.normalBuffer = normalBuffer;

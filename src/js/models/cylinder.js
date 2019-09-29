@@ -1,10 +1,10 @@
-import { vec3 } from 'gl-matrix'
+import { vec3, mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 
 export default class Cylinder extends TreeNode {
-    draw(modelMatrix, viewMatrix, projMatrix, normalMatrix) {
+    draw(modelMatrix, viewMatrix, projMatrix) {
         super.draw(
-            modelMatrix, viewMatrix, projMatrix, normalMatrix,
+            modelMatrix, viewMatrix, projMatrix,
             Cylinder.vertexBuffer, Cylinder.normalBuffer, Cylinder.indexBuffer
         );
     }
@@ -26,7 +26,6 @@ export default class Cylinder extends TreeNode {
 
         let pos = [];
         let normal = [];
-        let r = 2;
         let rows = 128;	// filas	
         let cols = 256;	// columnas
 
@@ -42,7 +41,7 @@ export default class Cylinder extends TreeNode {
             for (let j = 0; j < cols; j++) {
 
                 let alfa = j / (cols - 1) * Math.PI * 2;
-                let z = i / 64;
+                let z = (i - rows / 2) / 64;
 
                 // evaluo la posición sobre la superficie de la esfera a partir de latitud y longitud
                 let p = getPos(alfa, z);

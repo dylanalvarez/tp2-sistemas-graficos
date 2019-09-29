@@ -1,5 +1,13 @@
+import { mat4 } from "gl-matrix";
+
 export default class TreeNode {
-    draw(modelMatrix, viewMatrix, projMatrix, normalMatrix, vertexBuffer, normalBuffer, indexBuffer) {
+    draw(modelMatrix, viewMatrix, projMatrix, vertexBuffer, normalBuffer, indexBuffer) {
+        let normalMatrix = mat4.create()
+
+        mat4.multiply(normalMatrix, viewMatrix, modelMatrix);
+        mat4.invert(normalMatrix, normalMatrix);
+        mat4.transpose(normalMatrix, normalMatrix);
+
         this.setWebGLUniform("modelMatrix", modelMatrix);
         this.setWebGLUniform("viewMatrix", viewMatrix);
         this.setWebGLUniform("projMatrix", projMatrix);
@@ -21,5 +29,9 @@ export default class TreeNode {
 
     setWebGLUniform(key, value) {
         gl.uniformMatrix4fv(gl.getUniformLocation(glProgram, key), false, value);
+    }
+
+    static buildBuffers() {
+        return {}
     }
 }

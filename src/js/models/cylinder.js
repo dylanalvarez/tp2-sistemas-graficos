@@ -1,16 +1,12 @@
 import { vec3 } from 'gl-matrix'
+import TreeNode from './tree_node'
 
-export default class Cylinder {
+export default class Cylinder extends TreeNode {
     draw(modelMatrix, viewMatrix, projMatrix, normalMatrix) {
-        let modelMatrixUniform = gl.getUniformLocation(glProgram, "modelMatrix");
-        let viewMatrixUniform = gl.getUniformLocation(glProgram, "viewMatrix");
-        let projMatrixUniform = gl.getUniformLocation(glProgram, "projMatrix");
-        let normalMatrixUniform = gl.getUniformLocation(glProgram, "normalMatrix");
-
-        gl.uniformMatrix4fv(modelMatrixUniform, false, modelMatrix);
-        gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
-        gl.uniformMatrix4fv(projMatrixUniform, false, projMatrix);
-        gl.uniformMatrix4fv(normalMatrixUniform, false, normalMatrix);
+        this.setWebGLUniform("modelMatrix", modelMatrix);
+        this.setWebGLUniform("viewMatrix", viewMatrix);
+        this.setWebGLUniform("projMatrix", projMatrix);
+        this.setWebGLUniform("normalMatrix", normalMatrix);
 
         let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
         gl.enableVertexAttribArray(vertexPositionAttribute);

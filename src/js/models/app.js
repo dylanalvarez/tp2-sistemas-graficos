@@ -5,7 +5,7 @@ import Car from './car'
 
 export default class App {
     constructor() {
-        this.rotate_angle = -1.57078;
+        this.rotateAngle = -1.57078;
 
         this.modelMatrix = mat4.create();
         this.viewMatrix = mat4.create();
@@ -34,9 +34,9 @@ export default class App {
     }
 
     animate() {
-        this.rotate_angle += 0.01;
+        this.rotateAngle += 0.01;
         mat4.identity(this.modelMatrix);
-        mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotate_angle, [1.0, 0.0, 1.0]);
+        mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotateAngle, [1.0, 0.0, 1.0]);
     }
 
     setupWebGL() {

@@ -21,6 +21,8 @@ export default class App {
 
         this.setupWebGL();
         this.initShaders();
+
+        this.scene = new Car();
     }
 
     run() {
@@ -30,7 +32,7 @@ export default class App {
     }
 
     drawScene() {
-        new Car().draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
+        this.scene.draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
     }
 
     animate() {

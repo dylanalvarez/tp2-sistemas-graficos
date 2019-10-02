@@ -4,6 +4,9 @@ export default class Camera {
     constructor() {
         this.step = 0.1;
         this.pressedKeys = new Set();
+        this.offsetX = 0;
+        this.offsetY = 0;
+        this.offsetZ = -5;
         window.onkeydown = (event) => {
             this.pressedKeys.add(String.fromCharCode(event.keyCode));
         }
@@ -24,23 +27,20 @@ export default class Camera {
         return 0;
     }
 
-    offsetX() {
-        return this.offset('A', 'D');
+    updateOffsets() {
+        this.offsetX += this.offset('A', 'D');
+        this.offsetY += this.offset('E', 'Q');
+        this.offsetZ += this.offset('W', 'S');
     }
 
-    offsetY() {
-        return this.offset('E', 'Q');
-    }
+    setViewMatrix(viewMatrix) {
+        this.updateOffsets();
 
-    offsetZ() {
-        return this.offset('W', 'S');
-    }
-
-    applyTransformations(outputViewMatrix, inputViewMatrix) {
+        mat4.identity(viewMatrix);
         mat4.translate(
-            outputViewMatrix,
-            inputViewMatrix,
-            [this.offsetX(), this.offsetY(), this.offsetZ()]
+            viewMatrix,
+            viewMatrix,
+            [this.offsetX, this.offsetY, this.offsetZ]
         );
     }
 }

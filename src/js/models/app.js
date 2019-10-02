@@ -28,16 +28,11 @@ export default class App {
     run() {
         requestAnimationFrame(() => this.run());
         this.drawScene();
-        this.animate();
+        this.camera.setViewMatrix(this.viewMatrix);
     }
 
     drawScene() {
         this.scene.draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
-    }
-
-    animate() {
-        mat4.identity(this.modelMatrix);
-        this.camera.applyTransformations(this.viewMatrix, this.viewMatrix);
     }
 
     setupWebGL() {
@@ -50,11 +45,6 @@ export default class App {
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
         mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 100.0);
-
-        mat4.rotate(this.modelMatrix, this.modelMatrix, -1.57078, [1.0, 0.0, 0.0]);
-
-        mat4.identity(this.viewMatrix);
-        mat4.translate(this.viewMatrix, this.viewMatrix, [0.0, 0.0, -5.0]);
     }
 
     initShaders() {

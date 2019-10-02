@@ -1,7 +1,7 @@
 import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
-import Car from './car'
+import Camera from './camera'
 import Toroid from './toroid'
 
 export default class App {
@@ -23,6 +23,7 @@ export default class App {
         this.setupWebGL();
         this.initShaders();
 
+        this.camera = new Camera();
         this.scene = new Toroid();
     }
 
@@ -40,6 +41,7 @@ export default class App {
         this.rotateAngle += 0.01;
         mat4.identity(this.modelMatrix);
         mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotateAngle, [1.0, 0.0, 1.0]);
+        this.camera.applyTransformations(this.viewMatrix, this.viewMatrix);
     }
 
     setupWebGL() {

@@ -6,8 +6,6 @@ import Toroid from './toroid'
 
 export default class App {
     constructor() {
-        this.rotateAngle = -1.57078;
-
         this.modelMatrix = mat4.create();
         this.viewMatrix = mat4.create();
         this.projMatrix = mat4.create();
@@ -38,9 +36,7 @@ export default class App {
     }
 
     animate() {
-        this.rotateAngle += 0.01;
         mat4.identity(this.modelMatrix);
-        mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotateAngle, [1.0, 0.0, 1.0]);
         this.camera.applyTransformations(this.viewMatrix, this.viewMatrix);
     }
 

@@ -2,6 +2,7 @@ import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Car from './car'
+import Toroid from './toroid'
 
 export default class App {
     constructor() {
@@ -22,7 +23,7 @@ export default class App {
         this.setupWebGL();
         this.initShaders();
 
-        this.scene = new Car();
+        this.scene = new Toroid(256, 128);
     }
 
     run() {

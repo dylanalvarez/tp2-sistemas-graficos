@@ -1,42 +1,59 @@
 import TreeNode from "./tree_node";
+import { vec4, vec3 } from "gl-matrix";
 
-export default class ScanningSurfaceTreeNode extends TreeNode {
-    circunference(radius) {
-        let matrices = []
-        
-        for (let i = 0; i < 30; i++) {
-            alpha = (i / 30) * 2 * Math.PI;
-            let x = radius * Math.cos(alpha);
-            let y = radius * Math.sin(alpha);
+export default class ScanningSurfaceTreeNode extends TreeNode {    
+    levelCurveMatrices() {} // los hijos deben implementar
 
-            matrix = mat3.create();
-
-            // TODO: definir matriz con normal, tangente, binormal y puntos de la curva
-            // par cada punto de la curva de nivel (prestar mas atencion a las normaless)
-
-            matrices.push(matrix);
-        }
-
-        return points
-    }
-    
-    levelCurvePoints() { // los hijos deben implementar
-        [
-            [0,0,0],
-            [0,0,0.2],
-            ...
-        ]
-    }
-
-    controlCurveMatrices() { // los hijos deben implementar
-        [
-            matriz de punto 1,
-            matriz de punto 2,
-            ...
-        ]
-    }
+    controlCurveMatrices() {} // los hijos deben implementar
 
     buildBuffers() {
-        // hacer cosas con niveles y matrices de ptos de control
+        let pos = [];
+        let normal = [];
+        let rows = 128;
+        let cols = 256;
+
+        // Lista de matrices de tamaño <rows>
+        let controlCurveMatrices = this.controlCurveMatrices();
+        // Lista de matrices de tamaño <cols>
+        let levelCurveMatrices = this.levelCurveMatrices();
+
+        for (let i = 0; i < rows; i++) {
+
+            let controlPointMatrix = controlCurveMatrices[i];
+
+            for (let j = 0; j < cols; j++) {
+
+                let curvePointMatrix = levelCurveMatrices[j];
+                let p = [curvePointMatrix[12], curvePointMatrix[13], curvePointMatrix[14]];
+                
+                let vec_pos = vec4.fromValues(p[0], p[1], p[2], 1);
+                vec4.transformMat4(vec_pos, vec_pos, controlPointMatrix); // multiplico M*vec_4 - F
+
+                pos.push(vec_pos[0]);			// lleno el buffer de vértices
+                pos.push(vec_pos[1]);
+                pos.push(vec_pos[2]);
+
+                let norm = vec3.fromValues([curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2]]);
+                vec3.normalize(norm, norm);
+
+                normal.push(norm[0]);		// lleno el buffer de normales
+                normal.push(norm[1]);
+                normal.push(norm[2]);
+            }
+        }
+
+        let trianglesVerticeBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
+
+        let trianglesNormalBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesNormalBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
+
+        return {
+            vertexBuffer: trianglesVerticeBuffer,
+            normalBuffer: trianglesNormalBuffer,
+            indexBuffer: this.buildIndexBuffer(rows, cols)
+        }
     }
 }

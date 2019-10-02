@@ -14,10 +14,8 @@ export default class Toroid extends ScanningSurfaceTreeNode {
 
             let matrix = mat4.create();
             // Creo matriz identidad de 4x4 y la roto sobre el eje Z (porque la circunferencia esta sobre XY)
+            mat4.translate(matrix, matrix, [x, y, 0]);
             mat4.rotate(matrix, matrix, alpha, [0,0,1]);
-            matrix[12] = x;
-            matrix[13] = y;
-            matrix[14] = 0;
 
             matrices.push(matrix);
         }

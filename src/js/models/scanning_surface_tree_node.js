@@ -24,21 +24,22 @@ export default class ScanningSurfaceTreeNode extends TreeNode {
             for (let j = 0; j < cols; j++) {
 
                 let curvePointMatrix = levelCurveMatrices[j];
-                let p = [curvePointMatrix[12], curvePointMatrix[13], curvePointMatrix[14]];
                 
-                let vec_pos = vec4.fromValues(p[0], p[1], p[2], 1);
+                let vec_pos = vec4.fromValues(curvePointMatrix[12], curvePointMatrix[13], curvePointMatrix[14], 1);
+                
                 vec4.transformMat4(vec_pos, vec_pos, controlPointMatrix); // multiplico M*vec_4 - F
 
                 pos.push(vec_pos[0]);			// lleno el buffer de vértices
                 pos.push(vec_pos[1]);
                 pos.push(vec_pos[2]);
 
-                let norm = vec3.fromValues([curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2]]);
-                vec3.normalize(norm, norm);
+                let n = vec3.fromValues(curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2]);
+                
+                vec3.normalize(n, n);
 
-                normal.push(norm[0]);		// lleno el buffer de normales
-                normal.push(norm[1]);
-                normal.push(norm[2]);
+                normal.push(n[0]);		// lleno el buffer de normales
+                normal.push(n[1]);
+                normal.push(n[2]);
             }
         }
 

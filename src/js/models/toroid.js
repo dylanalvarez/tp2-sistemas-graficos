@@ -8,13 +8,13 @@ export default class Toroid extends ScanningSurfaceTreeNode {
         let matrices = []
         
         for (let i = 0; i < levels; i++) {
-            let alpha = (i / levels - 1) * 2 * Math.PI;
+            let alpha = (i / (levels - 1)) * 2 * Math.PI;
             let x = radius * Math.cos(alpha);
             let y = radius * Math.sin(alpha);
 
             let matrix = mat4.create();
             // Creo matriz identidad de 4x4 y la roto sobre el eje Z (porque la circunferencia esta sobre XY)
-            mat4.rotate(matrix, matrix, radius, alpha);
+            mat4.rotate(matrix, matrix, alpha, [0,0,1]);
             matrix[12] = x;
             matrix[13] = y;
             matrix[14] = 0;
@@ -60,8 +60,8 @@ export default class Toroid extends ScanningSurfaceTreeNode {
             vec3.cross(b, n, t);
             vec3.normalize(b,b);
 
-            let matrix = mat4.fromValues(b[0],            b[1],            b[2],            0,
-                                         n[0],            n[1],            n[2],            0,
+            let matrix = mat4.fromValues(n[0],            n[1],            n[2],            0,
+                                         b[0],            b[1],            b[2],            0,
                                          t[0],            t[1],            t[2],            0,
                                          controlPoint[0], controlPoint[1], controlPoint[2], 1 );
         

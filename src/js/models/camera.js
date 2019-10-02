@@ -28,7 +28,7 @@ export default class Camera {
     }
 
     updateOffsets() {
-        this.offsetX += this.offset('A', 'D');
+        this.offsetX += this.offset('D', 'A');
         this.offsetY += this.offset('E', 'Q');
         this.offsetZ += this.offset('W', 'S');
     }

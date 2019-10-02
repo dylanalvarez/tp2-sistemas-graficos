@@ -44,7 +44,7 @@ export default class App {
 
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 100.0);
+        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 100.0);
     }
 
     initShaders() {

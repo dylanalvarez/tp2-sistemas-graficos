@@ -1,7 +1,7 @@
 import TreeNode from "./tree_node";
 import { vec4, vec3 } from "gl-matrix";
 
-export default class ScanningSurfaceTreeNode extends TreeNode {    
+export default class ScanningSurfaceTreeNode extends TreeNode {
     levelCurveMatrices() {} // los hijos deben implementar
 
     controlCurveMatrices() {} // los hijos deben implementar

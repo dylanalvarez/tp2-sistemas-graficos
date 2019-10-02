@@ -2,13 +2,13 @@ import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4 } from 'gl-matrix';
 
 export default class Toroid extends ScanningSurfaceTreeNode {
-    circunference(radius) {
+    circunference(radius, levels) {
         // Devuelve lista de matrices para cada punta de la curva
 
         let matrices = []
         
-        for (let i = 0; i < 256; i++) {
-            let alpha = (i / 256 - 1) * 2 * Math.PI;
+        for (let i = 0; i < levels; i++) {
+            let alpha = (i / levels - 1) * 2 * Math.PI;
             let x = radius * Math.cos(alpha);
             let y = radius * Math.sin(alpha);
 
@@ -33,7 +33,7 @@ export default class Toroid extends ScanningSurfaceTreeNode {
     
     levelCurveMatrices() {
         // Aca me sirve el metodo circunference
-        return this.circunference(0.4);
+        return this.circunference(0.4, 256);
     }
 
     controlCurveMatrices() {

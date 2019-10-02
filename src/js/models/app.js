@@ -23,7 +23,7 @@ export default class App {
         this.setupWebGL();
         this.initShaders();
 
-        this.scene = new Toroid(256, 128);
+        this.scene = new Toroid();
     }
 
     run() {

@@ -1,13 +1,11 @@
 import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
-import Car from './car'
+import Camera from './camera'
 import Toroid from './toroid'
 
 export default class App {
     constructor() {
-        this.rotateAngle = -1.57078;
-
         this.modelMatrix = mat4.create();
         this.viewMatrix = mat4.create();
         this.projMatrix = mat4.create();
@@ -23,23 +21,18 @@ export default class App {
         this.setupWebGL();
         this.initShaders();
 
+        this.camera = new Camera();
         this.scene = new Toroid();
     }
 
     run() {
         requestAnimationFrame(() => this.run());
         this.drawScene();
-        this.animate();
+        this.camera.setViewMatrix(this.viewMatrix);
     }
 
     drawScene() {
         this.scene.draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
-    }
-
-    animate() {
-        this.rotateAngle += 0.01;
-        mat4.identity(this.modelMatrix);
-        mat4.rotate(this.modelMatrix, this.modelMatrix, this.rotateAngle, [1.0, 0.0, 1.0]);
     }
 
     setupWebGL() {
@@ -51,12 +44,7 @@ export default class App {
 
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 100.0);
-
-        mat4.rotate(this.modelMatrix, this.modelMatrix, -1.57078, [1.0, 0.0, 0.0]);
-
-        mat4.identity(this.viewMatrix);
-        mat4.translate(this.viewMatrix, this.viewMatrix, [0.0, 0.0, -5.0]);
+        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 100.0);
     }
 
     initShaders() {

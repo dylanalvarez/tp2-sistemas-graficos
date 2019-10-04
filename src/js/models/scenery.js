@@ -1,5 +1,6 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
+import { skyBlue, grassGreen} from '../colors'
 
 export default class Scenery extends TreeNode {
 
@@ -7,8 +8,8 @@ export default class Scenery extends TreeNode {
 
         let pos = [];
         let normal = [];
-        let rows = 100;
-        let cols = 100;
+        let rows = 25;
+        let cols = 25;
 
         let n = [0, 1, 0];
 
@@ -25,6 +26,22 @@ export default class Scenery extends TreeNode {
             }
         }
 
+        // Reemplazar estas constantes por las que estan en el modulo 'colors'
+        const grassGreen = [0.26, 0.82, 0.27, 1.0];
+        const skyBlue = [0.32, 0.53, 0.87];
+
+        // Repito rows*cols veces el vector de colores para el piso
+        // (repito el vector color por cada vertice que compone al piso)
+        let floorColors = [];
+        for (let i = 0; i < rows; i++){
+            for (let j = 0; j < cols; j++) {
+                floorColors.push(grassGreen)
+            }
+        }
+
+        let skyColors = [];
+        // Hacer lo mismo para sky colors
+
         let trianglesVerticeBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
@@ -33,9 +50,14 @@ export default class Scenery extends TreeNode {
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesNormalBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
 
+        let floorColorBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, floorColorBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(floorColors), gl.STATIC_DRAW);
+
         return {
             vertexBuffer: trianglesVerticeBuffer,
             normalBuffer: trianglesNormalBuffer,
+            colorBuffer: floorColorBuffer,
             indexBuffer: this.buildIndexBuffer(rows, cols)
         }
     }

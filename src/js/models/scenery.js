@@ -1,9 +1,5 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
-<<<<<<< Updated upstream
-import { skyBlue, grassGreen} from '../colors'
-=======
->>>>>>> Stashed changes
 
 export default class Scenery extends TreeNode {
 
@@ -11,13 +7,8 @@ export default class Scenery extends TreeNode {
 
         let pos = [];
         let normal = [];
-<<<<<<< Updated upstream
         let rows = 25;
         let cols = 25;
-=======
-        let rows = 100;
-        let cols = 100;
->>>>>>> Stashed changes
 
         let n = [0, 1, 0];
 
@@ -34,7 +25,6 @@ export default class Scenery extends TreeNode {
             }
         }
 
-<<<<<<< Updated upstream
         // Reemplazar estas constantes por las que estan en el modulo 'colors'
         const grassGreen = [0.26, 0.82, 0.27, 1.0];
         const skyBlue = [0.32, 0.53, 0.87];
@@ -51,8 +41,6 @@ export default class Scenery extends TreeNode {
         let skyColors = [];
         // Hacer lo mismo para sky colors
 
-=======
->>>>>>> Stashed changes
         let trianglesVerticeBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
@@ -61,26 +49,11 @@ export default class Scenery extends TreeNode {
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesNormalBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
 
-<<<<<<< Updated upstream
-        let floorColorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, floorColorBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(floorColors), gl.STATIC_DRAW);
-
         return {
             vertexBuffer: trianglesVerticeBuffer,
             normalBuffer: trianglesNormalBuffer,
-            colorBuffer: floorColorBuffer,
-=======
-        return {
-            vertexBuffer: trianglesVerticeBuffer,
-            normalBuffer: trianglesNormalBuffer,
->>>>>>> Stashed changes
             indexBuffer: this.buildIndexBuffer(rows, cols)
         }
     }
 
-<<<<<<< Updated upstream
 }
-=======
-} 
->>>>>>> Stashed changes

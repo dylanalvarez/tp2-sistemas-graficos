@@ -23,7 +23,7 @@ export default class App {
         this.initShaders();
 
         this.camera = new Camera();
-        this.scene = new Scenery();
+        this.scene = new Toroid();
     }
 
     run() {

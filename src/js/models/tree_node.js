@@ -16,10 +16,6 @@ export default class TreeNode {
         return window.buffers[this.constructor.name]['normalBuffer'];
     }
 
-    colorBuffer() {
-        return window.buffers[this.constructor.name]['colorBuffer'];
-    }
-
     indexBuffer() {
         return window.buffers[this.constructor.name]['indexBuffer'];
     }
@@ -45,11 +41,6 @@ export default class TreeNode {
         gl.enableVertexAttribArray(vertexNormalAttribute);
         gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer());
         gl.vertexAttribPointer(vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
-
-        let vertexColorAttribute = gl.getAttribLocation(glProgram, "aVertexColor");
-        gl.enableVertexAttribArray(vertexColorAttribute);
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer());
-        gl.vertexAttribPointer(vertexColorAttribute, 4, gl.FLOAT, false, 0, 0);
 
         let indexBuffer = this.indexBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);

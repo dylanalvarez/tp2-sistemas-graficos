@@ -83,6 +83,7 @@ export default class Camera {
         vec4.transformMat4(offset, offset, transformationMatrix);
 
         let x = offset[0];
+        let y = offset[1];
         let z = offset[2];
         let sum = Math.abs(x) + Math.abs(z);
 
@@ -94,8 +95,9 @@ export default class Camera {
         }
 
         this.offsetX += x * this.step;
+        this.offsetY += y * this.step;
         this.offsetY += this.offset('E', 'Q') * this.step;
-        this.offsetZ += z * this.step;
+        this.offsetZ += z *  this.step;
     }
 
     applyOffsets(eye) {

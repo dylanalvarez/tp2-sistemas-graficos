@@ -35,12 +35,11 @@ export default class Camera {
 
     setViewMatrix(viewMatrix) {
         this.updateOffsets();
-
-        mat4.identity(viewMatrix);
-        mat4.translate(
+        mat4.lookAt(
             viewMatrix,
-            viewMatrix,
-            [this.offsetX, this.offsetY, this.offsetZ]
-        );
+            [this.offsetX, this.offsetY, this.offsetZ],
+            [this.offsetX, this.offsetY, this.offsetZ + 1],
+            [0, 1, 0]
+        )
     }
 }

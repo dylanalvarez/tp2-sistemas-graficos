@@ -3,7 +3,7 @@ import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
 import Toroid from './toroid'
-import Scenery from './scenery'
+import Floor from './floor'
 
 export default class App {
     constructor() {
@@ -25,7 +25,7 @@ export default class App {
         this.camera = new Camera();
 
         this.scene = [];
-        this.scene.push(new  Scenery()); 
+        this.scene.push(new Floor()); 
         this.scene.push(new Toroid()); 
     }
 

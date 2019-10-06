@@ -23,7 +23,10 @@ export default class App {
         this.initShaders();
 
         this.camera = new Camera();
-        this.scene = new Scenery();
+
+        this.scene = [];
+        this.scene.push(new  Scenery()); 
+        this.scene.push(new Toroid()); 
     }
 
     run() {
@@ -33,7 +36,9 @@ export default class App {
     }
 
     drawScene() {
-        this.scene.draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
+        this.scene.forEach(model => {
+            model.draw(this.modelMatrix, this.viewMatrix, this.projMatrix); 
+        });        
     }
 
     setupWebGL() {

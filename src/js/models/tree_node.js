@@ -16,10 +16,6 @@ export default class TreeNode {
         return window.buffers[this.constructor.name]['normalBuffer'];
     }
 
-    colorBuffer() {
-        return window.buffers[this.constructor.name]['colorBuffer'];
-    }
-
     indexBuffer() {
         return window.buffers[this.constructor.name]['indexBuffer'];
     }

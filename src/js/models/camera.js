@@ -4,8 +4,8 @@ export default class Camera {
     constructor() {
         this.step = 0.1;
         this.pressedKeys = new Set();
-        this.offsetX = 0;
-        this.offsetY = 0;
+        this.offsetX = -2;
+        this.offsetY = 1;
         this.offsetZ = -5;
         window.onkeydown = (event) => {
             this.pressedKeys.add(String.fromCharCode(event.keyCode));
@@ -42,5 +42,6 @@ export default class Camera {
             viewMatrix,
             [this.offsetX, this.offsetY, this.offsetZ]
         );
+        
     }
 }

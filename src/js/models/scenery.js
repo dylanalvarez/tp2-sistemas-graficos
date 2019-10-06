@@ -14,6 +14,7 @@ export default class Scenery extends TreeNode {
 
         for (let i = 0; i < rows; i++) {
             for (let j=0; j < cols; j++) {
+                n = [0.04 * i, 0, 0.04 * j];
 
                 pos.push(i);
                 pos.push(0);
@@ -24,22 +25,6 @@ export default class Scenery extends TreeNode {
                 normal.push(n[2]);
             }
         }
-
-        // Reemplazar estas constantes por las que estan en el modulo 'colors'
-        const grassGreen = [0.26, 0.82, 0.27, 1.0];
-        const skyBlue = [0.32, 0.53, 0.87];
-
-        // Repito rows*cols veces el vector de colores para el piso
-        // (repito el vector color por cada vertice que compone al piso)
-        let floorColors = [];
-        for (let i = 0; i < rows; i++){
-            for (let j = 0; j < cols; j++) {
-                floorColors.push(grassGreen)
-            }
-        }
-
-        let skyColors = [];
-        // Hacer lo mismo para sky colors
 
         let trianglesVerticeBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);

@@ -3,7 +3,6 @@ import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
 import Toroid from './toroid'
-import Scenery from './scenery'
 
 export default class App {
     constructor() {

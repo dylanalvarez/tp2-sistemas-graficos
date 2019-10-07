@@ -1,7 +1,7 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
 
-export default class Scenery extends TreeNode {
+export default class Floor extends TreeNode {
 
     buildBuffers() {
 

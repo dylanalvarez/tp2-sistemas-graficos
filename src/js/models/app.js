@@ -4,6 +4,7 @@ import { mat4 } from 'gl-matrix'
 import Camera from './camera'
 import Toroid from './toroid'
 import Floor from './floor'
+import Skybox from './skybox'
 
 export default class App {
     constructor() {
@@ -25,8 +26,8 @@ export default class App {
         this.camera = new Camera();
 
         this.scene = [];
-        this.scene.push(new Floor()); 
-        this.scene.push(new Toroid()); 
+        this.scene.push(new Floor());
+        this.scene.push(new Skybox());
     }
 
     run() {
@@ -37,6 +38,7 @@ export default class App {
 
     drawScene() {
         this.scene.forEach(model => {
+            //console.log(model.constructor.name)
             model.draw(this.modelMatrix, this.viewMatrix, this.projMatrix); 
         });        
     }

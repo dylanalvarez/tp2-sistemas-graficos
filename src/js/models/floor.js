@@ -1,10 +1,10 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
+import colors from '../colors';
 
 export default class Floor extends TreeNode {
-    constructor() {
-        super();
-        this.color = [0.26, 0.82, 0.27, 1.0];
+    color() {
+        return colors.grassGreen;
     }
 
     buildBuffers() {

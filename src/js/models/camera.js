@@ -1,16 +1,16 @@
 import { mat4, vec4 } from 'gl-matrix'
 
 export default class Camera {
-    constructor() {
+    constructor(canvas) {
         this.step = 0.1;
         this.angleMultiplier = Math.PI / 500;
         this.yAngleLimit =  (3 / 8) * Math.PI;
         this.pressedKeys = new Set();
-        this.offsetX = 0;
+        this.offsetX = -2;
         this.offsetY = -1;
-        this.offsetZ = 15;
+        this.offsetZ = 12;
 
-        this.xAngle = 0;
+        this.xAngle = Math.PI / 2;
         this.yAngle = 0;
 
         this.lastMouseX = 0;
@@ -22,15 +22,15 @@ export default class Camera {
         window.onkeyup = (event) => {
             this.pressedKeys.delete(String.fromCharCode(event.keyCode));
         }
-        window.onmousedown = (event) => {
+        canvas.onmousedown = (event) => {
             this.listenToMouse = true;
             this.lastMouseX = event.x;
             this.lastMouseY = event.y;
         }
-        window.onmouseup = () => {
+        canvas.onmouseup = () => {
             this.listenToMouse = false;
         }
-        window.onmousemove = (event) => {
+        canvas.onmousemove = (event) => {
             if (!this.listenToMouse) return;
             
             this.updateXAngle(event.x);

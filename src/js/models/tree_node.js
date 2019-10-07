@@ -31,7 +31,7 @@ export default class TreeNode {
         this.setWebGLUniformMatrix("viewMatrix", viewMatrix);
         this.setWebGLUniformMatrix("projMatrix", projMatrix);
         this.setWebGLUniformMatrix("normalMatrix", normalMatrix);
-        this.setWebGLUniformColor("uColor", this.color);
+        this.setWebGLUniformColor("uColor", this.color());
 
         let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
         gl.enableVertexAttribArray(vertexPositionAttribute);
@@ -58,6 +58,15 @@ export default class TreeNode {
 
     buildBuffers() {
         return {}
+    }
+
+    color() {
+        return [
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            1.0
+        ];
     }
 
     buildIndexBuffer(rowCount, columnCount) {

@@ -1,7 +1,38 @@
 import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4 } from 'gl-matrix';
+import Car from './car'
+import colors from '../colors'
 
 export default class Toroid extends ScanningSurfaceTreeNode {
+    constructor() {
+        super();
+        this.matrices = this.controlCurveMatrices(16384);
+        this.car = new Car();
+        this.carPosition = 0;
+    }
+
+    color() {
+        return colors.black;
+    }
+
+    draw(modelMatrix, viewMatrix, projMatrix) {
+        let modelMatrixCopy = mat4.clone(modelMatrix);
+        mat4.translate(modelMatrixCopy, modelMatrixCopy, [0, 0.1, 0]);
+        mat4.rotate(modelMatrixCopy, modelMatrixCopy, Math.PI / 8, [1, 0, 1]);
+        super.draw(modelMatrixCopy, viewMatrix, projMatrix);
+
+        this.carPosition = this.carPosition + window.carSpeed;
+        let index = Math.trunc(this.carPosition) % this.matrices.length;
+        let childModelMatrix = mat4.clone(this.matrices[index]);
+
+        mat4.mul(childModelMatrix, modelMatrixCopy, childModelMatrix);
+        mat4.translate(childModelMatrix, childModelMatrix, [-0.5, 0, 0]);
+        mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [1, 0, 0])
+        mat4.scale(childModelMatrix, childModelMatrix, [0.1, 0.1, 0.1]);
+
+        this.car.draw(childModelMatrix, viewMatrix, projMatrix);
+    }
+
     circunference(radius, levels) {
         // Devuelve lista de matrices para cada punta de la curva
 
@@ -34,14 +65,15 @@ export default class Toroid extends ScanningSurfaceTreeNode {
         return this.circunference(0.4, 256);
     }
 
-    controlCurveMatrices() {
+    controlCurveMatrices(rows) {
         // ...aca no tanto, porque tengo que cambiar del plano XY a XZ
 
+        rows = rows || 128;
         let matrices = [];
 
-        for (let i = 0; i < 128; i++) {
+        for (let i = 0; i < rows; i++) {
             
-            let alpha = (i / (128 - 1)) * 2 * Math.PI;
+            let alpha = (i / (rows - 1)) * 2 * Math.PI;
             let controlPoint = this.getPos(alpha, 2);
             controlPoint = vec3.fromValues(controlPoint[0], 0, controlPoint[1]);
 

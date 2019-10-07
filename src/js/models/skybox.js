@@ -1,10 +1,10 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
+import colors from '../colors';
 
 export default class Scenery extends TreeNode {
-    constructor() {
-        super();
-        this.color = [0.32, 0.53, 0.87, 1.0];
+    color() {
+        return colors.skyBlue;
     }
 
     getPosInSphere(alpha, beta, radius) {

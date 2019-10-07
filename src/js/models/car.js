@@ -10,18 +10,9 @@ export default class Car extends TreeNode {
         this.wheel2 = new Cylinder();
         this.wheel3 = new Cylinder();
         this.wheel4 = new Cylinder();
-
-        this.counter = 0;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
-        // animation example, with internal state (counter)
-        let displacedModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(displacedModelMatrix, displacedModelMatrix, [0, 0.005 * this.counter, 0]);
-        modelMatrix = displacedModelMatrix;
-
-        this.counter++;
-
         let childModelMatrix = mat4.clone(modelMatrix);
         mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [1, 0, 0])
         mat4.scale(childModelMatrix, childModelMatrix, [0.5, 1, 2]);

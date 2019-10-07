@@ -2,6 +2,7 @@ import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
+import Carousel from './carousel'
 import * as dat from 'dat.gui';
 
 // dat.gui global variables

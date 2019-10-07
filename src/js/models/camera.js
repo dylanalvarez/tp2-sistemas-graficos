@@ -78,8 +78,8 @@ export default class Camera {
             1
         );
         let transformationMatrix = mat4.create();
-        mat4.rotateX(transformationMatrix, transformationMatrix, this.yAngle);
         mat4.rotateY(transformationMatrix, transformationMatrix, this.xAngle);
+        mat4.rotateX(transformationMatrix, transformationMatrix, this.yAngle);
         vec4.transformMat4(offset, offset, transformationMatrix);
 
         let x = offset[0];
@@ -117,8 +117,8 @@ export default class Camera {
 
         this.updateOffsets();
         this.applyOffsets(eye);
-        mat4.rotateX(eye, eye, this.yAngle);
         mat4.rotateY(eye, eye, this.xAngle);
+        mat4.rotateX(eye, eye, this.yAngle);
 
         let eyePosition = this.position(eye);
         let eyeTangent = this.tangent(eye);

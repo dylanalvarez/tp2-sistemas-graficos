@@ -3,7 +3,6 @@ import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
 import Scene from './scene'
-import Toroid from './toroid'
 import * as dat from 'dat.gui';
 
 // dat.gui global variables

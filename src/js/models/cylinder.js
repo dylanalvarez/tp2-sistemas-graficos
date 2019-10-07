@@ -35,6 +35,17 @@ export default class Cylinder extends TreeNode {
             controlPoints.push(p);
         }
 
+        // Add lid
+        for (let i = 0; i < cols; i++) {
+            pos.push(0);
+            pos.push(0);
+            pos.push(-1);
+
+            normal.push(0);
+            normal.push(0);
+            normal.push(-1);
+        }
+
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
 
@@ -58,6 +69,17 @@ export default class Cylinder extends TreeNode {
 
         }
 
+        // Add another lid
+        for (let i = 0; i < cols; i++) {
+            pos.push(0);
+            pos.push(0);
+            pos.push(1);
+
+            normal.push(0);
+            normal.push(0);
+            normal.push(1);
+        }
+
         let trianglesVerticeBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);
@@ -69,7 +91,7 @@ export default class Cylinder extends TreeNode {
         return {
             vertexBuffer: trianglesVerticeBuffer,
             normalBuffer: trianglesNormalBuffer,
-            indexBuffer: this.buildIndexBuffer(rows, cols)
+            indexBuffer: this.buildIndexBuffer(rows + 2, cols)
         }
     }
 }

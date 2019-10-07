@@ -16,7 +16,7 @@ export default class Toroid extends ScanningSurfaceTreeNode {
         mat4.rotate(modelMatrixCopy, modelMatrixCopy, Math.PI / 8, [1, 0, 1]);
         super.draw(modelMatrixCopy, viewMatrix, projMatrix);
 
-        this.carPosition = this.carPosition + 10;
+        this.carPosition = this.carPosition + window.carSpeed;
         let index = Math.trunc(this.carPosition) % this.matrices.length;
         let childModelMatrix = mat4.clone(this.matrices[index]);
 

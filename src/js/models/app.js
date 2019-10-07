@@ -2,7 +2,7 @@ import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
-import Toroid from './toroid'
+import Carousel from './carousel'
 
 export default class App {
     constructor() {
@@ -22,7 +22,7 @@ export default class App {
         this.initShaders();
 
         this.camera = new Camera();
-        this.scene = new Toroid();
+        this.scene = new Carousel();
     }
 
     run() {

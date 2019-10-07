@@ -2,6 +2,10 @@ import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
 
 export default class Scenery extends TreeNode {
+    constructor() {
+        super();
+        this.color = [0.32, 0.53, 0.87, 1.0];
+    }
 
     getPosInSphere(alpha, beta, radius) {
         var x = radius * Math.sin(beta) * Math.sin(alpha);

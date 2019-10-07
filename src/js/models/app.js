@@ -38,7 +38,6 @@ export default class App {
 
     drawScene() {
         this.scene.forEach(model => {
-            //console.log(model.constructor.name)
             model.draw(this.modelMatrix, this.viewMatrix, this.projMatrix); 
         });        
     }
@@ -52,7 +51,7 @@ export default class App {
 
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 100.0);
+        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 1000.0);
     }
 
     initShaders() {

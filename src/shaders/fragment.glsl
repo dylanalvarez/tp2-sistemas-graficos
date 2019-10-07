@@ -1,6 +1,7 @@
 precision highp float;
 varying vec3 vNormal;
 varying vec3 vPosWorld;
+uniform vec4 uColor;
 
 void main(void) {
 
@@ -9,4 +10,5 @@ void main(void) {
 	vec3 colorFinal=dot(lightVec,vNormal)*diffColor+vec3(0.2,0.2,0.2);		// color final iluminado
 
    gl_FragColor = vec4(vNormal, 1.0);
+   gl_FragColor = uColor;
 }

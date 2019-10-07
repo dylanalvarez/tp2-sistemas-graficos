@@ -44,13 +44,7 @@ export default class App {
 
     setupWebGL() {
         gl.enable(gl.DEPTH_TEST);
-
-        // set the clear color
-        gl.clearColor(0.1, 0.1, 0.2, 1.0);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-
         mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 1000.0);
     }
 

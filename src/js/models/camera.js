@@ -6,11 +6,11 @@ export default class Camera {
         this.angleMultiplier = Math.PI / 500;
         this.yAngleLimit =  (3 / 8) * Math.PI;
         this.pressedKeys = new Set();
-        this.offsetX = 0;
-        this.offsetY = 0;
-        this.offsetZ = -5;
+        this.offsetX = -2;
+        this.offsetY = -1;
+        this.offsetZ = 12;
 
-        this.xAngle = 0;
+        this.xAngle = Math.PI / 2;
         this.yAngle = 0;
 
         this.lastMouseX = 0;
@@ -78,12 +78,11 @@ export default class Camera {
             1
         );
         let transformationMatrix = mat4.create();
-        mat4.rotateX(transformationMatrix, transformationMatrix, this.yAngle);
         mat4.rotateY(transformationMatrix, transformationMatrix, this.xAngle);
+        mat4.rotateX(transformationMatrix, transformationMatrix, this.yAngle);
         vec4.transformMat4(offset, offset, transformationMatrix);
 
         let x = offset[0];
-        let y = offset[1];
         let z = offset[2];
         let sum = Math.abs(x) + Math.abs(z);
 
@@ -95,9 +94,8 @@ export default class Camera {
         }
 
         this.offsetX += x * this.step;
-        this.offsetY += y * this.step;
         this.offsetY += this.offset('E', 'Q') * this.step;
-        this.offsetZ += z *  this.step;
+        this.offsetZ += z * this.step;
     }
 
     applyOffsets(eye) {
@@ -117,8 +115,8 @@ export default class Camera {
 
         this.updateOffsets();
         this.applyOffsets(eye);
-        mat4.rotateX(eye, eye, this.yAngle);
         mat4.rotateY(eye, eye, this.xAngle);
+        mat4.rotateX(eye, eye, this.yAngle);
 
         let eyePosition = this.position(eye);
         let eyeTangent = this.tangent(eye);

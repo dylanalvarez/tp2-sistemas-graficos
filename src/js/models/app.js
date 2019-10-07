@@ -2,7 +2,7 @@ import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
-import Carousel from './carousel'
+import Scene from './scene'
 import * as dat from 'dat.gui';
 
 // dat.gui global variables
@@ -26,7 +26,7 @@ export default class App {
         this.initShaders();
 
         this.camera = new Camera(this.canvas);
-        this.scene = new Carousel();
+        this.scene = new Scene();
 
         this.gui = new dat.GUI();
         this.gui.add(window, 'carSpeed', 1, 1000);
@@ -51,7 +51,7 @@ export default class App {
 
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
 
-        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 100.0);
+        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 1000.0);
     }
 
     initShaders() {

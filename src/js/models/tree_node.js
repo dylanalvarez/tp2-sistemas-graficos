@@ -27,10 +27,11 @@ export default class TreeNode {
         mat4.invert(normalMatrix, normalMatrix);
         mat4.transpose(normalMatrix, normalMatrix);
 
-        this.setWebGLUniform("modelMatrix", modelMatrix);
-        this.setWebGLUniform("viewMatrix", viewMatrix);
-        this.setWebGLUniform("projMatrix", projMatrix);
-        this.setWebGLUniform("normalMatrix", normalMatrix);
+        this.setWebGLUniformMatrix("modelMatrix", modelMatrix);
+        this.setWebGLUniformMatrix("viewMatrix", viewMatrix);
+        this.setWebGLUniformMatrix("projMatrix", projMatrix);
+        this.setWebGLUniformMatrix("normalMatrix", normalMatrix);
+        this.setWebGLUniformColor("uColor", this.color());
 
         let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
         gl.enableVertexAttribArray(vertexPositionAttribute);
@@ -47,12 +48,25 @@ export default class TreeNode {
         gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
     }
 
-    setWebGLUniform(key, value) {
+    setWebGLUniformColor(key, color) {
+        gl.uniform3f(gl.getUniformLocation(glProgram, key), color[0], color[1], color[2]);
+    }
+
+    setWebGLUniformMatrix(key, value) {
         gl.uniformMatrix4fv(gl.getUniformLocation(glProgram, key), false, value);
     }
 
     buildBuffers() {
         return {}
+    }
+
+    color() {
+        return [
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            1.0
+        ];
     }
 
     buildIndexBuffer(rowCount, columnCount) {

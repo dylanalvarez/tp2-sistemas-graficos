@@ -2,9 +2,7 @@ import fragmentShaderSource from '../../shaders/fragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
-import Toroid from './toroid'
-import Floor from './floor'
-import Skybox from './skybox'
+import Scene from './scene'
 
 export default class App {
     constructor() {
@@ -24,10 +22,7 @@ export default class App {
         this.initShaders();
 
         this.camera = new Camera();
-
-        this.scene = [];
-        this.scene.push(new Floor());
-        this.scene.push(new Skybox());
+        this.scene = new Scene();
     }
 
     run() {
@@ -37,9 +32,7 @@ export default class App {
     }
 
     drawScene() {
-        this.scene.forEach(model => {
-            model.draw(this.modelMatrix, this.viewMatrix, this.projMatrix); 
-        });        
+        this.scene.draw(this.modelMatrix, this.viewMatrix, this.projMatrix);
     }
 
     setupWebGL() {

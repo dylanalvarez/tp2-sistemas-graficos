@@ -7,8 +7,8 @@ export default class Camera {
         this.yAngleLimit =  (3 / 8) * Math.PI;
         this.pressedKeys = new Set();
         this.offsetX = 0;
-        this.offsetY = 0;
-        this.offsetZ = -5;
+        this.offsetY = -1;
+        this.offsetZ = 15;
 
         this.xAngle = 0;
         this.yAngle = 0;

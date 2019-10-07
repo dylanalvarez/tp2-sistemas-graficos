@@ -3,7 +3,6 @@ precision highp float;
 
 attribute vec3 aVertexPosition;			//atributo posicion
 attribute vec3 aVertexNormal;			//atributo normal
-attribute vec4 aVertexColor;			//atributo color
 
 uniform mat4 modelMatrix;     			// matriz de modelado       
 uniform mat4 viewMatrix;				// matriz de vista

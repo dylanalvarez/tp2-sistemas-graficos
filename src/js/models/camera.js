@@ -1,7 +1,7 @@
 import { mat4, vec4 } from 'gl-matrix'
 
 export default class Camera {
-    constructor() {
+    constructor(canvas) {
         this.step = 0.1;
         this.angleMultiplier = Math.PI / 500;
         this.yAngleLimit =  (3 / 8) * Math.PI;
@@ -22,15 +22,15 @@ export default class Camera {
         window.onkeyup = (event) => {
             this.pressedKeys.delete(String.fromCharCode(event.keyCode));
         }
-        window.onmousedown = (event) => {
+        canvas.onmousedown = (event) => {
             this.listenToMouse = true;
             this.lastMouseX = event.x;
             this.lastMouseY = event.y;
         }
-        window.onmouseup = () => {
+        canvas.onmouseup = () => {
             this.listenToMouse = false;
         }
-        window.onmousemove = (event) => {
+        canvas.onmousemove = (event) => {
             if (!this.listenToMouse) return;
             
             this.updateXAngle(event.x);

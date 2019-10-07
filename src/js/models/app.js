@@ -3,6 +3,10 @@ import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
 import Toroid from './toroid'
+import * as dat from 'dat.gui';
+
+// dat.gui global variables
+window.carSpeed = 30;
 
 export default class App {
     constructor() {
@@ -21,8 +25,11 @@ export default class App {
         this.setupWebGL();
         this.initShaders();
 
-        this.camera = new Camera();
+        this.camera = new Camera(this.canvas);
         this.scene = new Toroid();
+
+        this.gui = new dat.GUI();
+        this.gui.add(window, 'carSpeed', 1, 1000);
     }
 
     run() {

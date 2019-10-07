@@ -49,7 +49,7 @@ export default class TreeNode {
     }
 
     setWebGLUniformColor(key, color) {
-        gl.uniform4f(gl.getUniformLocation(glProgram, key), color[0], color[1], color[2], color[3]);
+        gl.uniform3f(gl.getUniformLocation(glProgram, key), color[0], color[1], color[2]);
     }
 
     setWebGLUniformMatrix(key, value) {

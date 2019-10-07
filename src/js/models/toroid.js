@@ -1,6 +1,7 @@
 import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4 } from 'gl-matrix';
 import Car from './car'
+import colors from '../colors'
 
 export default class Toroid extends ScanningSurfaceTreeNode {
     constructor() {
@@ -8,6 +9,10 @@ export default class Toroid extends ScanningSurfaceTreeNode {
         this.matrices = this.controlCurveMatrices(16384);
         this.car = new Car();
         this.carPosition = 0;
+    }
+
+    color() {
+        return colors.black;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

@@ -3,8 +3,13 @@ import TreeNode from './tree_node'
 import colors from '../colors';
 
 export default class Cylinder extends TreeNode {
+    constructor(color) {
+        super();
+        this.colors = color;
+    }
+
     color() {
-        return colors.white;
+        return this.colors;
     }
 
     buildBuffers() {

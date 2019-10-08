@@ -1,15 +1,20 @@
 import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 import Cylinder from './cylinder'
+import colors from '../colors';
 
 export default class Car extends TreeNode {
     constructor() {
         super();
-        this.center = new Cylinder();
-        this.wheel1 = new Cylinder();
-        this.wheel2 = new Cylinder();
-        this.wheel3 = new Cylinder();
-        this.wheel4 = new Cylinder();
+        this.center = new Cylinder(colors.carYellow);
+        this.wheel1 = new Cylinder(colors.black);
+        this.wheel2 = new Cylinder(colors.black);
+        this.wheel3 = new Cylinder(colors.black);
+        this.wheel4 = new Cylinder(colors.black);
+    }
+
+    color() {
+        return colors.carYellow;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

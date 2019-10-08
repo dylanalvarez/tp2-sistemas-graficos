@@ -12,7 +12,7 @@ export default class Toroid extends ScanningSurfaceTreeNode {
     }
 
     color() {
-        return colors.black;
+        return colors.rollerCoasterGrey;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

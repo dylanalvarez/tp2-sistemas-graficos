@@ -2,8 +2,9 @@ import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4 } from 'gl-matrix';
 import Car from './car'
 import colors from '../colors'
+import BSpline from '../utils/cubic_bspline'
 
-export default class Toroid extends ScanningSurfaceTreeNode {
+export default class Rollercoaster extends ScanningSurfaceTreeNode {
     constructor() {
         super();
         this.matrices = this.controlCurveMatrices(16384);
@@ -17,7 +18,7 @@ export default class Toroid extends ScanningSurfaceTreeNode {
 
     draw(modelMatrix, viewMatrix, projMatrix) {
         let modelMatrixCopy = mat4.clone(modelMatrix);
-        mat4.translate(modelMatrixCopy, modelMatrixCopy, [0, 0.1, 0]);
+        mat4.translate(modelMatrixCopy, modelMatrixCopy, [0, 0, 0]);
         mat4.rotate(modelMatrixCopy, modelMatrixCopy, Math.PI / 8, [1, 0, 1]);
         super.draw(modelMatrixCopy, viewMatrix, projMatrix);
 
@@ -34,7 +35,7 @@ export default class Toroid extends ScanningSurfaceTreeNode {
     }
 
     circunference(radius, levels) {
-        // Devuelve lista de matrices para cada punta de la curva
+        // Devuelve lista de matrices para cada punto de la curva
 
         let matrices = []
         
@@ -70,32 +71,37 @@ export default class Toroid extends ScanningSurfaceTreeNode {
 
         rows = rows || 128;
         let matrices = [];
+        let controlPoints = [
+            [0,0,0],
+            [0,0,10],
+            [10,0,10],
+            [10,0,0]
+        ];
+        let bspline = new BSpline(controlPoints);
 
-        for (let i = 0; i < rows; i++) {
-            
-            let alpha = (i / (rows - 1)) * 2 * Math.PI;
-            let controlPoint = this.getPos(alpha, 2);
-            controlPoint = vec3.fromValues(controlPoint[0], 0, controlPoint[1]);
+        let deltaU = 1/rows;
 
-            // Vector normal (siempre apuntando hacia Y) - F
-            let n = vec3.fromValues(0,1,0);
-            vec3.normalize(n,n);
+        for(let u = 0; u <= 1.0; u+=deltaU) {
+            let controlPoint = bspline.BSplineCurve(u);
 
-            // Vector tangente
-            let t = vec3.fromValues(Math.sin(alpha),0,-Math.cos(alpha));
-            vec3.normalize(t,t);
+            let t = bspline.BSplineDerivativeCurve(u);
+            t = vec3.fromValues(...t);
+            vec3.normalize(t, t);
 
-            // Vector binormal (producto vectorial entre los 2 vectores anteriores) - F
+            let n = vec3.fromValues(0, 1, 0);
+            vec3.normalize(n, n);
+
             let b = vec3.create();
-            vec3.cross(b, n, t);
-            vec3.normalize(b,b);
+            vec3.cross(b, t, n);
+            vec3.normalize(b, b);
 
             let matrix = mat4.fromValues(n[0],            n[1],            n[2],            0,
                                          b[0],            b[1],            b[2],            0,
                                          t[0],            t[1],            t[2],            0,
                                          controlPoint[0], controlPoint[1], controlPoint[2], 1 );
-        
+            
             matrices.push(matrix);
+
         }
 
         return matrices;

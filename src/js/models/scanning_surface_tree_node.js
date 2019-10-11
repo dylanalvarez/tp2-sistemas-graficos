@@ -1,6 +1,5 @@
 import TreeNode from "./tree_node";
 import { vec4, vec3 } from "gl-matrix";
-import colors from "../colors";
 
 export default class ScanningSurfaceTreeNode extends TreeNode {
 

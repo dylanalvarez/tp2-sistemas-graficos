@@ -1,7 +1,7 @@
 import TreeNode from './tree_node'
 import Floor from './floor'
 import Skybox from './skybox'
-import Toroid from './toroid'
+import Rollercoaster from './rollercoaster'
 import { mat4 } from 'gl-matrix'
 import Carousel from './carousel'
 
@@ -10,7 +10,7 @@ export default class Scene extends TreeNode {
         super();
         this.floor = new Floor();
         this.skybox = new Skybox();
-        this.toroid = new Toroid();
+        this.toroid = new Rollercoaster();
         this.carousel = new Carousel();
     }
 
@@ -19,7 +19,7 @@ export default class Scene extends TreeNode {
         this.skybox.draw(modelMatrix, viewMatrix, projMatrix);
 
         let toroidModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(toroidModelMatrix, toroidModelMatrix, [6, -1.65, 9]);
+        mat4.translate(toroidModelMatrix, toroidModelMatrix, [16, -1.65, 19]);
         mat4.rotateY(toroidModelMatrix, toroidModelMatrix, Math.PI);
         mat4.scale(toroidModelMatrix, toroidModelMatrix, [1.3, 1.3, 1.3])
         this.toroid.draw(toroidModelMatrix, viewMatrix, projMatrix);

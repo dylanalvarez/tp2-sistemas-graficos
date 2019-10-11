@@ -36,24 +36,24 @@ export default class BSpline {
 
     BSplineCurve(u) {
         // Renombro atributos y funciones para emprolijar la ecuacion
-        b0 = this.base0; b1 = this.base1; b2 = this.base2; b3 = this.base3;
-        p0 = this.controlPoints[0]; p1 = this.controlPoints[1]; p2 = this.controlPoints[2]; p3 = this.controlPoints[3];
+        let b0 = this.base0, b1 = this.base1, b2 = this.base2, b3 = this.base3;
+        let p0 = this.controlPoints[0], p1 = this.controlPoints[1], p2 = this.controlPoints[2], p3 = this.controlPoints[3];
         
-        x = b0(u) * p0[0] + b1(u) * p1[0] + b2(u) * p2[0] + b3(u) * p3[0];
-        y = b0(u) * p0[1] + b1(u) * p1[1] + b2(u) * p2[1] + b3(u) * p3[1];
-        z = b0(u) * p0[2] + b1(u) * p1[2] + b2(u) * p2[2] + b3(u) * p3[2];
+        let x = b0(u) * p0[0] + b1(u) * p1[0] + b2(u) * p2[0] + b3(u) * p3[0];
+        let y = b0(u) * p0[1] + b1(u) * p1[1] + b2(u) * p2[1] + b3(u) * p3[1];
+        let z = b0(u) * p0[2] + b1(u) * p1[2] + b2(u) * p2[2] + b3(u) * p3[2];
 
         return [x, y, z];
     }
 
     BSplineDerivativeCurve(u) {
         // Renombro atributos y funciones para emprolijar la ecuacion
-        db0 = this.derivativeBase0; db1 = this.derivativeBase1; db2 = this.derivativeBase2; db3 = this.derivativeBase3;
-        p0 = this.controlPoints[0]; p1 = this.controlPoints[1]; p2 = this.controlPoints[2]; p3 = this.controlPoints[3];
+        let db0 = this.derivativeBase0, db1 = this.derivativeBase1, db2 = this.derivativeBase2, db3 = this.derivativeBase3;
+        let p0 = this.controlPoints[0], p1 = this.controlPoints[1], p2 = this.controlPoints[2], p3 = this.controlPoints[3];
         
-        x = db0(u) * p0[0] + db1(u) * p1[0] + db2(u) * p2[0] + db3(u) * p3[0];
-        y = db0(u) * p0[1] + db1(u) * p1[1] + db2(u) * p2[1] + db3(u) * p3[1];
-        z = db0(u) * p0[2] + db1(u) * p1[2] + db2(u) * p2[2] + db3(u) * p3[2];
+        let x = db0(u) * p0[0] + db1(u) * p1[0] + db2(u) * p2[0] + db3(u) * p3[0];
+        let y = db0(u) * p0[1] + db1(u) * p1[1] + db2(u) * p2[1] + db3(u) * p3[1];
+        let z = db0(u) * p0[2] + db1(u) * p1[2] + db2(u) * p2[2] + db3(u) * p3[2];
 
         return [x, y, z];
     }

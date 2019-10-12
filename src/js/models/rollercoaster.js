@@ -19,7 +19,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
     draw(modelMatrix, viewMatrix, projMatrix) {
         let modelMatrixCopy = mat4.clone(modelMatrix);
         mat4.translate(modelMatrixCopy, modelMatrixCopy, [0, 0, 0]);
-        mat4.rotate(modelMatrixCopy, modelMatrixCopy, Math.PI / 8, [1, 0, 1]);
+        //mat4.rotate(modelMatrixCopy, modelMatrixCopy, Math.PI / 8, [1, 0, 1]);
         super.draw(modelMatrixCopy, viewMatrix, projMatrix);
 
         this.carPosition = this.carPosition + window.carSpeed;
@@ -72,36 +72,40 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         rows = rows || 128;
         let matrices = [];
         let controlPoints = [
-            [0,0,0],
-            [0,0,10],
-            [10,0,10],
-            [10,0,0]
+            [0,0,0], [0,0,10], [10,0,10], [10,0,0],
+            [10,-5,0], [10,-5, 10], [20, -5, 10], [20 ,0 ,0],
         ];
-        let bspline = new BSpline(controlPoints);
 
-        let deltaU = 1/rows;
+        for (let i = 0; i < controlPoints.length - 3; i++) {
+            let segment = [controlPoints[i], controlPoints[i+1], controlPoints[i+2], controlPoints[i+3]];
 
-        for(let u = 0; u <= 1.0; u+=deltaU) {
-            let controlPoint = bspline.BSplineCurve(u);
+            let bspline = new BSpline(segment);
 
-            let t = bspline.BSplineDerivativeCurve(u);
-            t = vec3.fromValues(...t);
-            vec3.normalize(t, t);
+            let deltaU = (controlPoints.length - 3) /rows;
 
-            let n = vec3.fromValues(0, 1, 0);
-            vec3.normalize(n, n);
+            for(let u = 0; u <= 1.0; u+=deltaU) {
+                let controlPoint = bspline.BSplineCurve(u);
 
-            let b = vec3.create();
-            vec3.cross(b, t, n);
-            vec3.normalize(b, b);
+                let t = bspline.BSplineTangentVector(u);
+                t = vec3.fromValues(...t);
+                vec3.normalize(t, t);
 
-            let matrix = mat4.fromValues(n[0],            n[1],            n[2],            0,
-                                         b[0],            b[1],            b[2],            0,
-                                         t[0],            t[1],            t[2],            0,
-                                         controlPoint[0], controlPoint[1], controlPoint[2], 1 );
-            
-            matrices.push(matrix);
+                let b = bspline.BSplineBinormalVector(u);
+                b = vec3.fromValues(...b);
+                vec3.normalize(b, b);
 
+                let n = vec3.create();
+                vec3.cross(n, t, b);
+                vec3.normalize(n, n);
+
+                let matrix = mat4.fromValues(n[0],            n[1],            n[2],            0,
+                                            b[0],            b[1],            b[2],            0,
+                                            t[0],            t[1],            t[2],            0,
+                                            controlPoint[0], controlPoint[1], controlPoint[2], 1 );
+                
+                matrices.push(matrix);
+
+            }
         }
 
         return matrices;

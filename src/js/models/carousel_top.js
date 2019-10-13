@@ -17,7 +17,7 @@ export default class CarouselTop extends TreeNode {
         this.top.draw(topModelMatrix, viewMatrix, projMatrix);
 
         let chairModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(chairModelMatrix, chairModelMatrix, [1.5, 0.5, 0]);
+        mat4.translate(chairModelMatrix, chairModelMatrix, [1.5, -0.51, 0]);
         mat4.rotate(chairModelMatrix, chairModelMatrix, Math.PI / 2, [1, 0, 0]);
         mat4.scale(chairModelMatrix, chairModelMatrix, [0.06, 0.06, 0.6]);
         this.chair.draw(chairModelMatrix, viewMatrix, projMatrix);

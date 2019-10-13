@@ -19,14 +19,12 @@ export default class Scene extends TreeNode {
         this.skybox.draw(modelMatrix, viewMatrix, projMatrix);
 
         let toroidModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(toroidModelMatrix, toroidModelMatrix, [6, -1.65, 9]);
-        mat4.rotateY(toroidModelMatrix, toroidModelMatrix, Math.PI);
+        mat4.translate(toroidModelMatrix, toroidModelMatrix, [3, 0, -10]);
         mat4.scale(toroidModelMatrix, toroidModelMatrix, [1.3, 1.3, 1.3])
         this.toroid.draw(toroidModelMatrix, viewMatrix, projMatrix);
 
         let carouselModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(carouselModelMatrix, carouselModelMatrix, [6, -1, 16]);
-        mat4.rotateY(carouselModelMatrix, carouselModelMatrix, Math.PI);
+        mat4.translate(carouselModelMatrix, carouselModelMatrix, [-3, 0, -10]);
         this.carousel.draw(carouselModelMatrix, viewMatrix, projMatrix);
     }
 }

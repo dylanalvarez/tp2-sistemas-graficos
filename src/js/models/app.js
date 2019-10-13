@@ -45,7 +45,7 @@ export default class App {
     setupWebGL() {
         gl.enable(gl.DEPTH_TEST);
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-        mat4.perspective(this.projMatrix, Math.PI * 3.5 / 2, this.canvas.width / this.canvas.height, 0.1, 1000.0);
+        mat4.perspective(this.projMatrix, Math.PI / 3, this.canvas.width / this.canvas.height, 0.1, 1000.0);
     }
 
     initShaders() {

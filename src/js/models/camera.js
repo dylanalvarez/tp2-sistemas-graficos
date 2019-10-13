@@ -6,11 +6,11 @@ export default class Camera {
         this.angleMultiplier = Math.PI / 500;
         this.yAngleLimit =  (3 / 8) * Math.PI;
         this.pressedKeys = new Set();
-        this.offsetX = -2;
-        this.offsetY = -1;
-        this.offsetZ = 12;
+        this.offsetX = 0;
+        this.offsetY = 2;
+        this.offsetZ = 0;
 
-        this.xAngle = Math.PI / 2;
+        this.xAngle = 0;
         this.yAngle = 0;
 
         this.lastMouseX = 0;
@@ -45,16 +45,16 @@ export default class Camera {
         let backward = this.pressedKeys.has(backwardKey);
         let forward = this.pressedKeys.has(forwardKey);
         if (backward && !forward) {
-            return 1;
+            return -1;
         }
         if (forward && !backward) {
-            return -1;
+            return 1;
         }
         return 0;
     }
 
     updateXAngle(mouseX) {
-        let difference = (mouseX - this.lastMouseX) * this.angleMultiplier;
+        let difference = (this.lastMouseX - mouseX) * this.angleMultiplier;
         this.xAngle = (this.xAngle + difference) % (Math.PI * 2);
     }
 
@@ -72,7 +72,7 @@ export default class Camera {
 
     updateOffsets() {
         let offset = vec4.fromValues(
-            this.offset('D', 'A'),
+            this.offset('A', 'D'),
             0,
             this.offset('W', 'S'),
             1
@@ -94,7 +94,7 @@ export default class Camera {
         }
 
         this.offsetX += x * this.step;
-        this.offsetY += this.offset('E', 'Q') * this.step;
+        this.offsetY = Math.max(this.offsetY + this.offset('E', 'Q') * this.step, 0.1);
         this.offsetZ += z * this.step;
     }
 
@@ -122,9 +122,9 @@ export default class Camera {
         let eyeTangent = this.tangent(eye);
 
         let centerPosition = [
-            eyePosition[0] + eyeTangent[0],
-            eyePosition[1] + eyeTangent[1],
-            eyePosition[2] + eyeTangent[2],
+            eyePosition[0] - eyeTangent[0],
+            eyePosition[1] - eyeTangent[1],
+            eyePosition[2] - eyeTangent[2],
         ]
 
         mat4.lookAt(

@@ -14,6 +14,7 @@ export default class Carousel extends TreeNode {
 
     draw(modelMatrix, viewMatrix, projMatrix) {
         let baseModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(baseModelMatrix, baseModelMatrix, [0, 1, 0])
         mat4.rotate(baseModelMatrix, baseModelMatrix, Math.PI / 2, [1, 0, 0]);
         mat4.scale(baseModelMatrix, baseModelMatrix, [0.1, 0.1, 1]);
         this.base.draw(baseModelMatrix, viewMatrix, projMatrix);
@@ -21,7 +22,7 @@ export default class Carousel extends TreeNode {
         this.angle = this.angle + 0.05;
 
         let topModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(topModelMatrix, topModelMatrix, [0, -1, 0]);
+        mat4.translate(topModelMatrix, topModelMatrix, [0, 2, 0]);
         mat4.rotate(topModelMatrix, topModelMatrix, this.angle, [0, -1, 0]);
         this.top.draw(topModelMatrix, viewMatrix, projMatrix);
     }

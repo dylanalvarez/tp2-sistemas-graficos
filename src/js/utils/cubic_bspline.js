@@ -74,7 +74,7 @@ export default class BSpline {
         return [x, y, z];
     }
 
-    BSplineBinormalVector(u) {
+    BSplineNormalVector(u) {
 
         let ddb0 = this.doubleDerivativeBase0, ddb1 = this.doubleDerivativeBase1,
         ddb2 = this.doubleDerivativeBase2, ddb3 = this.doubleDerivativeBase3;

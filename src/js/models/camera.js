@@ -2,7 +2,7 @@ import { mat4, vec4 } from 'gl-matrix'
 
 export default class Camera {
     constructor(canvas) {
-        this.step = 0.1;
+        this.step = 0.2;
         this.angleMultiplier = Math.PI / 500;
         this.yAngleLimit =  (3 / 8) * Math.PI;
         this.pressedKeys = new Set();

@@ -62,7 +62,6 @@ export default class Scenery extends TreeNode {
                 pos.push(p[2]);
 
                 let n = this.getNrm(alpha, beta);
-                vec3.scale(n, n, -1);
                 
                 normal.push(n[0]);
                 normal.push(n[1]);

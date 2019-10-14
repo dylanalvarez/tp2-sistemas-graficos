@@ -1,5 +1,5 @@
 import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
-import { vec3, mat4 } from 'gl-matrix';
+import { vec3, mat4, mat3, vec4 } from 'gl-matrix';
 import Car from './car'
 import colors from '../colors'
 import BSpline from '../utils/cubic_bspline'
@@ -20,7 +20,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         let modelMatrixCopy = mat4.clone(modelMatrix);
         mat4.translate(modelMatrixCopy, modelMatrixCopy, [0, 2, 0]);
         super.draw(modelMatrixCopy, viewMatrix, projMatrix);
-
+        
         this.carPosition = this.carPosition + window.carSpeed;
         let index = Math.trunc(this.carPosition) % this.matrices.length;
         let childModelMatrix = mat4.clone(this.matrices[index]);
@@ -61,30 +61,31 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
     }
     
     levelCurveMatrices() {
-        // Aca me sirve el metodo circunference
         return this.circunference(0.4, 256);
     }
 
     controlCurveMatrices(rows) {
-        // ...aca no tanto, porque tengo que cambiar del plano XY a XZ
-
-        rows = rows || 128;
+        rows = rows || 120;
         let matrices = [];
         let controlPoints = [
-            [0 ,0 ,0], [0, 0, 5], [5, 0, 5], [5, 0, 0],
-            [5, 5, 0], [5, 5, -10], [5, 0, -10], [0, 0, -10],
-            [0, 0, -5], [-5, 0, -5], [-5, 0, 0], [0, 0, 0],
-            [0, 0 ,5], [5, 0, 5], [5, 0, 0]
+            [0, 0, 0], [0, 0, 1], [0, 0, 3], [0, 0, 5],
+            [5, 0, 5], [5, 0, 0], [5, 0, -5], [5, 10, -10],
+            [7, 10, -20], [5, 5, -20], [5, 6, -30], [5, 0, -35],
+            [5, 0, -40], [-10, 0, -40], [-10, 2, -35], [-10, 0, -30],
+            [0, 0, -30], [0, 0, -20], [-10, 3, -20], [-10, 3, -10], 
+            [-10, 0, -5], [-5, 0, -5], [-3, 0, -3], [-1, 0, -1], 
+            [0, 0, 0], [0, 0, 1], [0, 0, 3],
         ];
-
-        for (let i = 0; i < controlPoints.length - 3; i++) {
+        let i;
+        for (i = 0; i < controlPoints.length - 3; i++) {
+            
             let segment = [controlPoints[i], controlPoints[i+1], controlPoints[i+2], controlPoints[i+3]];
-
             let bspline = new BSpline(segment);
-
-            let deltaU = (controlPoints.length - 3) /rows;
+            
+            let deltaU = (controlPoints.length - 3) / rows;
 
             for(let u = 0; u <= 1.0; u+=deltaU) {
+                
                 let controlPoint = bspline.BSplineCurve(u);
 
                 let t = bspline.BSplineTangentVector(u);
@@ -92,12 +93,16 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
                 vec3.normalize(t, t);
 
                 let n = bspline.BSplineNormalVector(u);
-                n = vec3.fromValues(...n);
+                n = vec3.fromValues(0,1,0);
                 vec3.normalize(n, n);
 
                 let b = vec3.create();
                 vec3.cross(b, t, n);
                 vec3.normalize(b, b);
+
+                // El 'n' inicial es tan solo (0,1,0). Multiplicando vectorialmente el nuevo 'b' con 't' obtengo el 'n' real
+                vec3.cross(n, b, t);
+                vec3.normalize(n, n);
 
                 let matrix = mat4.fromValues(n[0],            n[1],            n[2],            0,
                                              b[0],            b[1],            b[2],            0,
@@ -107,8 +112,8 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
                 matrices.push(matrix);
 
             }
+            
         }
-
         return matrices;
     }
 }

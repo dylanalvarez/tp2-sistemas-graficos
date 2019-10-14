@@ -2,7 +2,7 @@ import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
 import colors from '../colors';
 
-export default class Scenery extends TreeNode {
+export default class Skybox extends TreeNode {
     color() {
         return colors.skyBlue;
     }

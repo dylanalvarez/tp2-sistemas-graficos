@@ -19,7 +19,7 @@ export default class Scene extends TreeNode {
         this.skybox.draw(modelMatrix, viewMatrix, projMatrix);
 
         let coasterModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(coasterModelMatrix, coasterModelMatrix, [5, 0, -10]);
+        mat4.translate(coasterModelMatrix, coasterModelMatrix, [15, 0, -10]);
         this.coaster.draw(coasterModelMatrix, viewMatrix, projMatrix);
 
         let carouselModelMatrix = mat4.clone(modelMatrix);

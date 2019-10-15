@@ -14,11 +14,10 @@ export default class Floor extends TreeNode {
         let rows = 25;
         let cols = 25;
 
-        let n = [0, 1, 0];
+        let n = [0, -1, 0];
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-                n = [0.04 * i, 0, 0.04 * j];
 
                 pos.push(1000 * Math.trunc(i - rows / 2));
                 pos.push(0);

@@ -7,7 +7,8 @@ import BSpline from '../utils/cubic_bspline'
 export default class Rollercoaster extends ScanningSurfaceTreeNode {
     constructor() {
         super();
-        this.matrices = this.controlCurveMatrices(16384);
+        // matrices for car movement (needs more precision)
+        this.matrices = this.controlCurveMatrices(1000);
         this.car = new Car();
         this.carPosition = 0;
     }
@@ -64,8 +65,9 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         return this.circunference(0.4, 256);
     }
 
-    controlCurveMatrices(rows) {
-        rows = rows || 210;
+    controlCurveMatrices(steps) {
+        // steps for each BSpline cruve defined. Must be multiple of 10
+        steps = steps || 10;
         let matrices = [];
         let controlPoints = [
             [0, 0, 0], [0, 0, 5],
@@ -77,12 +79,13 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
             [0, 0, 0], [0, 0, 5], [5, 0, 5],
         ];
         let i;
+        
         for (i = 0; i < controlPoints.length - 3; i++) {
             
             let segment = [controlPoints[i], controlPoints[i+1], controlPoints[i+2], controlPoints[i+3]];
             let bspline = new BSpline(segment);
             
-            let deltaU = (controlPoints.length - 3) / rows;
+            let deltaU = 1 / steps;
 
             for(let u = 0; u <= 1.0; u+=deltaU) {
                 
@@ -92,8 +95,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
                 t = vec3.fromValues(...t);
                 vec3.normalize(t, t);
 
-                let n = bspline.BSplineNormalVector(u);
-                n = vec3.fromValues(0,1,0);
+                let n = vec3.fromValues(0,1,0);
                 vec3.normalize(n, n);
 
                 let b = vec3.create();

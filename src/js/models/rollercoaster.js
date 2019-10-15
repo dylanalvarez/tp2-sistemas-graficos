@@ -1,7 +1,8 @@
 import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4, mat3, vec4 } from 'gl-matrix';
 import Car from './car'
-import colors from '../colors'
+import colors from '../constants/colors'
+import coasterTypes from '../constants/rollerCoasterTypes'
 import BSpline from '../utils/cubic_bspline'
 
 export default class Rollercoaster extends ScanningSurfaceTreeNode {
@@ -67,15 +68,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
     controlCurveMatrices(rows) {
         rows = rows || 120;
         let matrices = [];
-        let controlPoints = [
-            [0, 0, 0], [0, 0, 1], [0, 0, 3], [0, 0, 5],
-            [5, 0, 5], [5, 0, 0], [5, 0, -5], [5, 10, -10],
-            [7, 10, -20], [5, 5, -20], [5, 6, -30], [5, 0, -35],
-            [5, 0, -40], [-10, 0, -40], [-10, 2, -35], [-10, 0, -30],
-            [0, 0, -30], [0, 0, -20], [-10, 3, -20], [-10, 3, -10], 
-            [-10, 0, -5], [-5, 0, -5], [-3, 0, -3], [-1, 0, -1], 
-            [0, 0, 0], [0, 0, 1], [0, 0, 3],
-        ];
+        let controlPoints = coasterTypes[window.tipoDeCamino];
         let i;
         for (i = 0; i < controlPoints.length - 3; i++) {
             

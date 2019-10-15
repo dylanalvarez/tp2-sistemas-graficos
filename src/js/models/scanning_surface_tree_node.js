@@ -1,6 +1,5 @@
 import TreeNode from "./tree_node";
 import { vec4, vec3 } from "gl-matrix";
-import colors from "../colors";
 
 export default class ScanningSurfaceTreeNode extends TreeNode {
 
@@ -11,16 +10,16 @@ export default class ScanningSurfaceTreeNode extends TreeNode {
     buildBuffers() {
         let pos = [];
         let normal = [];
-        let rows = 128;
-        let cols = 256;
 
-        // Lista de matrices de tamaño <rows>
         let controlCurveMatrices = this.controlCurveMatrices();
-        // Lista de matrices de tamaño <cols>
+
         let levelCurveMatrices = this.levelCurveMatrices();
 
-        for (let i = 0; i < rows; i++) {
+        let rows = controlCurveMatrices.length;
+        let cols = levelCurveMatrices.length;
 
+        let i;
+        for (i = 0; i < rows; i++) {
             let controlPointMatrix = controlCurveMatrices[i];
 
             for (let j = 0; j < cols; j++) {

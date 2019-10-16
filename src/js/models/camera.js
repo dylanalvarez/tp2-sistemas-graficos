@@ -178,10 +178,6 @@ export default class Camera {
             eyePosition[2] - eyeTangent[2],
         ]
 
-        console.log(eyePosition);
-        console.log(this.xAngle);
-        console.log(this.yAngle);
-
         mat4.lookAt(
             viewMatrix,
             eyePosition,

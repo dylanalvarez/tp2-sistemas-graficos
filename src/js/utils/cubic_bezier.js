@@ -17,7 +17,7 @@ export default class Bezier {
 
 	derivativeBase2(u) { return -9*u*u+6*u;}		 // -9u2 +6u
 
-	derivativeBase3der(u) { return 3*u*u; }			// 3u2
+	derivativeBase3(u) { return 3*u*u; }			// 3u2
 
 	doubleDerivativeBase0(u) { return -6*u+6;} 		//-6u +6
 
@@ -34,6 +34,8 @@ export default class Bezier {
         let x = b0(u) * p0[0] + b1(u) * p1[0] + b2(u) * p2[0] + b3(u) * p3[0];
         let y = b0(u) * p0[1] + b1(u) * p1[1] + b2(u) * p2[1] + b3(u) * p3[1];
         let z = b0(u) * p0[2] + b1(u) * p1[2] + b2(u) * p2[2] + b3(u) * p3[2];
+
+        return [x, y, z];
     }
 
     bezierCurveDerivative(u) {
@@ -43,6 +45,8 @@ export default class Bezier {
         let x = db0(u) * p0[0] + db1(u) * p1[0] + db2(u) * p2[0] + db3(u) * p3[0];
         let y = db0(u) * p0[1] + db1(u) * p1[1] + db2(u) * p2[1] + db3(u) * p3[1];
         let z = db0(u) * p0[2] + db1(u) * p1[2] + db2(u) * p2[2] + db3(u) * p3[2];
+
+        return [x, y, z];
     }
 
     bezierCurveDoubleDerivative(u) {

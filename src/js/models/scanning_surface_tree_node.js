@@ -18,8 +18,7 @@ export default class ScanningSurfaceTreeNode extends TreeNode {
         let rows = controlCurveMatrices.length;
         let cols = levelCurveMatrices.length;
 
-        let i;
-        for (i = 0; i < rows; i++) {
+        for (let i = 0; i < rows; i++) {
             let controlPointMatrix = controlCurveMatrices[i];
 
             for (let j = 0; j < cols; j++) {

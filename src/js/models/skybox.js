@@ -1,6 +1,6 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
-import colors from '../colors';
+import colors from '../constants/colors';
 
 export default class Skybox extends TreeNode {
     color() {

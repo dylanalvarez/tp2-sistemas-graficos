@@ -1,7 +1,7 @@
 import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 import Cylinder from './cylinder'
-import colors from '../colors';
+import colors from '../constants/colors';
 
 export default class Car extends TreeNode {
     constructor() {

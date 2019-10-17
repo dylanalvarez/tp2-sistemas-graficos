@@ -2,6 +2,7 @@ import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4, mat3, vec4 } from 'gl-matrix';
 import Car from './car'
 import colors from '../colors'
+import bezierPoints from '../bezierPoints'
 import BSpline from '../utils/cubic_bspline'
 import Bezier from '../utils/cubic_bezier'
 
@@ -28,7 +29,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         let childModelMatrix = mat4.clone(this.matrices[index]);
 
         mat4.mul(childModelMatrix, modelMatrixCopy, childModelMatrix);
-        mat4.translate(childModelMatrix, childModelMatrix, [0.5, 0, 0]);
+        mat4.translate(childModelMatrix, childModelMatrix, [0.2, 0, 0]);
         mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [1, 0, 0])
         mat4.scale(childModelMatrix, childModelMatrix, [0.1, 0.1, 0.1]);
 
@@ -38,24 +39,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
     levelCurveMatrices() {
         let matrices = [];
 
-        let levelPoints = [
-            [-14, 11, 0], [-14, 11.5, 0], [-13.5, 12, 0], [-13, 12, 0],
-            [-13, 12, 0], [-12.66, 12, 0], [-12.33, 12, 0], [-12, 12, 0],
-            [-12, 12, 0], [-12, 10.66, 0], [-12, 9.33, 0], [-12, 8, 0],
-            [-12, 8, 0], [-8, 8, 0], [-4, 4, 0], [0, 4, 0],
-            [0, 4, 0], [4, 4, 0], [8, 8, 0], [12, 8, 0],
-            [12, 8, 0], [12, 9.33, 0], [12, 10.66, 0], [12, 12, 0],
-            [12, 12, 0], [12.33, 12, 0], [12.66, 12, 0], [13, 12, 0],
-            [13, 12, 0], [13.5, 12, 0], [14, 11.5, 0], [14, 11, 0],
-            [14, 11, 0], [14, 9, 0], [14, 7, 0], [14, 5, 0],
-            [14, 5, 0], [14, 4.5, 0], [13.5, 4, 0], [13, 4, 0],
-            [13, 4, 0], [6, 4, 0], [6, -4, 0], [0, -4, 0],
-            [0, -4, 0], [-6, -4, 0], [-6, 4, 0], [-13, 4, 0],
-            [-13, 4, 0], [-13.5, 4, 0], [-14, 4, 0], [-14, 5, 0],
-            [-14, 5, 0], [-14, 7, 0], [-14, 9, 0], [-14, 11, 0]
-        ].map(function(point) {
-            return [point[1]*0.02, point[0]*0.02, point[2]*0.02];
-        });
+        let levelPoints = bezierPoints.levelPoints;
 
         for (let i = 0; i < levelPoints.length; i+=4) {
             let segment = [levelPoints[i], levelPoints[i+1], levelPoints[i+2], levelPoints[i+3]];

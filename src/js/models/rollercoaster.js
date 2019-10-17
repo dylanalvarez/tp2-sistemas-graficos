@@ -34,33 +34,6 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
 
         this.car.draw(childModelMatrix, viewMatrix, projMatrix);
     }
-
-    circunference(radius, levels) {
-        // Devuelve lista de matrices para cada punto de la curva
-
-        let matrices = []
-        
-        for (let i = 0; i < levels; i++) {
-            let alpha = (i / (levels - 1)) * 2 * Math.PI;
-            let x = radius * Math.cos(alpha);
-            let y = radius * Math.sin(alpha);
-
-            let matrix = mat4.create();
-            // Creo matriz identidad de 4x4 y la roto sobre el eje Z (porque la circunferencia esta sobre XY)
-            mat4.translate(matrix, matrix, [x, y, 0]);
-            mat4.rotate(matrix, matrix, alpha, [0,0,1]);
-
-            matrices.push(matrix);
-        }
-
-        return matrices
-    }
-
-    getPos(alpha, radius) {
-        let x = radius * Math.cos(alpha);
-        let y = radius * Math.sin(alpha);
-        return [x, y, 0];
-    }
     
     levelCurveMatrices() {
         let matrices = [];
@@ -80,14 +53,16 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
             [0, -4, 0], [-6, -4, 0], [-6, 4, 0], [-13, 4, 0],
             [-13, 4, 0], [-13.5, 4, 0], [-14, 4, 0], [-14, 5, 0],
             [-14, 5, 0], [-14, 7, 0], [-14, 9, 0], [-14, 11, 0]
-        ];
-        console.log(levelPoints.length / 4)
-        for (let i = 0; i < levelPoints.length / 4; i+=4) {
+        ].map(function(point) {
+            return [point[1]*0.02, point[0]*0.02, point[2]*0.02];
+        });
+
+        for (let i = 0; i < levelPoints.length; i+=4) {
             let segment = [levelPoints[i], levelPoints[i+1], levelPoints[i+2], levelPoints[i+3]];
             let bezier = new Bezier(segment);
 
             let deltaU = 0.1;
-
+            
             for (let u = 0; u <= 1.0; u+=deltaU) {
 
                 let levelPoint = bezier.bezierCurve(u);
@@ -112,9 +87,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
             }
 
         }
-        console.log(matrices.length)
         return matrices;
-        //return this.circunference(0.4, 256);
     }
 
     controlCurveMatrices(steps) {

@@ -10,6 +10,6 @@ export default {
     carouselBaseBlue: [0.14, 0.54, 0.85, 1.0],
     rollerCoasterGrey: [0.57, 0.56, 0.55, 1.0],
     pillarRed: [0.83, 0.3, 0.21, 1.0],
-    poleDarkGrey: [0.15, 0.15, 0.15],
-    bulbYellow: [1.0, 0.98, 0.74],
+    poleDarkGrey: [0.15, 0.15, 0.15, 1.0],
+    bulbYellow: [1.0, 0.98, 0.74, 1.0],
 }

@@ -21,6 +21,7 @@ export default class TreeNode {
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
+        if (this.constructor.name === "Skybox") console.log(this.color())
         let normalMatrix = mat4.create()
 
         mat4.multiply(normalMatrix, viewMatrix, modelMatrix);

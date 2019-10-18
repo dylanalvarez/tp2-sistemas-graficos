@@ -20,15 +20,15 @@ export default class Sphere extends TreeNode {
         return [x, y, z];
     }
 
-    getNrm(alpha, beta) {
-        var p=this.getPosInSphere(alpha, beta, 1);
+    getNrm(alpha, beta, radius) {
+        var p=this.getPosInSphere(alpha, beta, radius);
         var v=vec3.create();
         vec3.normalize(v, p);
 
         var delta=0.05;
-        var p1=this.getPosInSphere(alpha, beta, 1);
-        var p2=this.getPosInSphere(alpha, beta+delta, 1);
-        var p3=this.getPosInSphere(alpha+delta, beta, 1);
+        var p1=this.getPosInSphere(alpha, beta, radius);
+        var p2=this.getPosInSphere(alpha, beta+delta, radius);
+        var p3=this.getPosInSphere(alpha+delta, beta, radius);
 
         var v1=vec3.fromValues(p2[0]-p1[0],
                                p2[1]-p1[1],
@@ -64,7 +64,7 @@ export default class Sphere extends TreeNode {
                 pos.push(p[1]);
                 pos.push(p[2]);
 
-                let n = this.getNrm(alpha, beta);
+                let n = this.getNrm(alpha, beta, radius);
                 
                 normal.push(n[0]);
                 normal.push(n[1]);

@@ -39,7 +39,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
     levelCurveMatrices() {
         let matrices = [];
 
-        let levelPoints = bezierPoints.levelPoints;
+        let levelPoints = bezierPoints.rollercoasterLevelPoints;
 
         for (let i = 0; i < levelPoints.length; i+=4) {
             let segment = [levelPoints[i], levelPoints[i+1], levelPoints[i+2], levelPoints[i+3]];

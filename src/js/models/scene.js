@@ -5,6 +5,7 @@ import CircularRollercoaster from './circular_rollercoaster'
 import CrossedRollercoaster from './crossed_rollercoaster'
 import { mat4 } from 'gl-matrix'
 import Carousel from './carousel'
+import Lightpole from './lightpole'
 
 export default class Scene extends TreeNode {
     constructor() {
@@ -14,6 +15,9 @@ export default class Scene extends TreeNode {
         this.circularCoaster = new CircularRollercoaster();
         this.crossedCoaster = new CrossedRollercoaster();
         this.carousel = new Carousel();
+        this.lightpoleOne = new Lightpole();
+        this.lightpoleTwo = new Lightpole();
+        this.lightpoleThree = new Lightpole();
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
@@ -29,5 +33,18 @@ export default class Scene extends TreeNode {
         mat4.translate(carouselModelMatrix, carouselModelMatrix, [-3, 0, -10]);
 
         this.carousel.draw(carouselModelMatrix, viewMatrix, projMatrix);
+
+        let lightpoleOneModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [2, 0, -5]);
+        this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+
+        let lightpoleTwoModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleTwoModelMatrix, lightpoleTwoModelMatrix, [-2, 0, -30]);
+        this.lightpoleOne.draw(lightpoleTwoModelMatrix, viewMatrix, projMatrix);
+
+        let lightpoleThreeModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleThreeModelMatrix, lightpoleThreeModelMatrix, [30, 0, -20]);
+        this.lightpoleOne.draw(lightpoleThreeModelMatrix, viewMatrix, projMatrix);
+
     }
 }

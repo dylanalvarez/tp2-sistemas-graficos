@@ -2,7 +2,7 @@ import {mat4} from 'gl-matrix'
 import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import Sphere from './sphere'
-import colors from '../colors';
+import colors from '../constants/colors';
 
 export default class Lightpole extends TreeNode {
     constructor() {

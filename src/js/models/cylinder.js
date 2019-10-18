@@ -1,6 +1,5 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
-import colors from '../colors';
 
 export default class Cylinder extends TreeNode {
     constructor(color) {

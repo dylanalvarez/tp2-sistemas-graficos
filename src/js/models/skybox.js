@@ -1,5 +1,4 @@
-import { vec3, mat4 } from 'gl-matrix'
-import colors from '../colors';
+import colors from '../constants/colors';
 import Sphere from './sphere'
 
 export default class Skybox extends Sphere {

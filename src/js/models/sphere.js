@@ -8,7 +8,6 @@ export default class Sphere extends TreeNode {
     }
 
     color() {
-        if (this.constructor.name === "Skybox") console.log(this.colors);
         return this.colors;
     }
 

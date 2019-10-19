@@ -7,6 +7,7 @@ import * as dat from 'dat.gui';
 
 // dat.gui global variables
 window.carSpeed = 20;
+window.tipoDeCamino = 'No Cruzado'
 
 export default class App {
     constructor() {
@@ -30,6 +31,7 @@ export default class App {
 
         this.gui = new dat.GUI();
         this.gui.add(window, 'carSpeed', 1, 60);
+        this.gui.add(window, 'tipoDeCamino', ['No Cruzado', 'Cruzado'])
     }
 
     run() {

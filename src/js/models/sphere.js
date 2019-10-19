@@ -1,15 +1,54 @@
-import colors from '../constants/colors';
-import Sphere from './sphere'
+import { vec3 } from 'gl-matrix'
+import TreeNode from './tree_node'
 
-export default class Skybox extends Sphere {
+export default class Sphere extends TreeNode {
+    constructor(color) {
+        super();
+        this.colors = color;
+    }
+
     color() {
-        return colors.skyBlue;
+        return this.colors;
+    }
+
+    getPosInSphere(alpha, beta, radius) {
+        var x = radius * Math.sin(beta) * Math.sin(alpha);
+        var y = radius * Math.sin(beta) * Math.cos(alpha);
+        var z = radius * Math.cos(beta);
+
+        return [x, y, z];
+    }
+
+    getNrm(alpha, beta, radius) {
+        var p=this.getPosInSphere(alpha, beta, radius);
+        var v=vec3.create();
+        vec3.normalize(v, p);
+
+        var delta=0.05;
+        var p1=this.getPosInSphere(alpha, beta, radius);
+        var p2=this.getPosInSphere(alpha, beta+delta, radius);
+        var p3=this.getPosInSphere(alpha+delta, beta, radius);
+
+        var v1=vec3.fromValues(p2[0]-p1[0],
+                               p2[1]-p1[1],
+                               p2[2]-p1[2]);
+        var v2=vec3.fromValues(p3[0]-p1[0],
+                               p3[1]-p1[1],
+                               p3[2]-p1[2]);
+
+        vec3.normalize(v1,v1);
+        vec3.normalize(v2,v2);
+        
+        var n=vec3.create();
+        vec3.cross(n, v1, v2);
+        vec3.scale(n, n, -1);
+        return n;
     }
 
     buildBuffers() {
         let pos = [];
         let normal = [];
-        let radius = 100;
+        let radius = 1;
         let rows = 128;
         let cols = 256;
         for (let i = 0; i < rows; i++) {
@@ -46,4 +85,5 @@ export default class Skybox extends Sphere {
             indexBuffer: this.buildIndexBuffer(rows, cols)
         }
     }
+
 }

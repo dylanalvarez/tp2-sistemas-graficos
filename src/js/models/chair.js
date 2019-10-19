@@ -1,7 +1,8 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
+import chairPoints from '../constants/chairPoints'
 
-export default class Cylinder extends TreeNode {
+export default class Chair extends TreeNode {
     constructor(color) {
         super();
         this.colors = color;
@@ -12,25 +13,13 @@ export default class Cylinder extends TreeNode {
     }
 
     buildBuffers() {
-        function getPos(alfa, height) {
-            let r = 2;
-            let x = r * Math.cos(alfa);
-            let y = r * Math.sin(alfa);
-            return [x, y, height];
-        }
-
-        function getNrm(alfa) {
-            let position = getPos(alfa, 0);
-            let v1 = vec3.fromValues(...position);
-            vec3.normalize(v1, v1);
-            return v1;
-        }
+        let levelPoints = chairPoints.chairLevelPoints;
+        let levelNormals = chairPoints.chairLevelNormals;
 
         let pos = [];
         let normal = [];
         let rows = 128;	// filas	
-        let cols = 256;	// columnas
-
+        let cols = levelPoints.length;	// columnas
 
         // Add lid
         for (let i = 0; i < cols; i++) {
@@ -46,18 +35,18 @@ export default class Cylinder extends TreeNode {
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
 
-                let alfa = j / (cols - 1) * Math.PI * 2;
-                let z = (i - rows / 2) / 64;
+                let z = (i - rows / 2) / 32;
 
                 // evaluo la posición sobre la superficie de la esfera a partir de latitud y longitud
-                let p = getPos(alfa, z);
+                let p = levelPoints[j];
+                p = [p[0], p[1], z]
 
                 pos.push(p[0]);			// lleno el buffer de vértices
                 pos.push(p[1]);
                 pos.push(p[2]);
 
                 // evaluo el vector normal sobre la superficie de la esfera a partir de latitud y longitud
-                let n = getNrm(alfa);
+                let n = levelNormals[j];
 
                 normal.push(n[0]);		// lleno el buffer de normales
                 normal.push(n[1]);

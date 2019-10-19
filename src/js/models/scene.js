@@ -6,6 +6,8 @@ import CrossedRollercoaster from './crossed_rollercoaster'
 import { mat4 } from 'gl-matrix'
 import Carousel from './carousel'
 import Lightpole from './lightpole'
+import Chair from './chair'
+import colors from '../constants/colors'
 
 export default class Scene extends TreeNode {
     constructor() {

@@ -2,6 +2,7 @@ import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import Chair from './chair'
+import CarBody from './carbody'
 import colors from '../constants/colors';
 
 export default class Car extends TreeNode {
@@ -13,6 +14,7 @@ export default class Car extends TreeNode {
         this.wheel3 = new Cylinder(colors.black);
         this.wheel4 = new Cylinder(colors.black);
         this.chair = new Chair(colors.carChairGreen);
+        this.carBody = new CarBody();
     }
 
     color() {
@@ -20,6 +22,7 @@ export default class Car extends TreeNode {
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
+        /*
         let childModelMatrix = mat4.clone(modelMatrix);
         mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [1, 0, 0])
         mat4.scale(childModelMatrix, childModelMatrix, [0.5, 1, 2]);
@@ -48,13 +51,18 @@ export default class Car extends TreeNode {
         mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [0, 0, 1])
         mat4.scale(childModelMatrix, childModelMatrix, [0.3, 0.3, 0.3]);
         this.wheel4.draw(childModelMatrix, viewMatrix, projMatrix);
-
-        childModelMatrix = mat4.clone(modelMatrix);
+        */
+        let childModelMatrix = mat4.clone(modelMatrix);
         // Los ejes de la silla estan rotados por la aplicacion que se le aplica a todo el auto
         // en Rollercoaster
         mat4.translate(childModelMatrix, childModelMatrix, [1,-0.2, 0]);
         mat4.scale(childModelMatrix, childModelMatrix, [0.4, 0.4, 0.4]);
         
         this.chair.draw(childModelMatrix, viewMatrix, projMatrix);
+        
+       childModelMatrix = mat4.clone(modelMatrix);
+       mat4.translate(childModelMatrix, childModelMatrix, [0, 10, 0])
+       this.carBody.draw(childModelMatrix, viewMatrix, projMatrix);
     }
+
 }

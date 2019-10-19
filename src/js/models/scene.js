@@ -8,6 +8,7 @@ import Carousel from './carousel'
 import Lightpole from './lightpole'
 import Chair from './chair'
 import colors from '../constants/colors'
+import CarBody from './carbody'
 
 export default class Scene extends TreeNode {
     constructor() {
@@ -20,6 +21,7 @@ export default class Scene extends TreeNode {
         this.lightpoleOne = new Lightpole();
         this.lightpoleTwo = new Lightpole();
         this.lightpoleThree = new Lightpole();
+        this.carBody = new CarBody();
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
@@ -47,6 +49,10 @@ export default class Scene extends TreeNode {
         let lightpoleThreeModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleThreeModelMatrix, lightpoleThreeModelMatrix, [30, 0, -20]);
         this.lightpoleOne.draw(lightpoleThreeModelMatrix, viewMatrix, projMatrix);
+
+        let carBodyMatrix = mat4.clone(modelMatrix);
+        mat4.translate(carBodyMatrix, carBodyMatrix, [0, 1, 0])
+        this.carBody.draw(carBodyMatrix, viewMatrix, projMatrix);
 
     }
 }

@@ -73,6 +73,6 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         return matrices;
     }
 
-    controlCurveMatrices(steps) { }
+    controlCurveMatrices() { }
 
 }

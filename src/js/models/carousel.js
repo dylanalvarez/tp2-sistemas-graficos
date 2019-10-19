@@ -3,6 +3,7 @@ import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import CarouselTop from './carousel_top';
 import colors from '../constants/colors';
+import Chair from './chair';
 
 export default class Carousel extends TreeNode {
     constructor() {

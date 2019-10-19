@@ -29,8 +29,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
 
         mat4.mul(childModelMatrix, modelMatrixCopy, childModelMatrix);
         mat4.translate(childModelMatrix, childModelMatrix, [0.2, 0, 0]);
-        mat4.rotate(childModelMatrix, childModelMatrix, -Math.PI / 2, [1, 0, 0])
-        mat4.rotate(childModelMatrix, childModelMatrix, Math.PI, [0, 0, 1])
+        mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [1, 0, 0]);
         mat4.scale(childModelMatrix, childModelMatrix, [0.1, 0.1, 0.1]);
 
         this.car.draw(childModelMatrix, viewMatrix, projMatrix);

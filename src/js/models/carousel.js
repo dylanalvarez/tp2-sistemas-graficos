@@ -3,8 +3,7 @@ import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import CarouselTop from './carousel_top';
 import colors from '../constants/colors';
-import Chair from './chair';
-import SmoothedOutRandom from './smoothed_out_random';
+import SmoothedOutRandom from '../utils/smoothed_out_random';
 
 export default class Carousel extends TreeNode {
     constructor() {

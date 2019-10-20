@@ -2,14 +2,19 @@ import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import colors from '../constants/colors';
-import Chair from './chair';
+import ChairWithRope from './chair_with_rope';
 
 export default class CarouselTop extends TreeNode {
     constructor() {
         super();
         this.top = new Cylinder(colors.carouselTopOrange);
-        this.rope = new Cylinder(colors.black);
-        this.chair = new Chair(colors.carouselChairMagenta)
+        this.chairWithRope = new ChairWithRope();
+        this.speed = 0;
+        this.chairCount = 5;
+    }
+
+    setSpeed(speed) {
+        this.speed = speed;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
@@ -18,18 +23,12 @@ export default class CarouselTop extends TreeNode {
         mat4.scale(topModelMatrix, topModelMatrix, [1, 1, 0.1]);
         this.top.draw(topModelMatrix, viewMatrix, projMatrix);
 
-        let ropeModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(ropeModelMatrix, ropeModelMatrix, [1.5, -0.51, 0]);
-        mat4.rotate(ropeModelMatrix, ropeModelMatrix, Math.PI / 2, [1, 0, 0]);
-        mat4.scale(ropeModelMatrix, ropeModelMatrix, [0.01, 0.01, 0.6]);
-        this.rope.draw(ropeModelMatrix, viewMatrix, projMatrix);
-        
-        let chairModelMatrix = mat4.clone(modelMatrix);
-        
-        mat4.translate(chairModelMatrix, chairModelMatrix, [1.5, -1.3, -0.02]);
-        mat4.rotate(chairModelMatrix, chairModelMatrix, -Math.PI/2, [0, 1, 0]);
-        mat4.scale(chairModelMatrix, chairModelMatrix, [0.1, 0.1, 0.1])
-        
-        this.chair.draw(chairModelMatrix, viewMatrix, projMatrix);
+        for (let i = 0; i < this.chairCount; i++) {
+            let childModelMatrix = mat4.clone(modelMatrix);
+            mat4.rotateY(childModelMatrix, childModelMatrix, 2 * Math.PI * i / this.chairCount);
+            mat4.translate(childModelMatrix, childModelMatrix, [1.5, 0, 0]);
+            mat4.rotateZ(childModelMatrix, childModelMatrix, this.speed * 2 * Math.PI);
+            this.chairWithRope.draw(childModelMatrix, viewMatrix, projMatrix);
+        }
     }
 }

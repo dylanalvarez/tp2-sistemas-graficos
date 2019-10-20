@@ -112,7 +112,6 @@ export default class CarCenterBody extends ScanningSurfaceTreeNode {
                 normal.push(n[1]);
                 normal.push(n[2]);
             }
-            console.log(scale)
             scale+=0.03;
         }
 

@@ -223,7 +223,6 @@ export default class Camera {
                 centerPosition,
                 [0, 1, 0]
             )
-            console.log(eyePosition);
         } else {
             let eye = mat4.create();
 

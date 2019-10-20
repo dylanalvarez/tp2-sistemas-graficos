@@ -10,7 +10,14 @@ export default class Carousel extends TreeNode {
         super();
         this.base = new Cylinder(colors.white);
         this.top = new CarouselTop();
+        this.time = 0;
         this.angle = 0;
+        this.previousRandom = 0.5;
+    }
+
+    smoothedOutRandom() {
+        this.previousRandom += (Math.random() - 0.5) / 10;
+        return this.previousRandom;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
@@ -20,7 +27,10 @@ export default class Carousel extends TreeNode {
         mat4.scale(baseModelMatrix, baseModelMatrix, [0.1, 0.1, 1]);
         this.base.draw(baseModelMatrix, viewMatrix, projMatrix);
 
-        this.angle = this.angle + 0.05;
+        this.time += this.smoothedOutRandom() * 0.01;
+        let speed = Math.pow(Math.sin(this.time), 2) / 12 + 0.01
+        this.angle += speed;
+        this.top.setSpeed(speed);
 
         let topModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(topModelMatrix, topModelMatrix, [0, 2, 0]);

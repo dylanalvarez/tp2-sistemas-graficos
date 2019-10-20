@@ -12,7 +12,6 @@ export default class CarBody extends ScanningSurfaceTreeNode {
     levelCurveMatrices() {
         let matrices = [];
         let centerBodyLevelPoints = carBodyPoints.carBodyLevelPoints;
-        let carCapsLevelsPoints = carBodyPoints.carCapsLevelPoints;
 
         for (let i = 0; i < centerBodyLevelPoints.length; i+=4) {
             let segment = [centerBodyLevelPoints[i], centerBodyLevelPoints[i+1], centerBodyLevelPoints[i+2], centerBodyLevelPoints[i+3]];
@@ -54,11 +53,11 @@ export default class CarBody extends ScanningSurfaceTreeNode {
         for(let i=0; i < steps; i++) {
             
             let z = i / steps - 1;
-            let controlPoint = [z, 0, 0];
+            let controlPoint = [0, 0, z];
 
-            let t = vec3.fromValues(1, 0, 0);
+            let t = vec3.fromValues(0, 0, 1);
             let n = vec3.fromValues(0, 1, 0);
-            let b = vec3.fromValues(0, 0, 1);
+            let b = vec3.fromValues(-1, 0, 0);
 
             let matrix = mat4.fromValues(n[0],            n[1],            n[2],            0,
                                          b[0],            b[1],            b[2],            0,

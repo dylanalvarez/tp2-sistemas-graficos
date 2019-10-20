@@ -6,8 +6,8 @@ import Scene from './scene'
 import * as dat from 'dat.gui';
 
 // dat.gui global variables
-window.carSpeed = 20;
-window.tipoDeCamino = 'No Cruzado'
+window['Velocidad carro'] = 20;
+window['Tipo de camino'] = 'No cruzado'
 
 export default class App {
     constructor() {
@@ -29,9 +29,9 @@ export default class App {
         window.camera = new Camera(this.canvas);
         this.scene = new Scene();
 
-        this.gui = new dat.GUI();
-        this.gui.add(window, 'carSpeed', 1, 60);
-        this.gui.add(window, 'tipoDeCamino', ['No Cruzado', 'Cruzado'])
+        this.gui = new dat.GUI({hideable: false});
+        this.gui.add(window, 'Velocidad carro', 1, 60);
+        this.gui.add(window, 'Tipo de camino', ['No cruzado', 'Cruzado'])
     }
 
     run() {

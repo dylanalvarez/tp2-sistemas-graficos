@@ -6,7 +6,7 @@ import Scene from './scene'
 import * as dat from 'dat.gui';
 
 // dat.gui global variables
-window.carSpeed = 30;
+window.carSpeed = 20;
 window.tipoDeCamino = 'No Cruzado'
 
 export default class App {
@@ -26,18 +26,18 @@ export default class App {
         this.setupWebGL();
         this.initShaders();
 
-        this.camera = new Camera(this.canvas);
+        window.camera = new Camera(this.canvas);
         this.scene = new Scene();
 
         this.gui = new dat.GUI();
-        this.gui.add(window, 'carSpeed', 1, 1000);
+        this.gui.add(window, 'carSpeed', 1, 60);
         this.gui.add(window, 'tipoDeCamino', ['No Cruzado', 'Cruzado'])
     }
 
     run() {
         requestAnimationFrame(() => this.run());
         this.drawScene();
-        this.camera.setViewMatrix(this.viewMatrix);
+        window.camera.setViewMatrix(this.viewMatrix);
     }
 
     drawScene() {

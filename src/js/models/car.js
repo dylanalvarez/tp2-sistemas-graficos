@@ -20,6 +20,8 @@ export default class Car extends TreeNode {
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
+        window.camera.updateCarPosition(mat4.clone(modelMatrix));
+
         let childModelMatrix = mat4.clone(modelMatrix);
         mat4.rotate(childModelMatrix, childModelMatrix, Math.PI / 2, [1, 0, 0])
         mat4.scale(childModelMatrix, childModelMatrix, [0.5, 1, 2]);

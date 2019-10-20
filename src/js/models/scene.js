@@ -45,6 +45,5 @@ export default class Scene extends TreeNode {
         let lightpoleThreeModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleThreeModelMatrix, lightpoleThreeModelMatrix, [30, 0, -20]);
         this.lightpoleOne.draw(lightpoleThreeModelMatrix, viewMatrix, projMatrix);
-
     }
 }

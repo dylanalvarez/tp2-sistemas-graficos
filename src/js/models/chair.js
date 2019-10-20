@@ -37,7 +37,6 @@ export default class Chair extends TreeNode {
 
                 let z = (i - rows / 2) / 32;
 
-                // evaluo la posición sobre la superficie de la esfera a partir de latitud y longitud
                 let p = levelPoints[j];
                 p = [p[0], p[1], z]
 
@@ -45,7 +44,6 @@ export default class Chair extends TreeNode {
                 pos.push(p[1]);
                 pos.push(p[2]);
 
-                // evaluo el vector normal sobre la superficie de la esfera a partir de latitud y longitud
                 let n = levelNormals[j];
 
                 normal.push(n[0]);		// lleno el buffer de normales

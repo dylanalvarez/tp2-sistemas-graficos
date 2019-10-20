@@ -26,7 +26,6 @@ export default class Car extends TreeNode {
         // Los ejes de la silla estan rotados por la aplicacion que se le aplica a todo el auto
         // en Rollercoaster
         let childModelMatrix = mat4.clone(modelMatrix);
-        //mat4.translate(childModelMatrix, childModelMatrix, [1, -0.4, 0.2]);
         mat4.scale(childModelMatrix, childModelMatrix, [0.6, 0.6, 0.7]);
         this.chairTwo.draw(childModelMatrix, viewMatrix, projMatrix);
 

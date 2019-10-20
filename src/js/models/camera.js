@@ -91,10 +91,10 @@ export default class Camera {
             this.step = 0.3;
         } else if (this.mode === 'chairs') {
             cameraModeNameDiv.innerHTML = '<b>Vista orbital sillas voladoras</b><br>(<b>C</b> cambia cámara, navegar con <b>mouse</b> y <b>WS</b>)'
-            this.yAngleUpperLimit = (1 / 64) * Math.PI;
+            this.yAngleUpperLimit = 0;
             this.yAngleLowerLimit = - (3 / 8) * Math.PI;
-            this.orbitalRadius = 7;
-            this.maxOrbitalRadius = 10;
+            this.orbitalRadius = 10;
+            this.maxOrbitalRadius = 25;
             this.minOrbitalRadius = 3;
             this.offsetX = -2.9;
             this.offsetY = 0.7;

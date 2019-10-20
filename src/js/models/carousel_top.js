@@ -10,7 +10,6 @@ export default class CarouselTop extends TreeNode {
         this.top = new Cylinder(colors.carouselTopOrange);
         this.chairWithRope = new ChairWithRope();
         this.speed = 0;
-        this.chairCount = 5;
     }
 
     setSpeed(speed) {
@@ -20,13 +19,14 @@ export default class CarouselTop extends TreeNode {
     draw(modelMatrix, viewMatrix, projMatrix) {
         let topModelMatrix = mat4.clone(modelMatrix);
         mat4.rotate(topModelMatrix, topModelMatrix, Math.PI / 2, [1, 0, 0]);
-        mat4.scale(topModelMatrix, topModelMatrix, [1, 1, 0.1]);
+        mat4.scale(topModelMatrix, topModelMatrix, [1.2, 1.2, 0.1]);
         this.top.draw(topModelMatrix, viewMatrix, projMatrix);
 
-        for (let i = 0; i < this.chairCount; i++) {
+        let chairCount = window['Cantidad sillas'];
+        for (let i = 0; i < chairCount; i++) {
             let childModelMatrix = mat4.clone(modelMatrix);
-            mat4.rotateY(childModelMatrix, childModelMatrix, 2 * Math.PI * i / this.chairCount);
-            mat4.translate(childModelMatrix, childModelMatrix, [1.5, 0, 0]);
+            mat4.rotateY(childModelMatrix, childModelMatrix, 2 * Math.PI * i / chairCount);
+            mat4.translate(childModelMatrix, childModelMatrix, [2, 0, 0]);
             mat4.rotateZ(childModelMatrix, childModelMatrix, this.speed * 2 * Math.PI);
             this.chairWithRope.draw(childModelMatrix, viewMatrix, projMatrix);
         }

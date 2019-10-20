@@ -8,7 +8,8 @@ import * as dat from 'dat.gui';
 // dat.gui global variables
 window['Velocidad carro'] = 20;
 window['Tipo de camino'] = 'No cruzado'
-window['Cantidad sillas'] = 5
+window['Cantidad sillas'] = 8
+window['Altura sillas'] = 1.5
 
 export default class App {
     constructor() {
@@ -34,6 +35,7 @@ export default class App {
         this.gui.add(window, 'Velocidad carro', 1, 60);
         this.gui.add(window, 'Tipo de camino', ['No cruzado', 'Cruzado']);
         this.gui.add(window, 'Cantidad sillas', 0, 30, 1);
+        this.gui.add(window, 'Altura sillas', 1, 4, 0.01);
     }
 
     run() {

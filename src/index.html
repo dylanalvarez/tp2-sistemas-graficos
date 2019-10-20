@@ -9,11 +9,62 @@
         body {
             margin: 0 !important;
             padding: 0 !important;
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(158, 211, 236);
+        }
+
+        #camera-mode-name,
+        #title,
+        #credits {
+            position: absolute;
+            background-color: rgb(26, 26, 26);            
+            color: white;
+            padding: 4px;
+            font-family: "Lucida Grande", sans-serif;
+            font-size: 11px;
+            min-width: 245px;
+            text-align: center;
+        }
+
+        #camera-mode-name {
+            top: 0;
+            left: 15px;
+            background: #1a1a1a;
+            text-align: left;
+        }
+
+        #title {
+            bottom: 0;
+            left: 15px;
+        }
+
+        #credits {
+            bottom: 0;
+            right: 15px;
         }
     </style>
 </head>
 
 <body>
+    <div id="camera-mode-name"></div>
+    <div id="title">
+        <a href="https://github.com/dylanalvarez/tp1-sistemas-graficos" target="_blank">
+            TP 1 Sistemas Gráficos
+        </a>
+        -
+        <a href="https://www.sistemasgraficos.xyz/" target="_blank">
+            FIUBA
+        </a>
+    </div>
+    <div id="credits">
+        <a href="https://github.com/FScaccheri" target="_blank">Franco Scaccheri</a>
+        -
+        <a href="https://github.com/dylanalvarez" target="_blank">Dylan Alvarez</a>
+    </div>
     <canvas id="my-canvas"></canvas>
 </body>
 

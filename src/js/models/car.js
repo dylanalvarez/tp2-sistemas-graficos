@@ -1,6 +1,5 @@
 import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
-import Cylinder from './cylinder'
 import Chair from './chair'
 import CarBody from './carbody'
 import CarCap from './carcap';
@@ -21,7 +20,10 @@ export default class Car extends TreeNode {
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
-        // Los ejes estan rotados por la rotacion que se le aplica a todo el auto
+        window.camera.updateCarPosition(mat4.clone(modelMatrix));
+
+        childModelMatrix = mat4.clone(modelMatrix);
+        // Los ejes de la silla estan rotados por la aplicacion que se le aplica a todo el auto
         // en Rollercoaster
         let childModelMatrix = mat4.clone(modelMatrix);
         //mat4.translate(childModelMatrix, childModelMatrix, [1, -0.4, 0.2]);

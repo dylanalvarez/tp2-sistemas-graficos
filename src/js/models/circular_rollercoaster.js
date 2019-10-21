@@ -5,7 +5,7 @@ import BSpline from '../utils/cubic_bspline'
 
 export default class CircularRollerCoaster extends Rollercoaster {
     controlCurveMatrices(steps) {
-        // steps for each BSpline cruve defined. Must be multiple of 10
+        // steps for each BSpline curve defined. Must be multiple of 10
         steps = steps || 10;
         let matrices = [];
         let controlPoints = coasterTypes['No Cruzado'];
@@ -45,6 +45,9 @@ export default class CircularRollerCoaster extends Rollercoaster {
 
             }
             
+        }
+        if (steps === 10){
+            this.curveMatrices = matrices;
         }
         return matrices;
     }

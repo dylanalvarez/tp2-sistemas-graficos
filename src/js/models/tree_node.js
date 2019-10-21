@@ -21,9 +21,10 @@ export default class TreeNode {
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
-        let normalMatrix = mat4.create()
+        //let normalMatrix = mat4.create()
+        let normalMatrix = mat4.clone(modelMatrix); // absolute normals, not relative to viewMatrix
 
-        mat4.multiply(normalMatrix, viewMatrix, modelMatrix);
+        //mat4.multiply(normalMatrix, viewMatrix, modelMatrix);
         mat4.invert(normalMatrix, normalMatrix);
         mat4.transpose(normalMatrix, normalMatrix);
 

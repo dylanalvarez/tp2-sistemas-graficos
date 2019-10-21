@@ -26,9 +26,9 @@ export default class Skybox extends Sphere {
 
                 let n = this.getNrm(alpha, beta, radius);
                 
-                normal.push(n[0]);
-                normal.push(n[1]);
-                normal.push(n[2]);
+                normal.push(-n[0]);
+                normal.push(-n[1]);
+                normal.push(-n[2]);
             }
         }
 

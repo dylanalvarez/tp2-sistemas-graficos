@@ -22,7 +22,7 @@ export default class CarouselTop extends TreeNode {
         mat4.scale(topModelMatrix, topModelMatrix, [1.2, 1.2, 0.1]);
         this.top.draw(topModelMatrix, viewMatrix, projMatrix);
 
-        let chairCount = window['Cantidad sillas'];
+        let chairCount = window['Cant. sillas'];
         for (let i = 0; i < chairCount; i++) {
             let childModelMatrix = mat4.clone(modelMatrix);
             mat4.rotateY(childModelMatrix, childModelMatrix, 2 * Math.PI * i / chairCount);

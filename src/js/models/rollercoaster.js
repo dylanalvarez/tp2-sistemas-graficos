@@ -1,6 +1,7 @@
 import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4 } from 'gl-matrix';
 import Car from './car'
+import Cylinder from './cylinder'
 import colors from '../constants/colors'
 import bezierPoints from '../constants/bezierPoints'
 import Bezier from '../utils/cubic_bezier'
@@ -12,6 +13,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         this.matrices = this.controlCurveMatrices(1000);
         this.car = new Car();
         this.carPosition = 0;
+        this.column = new Cylinder(colors.pillarRed);
     }
 
     color() {
@@ -33,6 +35,19 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         mat4.scale(childModelMatrix, childModelMatrix, [0.08, 0.08, 0.08]);
 
         this.car.draw(childModelMatrix, viewMatrix, projMatrix);
+        
+        let columnCount = window['Cantidad columnas'];
+        
+        for (let i = 0; i < columnCount; i++) {
+            let index = Math.floor(i * this.matrices.length / columnCount);
+            let m = this.matrices[index];
+            let columnModelMatrix = mat4.clone(modelMatrix);
+            mat4.translate(columnModelMatrix, columnModelMatrix, [m[12], m[13]-28.1, m[14]]);
+            mat4.scale(columnModelMatrix, columnModelMatrix, [0.1, 30, 0.1]);
+            mat4.rotateX(columnModelMatrix, columnModelMatrix, Math.PI/2);
+
+            this.column.draw(columnModelMatrix, viewMatrix, projMatrix);
+        }        
     }
     
     levelCurveMatrices() {

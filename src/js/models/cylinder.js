@@ -11,7 +11,9 @@ export default class Cylinder extends TreeNode {
         return this.colors;
     }
 
-    buildBuffers() {
+    buildBuffers(lowerLidOffset, upperLidOffset) {
+        lowerLidOffset = lowerLidOffset || 0;
+        upperLidOffset = upperLidOffset || 0;
         function getPos(alfa, height) {
             let r = 2;
             let x = r * Math.cos(alfa);
@@ -36,7 +38,7 @@ export default class Cylinder extends TreeNode {
         for (let i = 0; i < cols; i++) {
             pos.push(0);
             pos.push(0);
-            pos.push(-1);
+            pos.push(-1 - lowerLidOffset);
 
             normal.push(0);
             normal.push(0);
@@ -70,7 +72,7 @@ export default class Cylinder extends TreeNode {
         for (let i = 0; i < cols; i++) {
             pos.push(0);
             pos.push(0);
-            pos.push(1);
+            pos.push(1 + upperLidOffset);
 
             normal.push(0);
             normal.push(0);

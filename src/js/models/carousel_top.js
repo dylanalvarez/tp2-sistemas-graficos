@@ -4,10 +4,9 @@ import Cylinder from './cylinder'
 import colors from '../constants/colors';
 import ChairWithRope from './chair_with_rope';
 
-export default class CarouselTop extends TreeNode {
+export default class CarouselTop extends Cylinder {
     constructor() {
-        super();
-        this.top = new Cylinder(colors.carouselTopOrange);
+        super(colors.carouselTopOrange);
         this.chairWithRope = new ChairWithRope();
         this.speed = 0;
     }
@@ -20,7 +19,7 @@ export default class CarouselTop extends TreeNode {
         let topModelMatrix = mat4.clone(modelMatrix);
         mat4.rotate(topModelMatrix, topModelMatrix, Math.PI / 2, [1, 0, 0]);
         mat4.scale(topModelMatrix, topModelMatrix, [1.2, 1.2, 0.1]);
-        this.top.draw(topModelMatrix, viewMatrix, projMatrix);
+        super.draw(topModelMatrix, viewMatrix, projMatrix);
 
         let chairCount = window['Cant. sillas'];
         for (let i = 0; i < chairCount; i++) {
@@ -30,5 +29,9 @@ export default class CarouselTop extends TreeNode {
             mat4.rotateZ(childModelMatrix, childModelMatrix, this.speed * 2 * Math.PI);
             this.chairWithRope.draw(childModelMatrix, viewMatrix, projMatrix);
         }
+    }
+
+    buildBuffers() {
+        return super.buildBuffers(2, 7);
     }
 }

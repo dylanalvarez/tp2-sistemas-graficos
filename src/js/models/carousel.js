@@ -1,14 +1,18 @@
 import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 import Cylinder from './cylinder'
+import SupportCylinder from './support_cylinder'
 import CarouselTop from './carousel_top';
 import colors from '../constants/colors';
 import SmoothedOutRandom from '../utils/smoothed_out_random';
+import SupportTopCylinder from './support_top_cylinder';
 
 export default class Carousel extends TreeNode {
     constructor() {
         super();
         this.base = new Cylinder(colors.white);
+        this.support = new SupportCylinder(colors.lightBlue);
+        this.supportTop = new SupportTopCylinder(colors.lightBlue);
         this.top = new CarouselTop();
         this.time = 0;
         this.yAngle = 0;
@@ -22,9 +26,21 @@ export default class Carousel extends TreeNode {
     draw(modelMatrix, viewMatrix, projMatrix) {
         let baseModelMatrix = mat4.clone(modelMatrix);
         mat4.rotate(baseModelMatrix, baseModelMatrix, Math.PI / 2, [1, 0, 0]);
-        mat4.scale(baseModelMatrix, baseModelMatrix, [0.1, 0.1, window['Altura sillas']]);
+        mat4.scale(baseModelMatrix, baseModelMatrix, [0.15, 0.15, window['Altura sillas']]);
         mat4.translate(baseModelMatrix, baseModelMatrix, [0, 0, -1]);
         this.base.draw(baseModelMatrix, viewMatrix, projMatrix);
+
+        baseModelMatrix = mat4.clone(modelMatrix);
+        mat4.rotate(baseModelMatrix, baseModelMatrix, Math.PI / 2, [1, 0, 0]);
+        mat4.scale(baseModelMatrix, baseModelMatrix, [0.2, 0.2, 0.3]);
+        mat4.translate(baseModelMatrix, baseModelMatrix, [0, 0, -1]);
+        this.support.draw(baseModelMatrix, viewMatrix, projMatrix);
+
+        baseModelMatrix = mat4.clone(modelMatrix);
+        mat4.rotate(baseModelMatrix, baseModelMatrix, Math.PI / 2, [1, 0, 0]);
+        mat4.scale(baseModelMatrix, baseModelMatrix, [0.18, 0.18, 0.45]);
+        mat4.translate(baseModelMatrix, baseModelMatrix, [0, 0, -1]);
+        this.supportTop.draw(baseModelMatrix, viewMatrix, projMatrix);
 
         this.time += this.random1.nextValue() * 0.01;
         let speed = Math.pow(Math.sin(this.time), 2) / 12 + 0.01

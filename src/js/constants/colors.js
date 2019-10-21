@@ -12,4 +12,5 @@ export default {
     pillarRed: [0.83, 0.3, 0.21, 1.0],
     poleDarkGrey: [0.15, 0.15, 0.15, 1.0],
     bulbYellow: [1.0, 0.98, 0.74, 1.0],
+    lightBlue: [0, 0.6, 1, 1.0],
 }

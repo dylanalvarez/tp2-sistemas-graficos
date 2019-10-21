@@ -36,7 +36,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
 
         this.car.draw(childModelMatrix, viewMatrix, projMatrix);
         
-        let columnCount = window['Cantidad columnas'];
+        let columnCount = window['Cant. columnas'];
         
         for (let i = 0; i < columnCount; i++) {
             let index = Math.floor(i * this.matrices.length / columnCount);

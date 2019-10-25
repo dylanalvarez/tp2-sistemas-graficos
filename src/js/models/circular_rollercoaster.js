@@ -1,6 +1,6 @@
 import { vec3, mat4 } from 'gl-matrix';
 import Rollercoaster from './rollercoaster'
-import coasterTypes from '../constants/rollerCoasterTypes'
+import coasterTypes from '../constants/roller_coaster_types'
 import BSpline from '../utils/cubic_bspline'
 
 export default class CircularRollerCoaster extends Rollercoaster {

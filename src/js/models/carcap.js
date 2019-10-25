@@ -1,15 +1,16 @@
 import colors from '../constants/colors'
-import carBodyPoints from '../constants/carBodyPoints'
+import carBodyPoints from '../constants/car_body_points'
 import ScanningSurfaceTreeNode from "./scanning_surface_tree_node";
 import { mat4, vec3, vec4 } from "gl-matrix";
 import Bezier from '../utils/cubic_bezier';
 
-export default class CarCenterBody extends ScanningSurfaceTreeNode {
+export default class CarCap extends ScanningSurfaceTreeNode {
     color() {
         return colors.carYellow;
     }
 
-    levelCurveMatrices() {
+    levelCurveMatrices(normalScaling) {
+        let normalScale = normalScaling || 1;
         let matrices = [];
         let carCapsLevelsPoints = carBodyPoints.carCapsLevelPoints;
         for (let i = 0; i < carCapsLevelsPoints.length; i+=4) {
@@ -30,6 +31,7 @@ export default class CarCenterBody extends ScanningSurfaceTreeNode {
 
                 let n = vec3.fromValues(0, 1, 0);
                 vec3.cross(n, t, b);
+                vec3.scale(n, n, normalScale);
                 vec3.normalize(n, n);
 
                 let matrix = mat4.fromValues(n[0],          n[1],          n[2],          0,

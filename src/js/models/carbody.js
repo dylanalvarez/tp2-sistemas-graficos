@@ -1,5 +1,5 @@
 import colors from '../constants/colors'
-import carBodyPoints from '../constants/carBodyPoints'
+import carBodyPoints from '../constants/car_body_points'
 import ScanningSurfaceTreeNode from "./scanning_surface_tree_node";
 import { mat4, vec3 } from "gl-matrix";
 import Bezier from '../utils/cubic_bezier';

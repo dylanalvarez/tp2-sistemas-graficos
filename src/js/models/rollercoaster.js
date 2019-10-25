@@ -3,7 +3,7 @@ import { vec3, mat4 } from 'gl-matrix';
 import Car from './car'
 import Cylinder from './cylinder'
 import colors from '../constants/colors'
-import bezierPoints from '../constants/bezierPoints'
+import bezierPoints from '../constants/bezier_points'
 import Bezier from '../utils/cubic_bezier'
 
 export default class Rollercoaster extends ScanningSurfaceTreeNode {

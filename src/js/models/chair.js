@@ -1,6 +1,5 @@
-import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
-import chairPoints from '../constants/chairPoints'
+import chairPoints from '../constants/chair_points'
 
 export default class Chair extends TreeNode {
     constructor(color) {
@@ -25,11 +24,11 @@ export default class Chair extends TreeNode {
         for (let i = 0; i < cols; i++) {
             pos.push(0);
             pos.push(0);
-            pos.push(-1);
+            pos.push(1);
 
             normal.push(0);
             normal.push(0);
-            normal.push(-1);
+            normal.push(1);
         }
 
         for (let i = 0; i < rows; i++) {
@@ -57,11 +56,11 @@ export default class Chair extends TreeNode {
         for (let i = 0; i < cols; i++) {
             pos.push(0);
             pos.push(0);
-            pos.push(1);
+            pos.push(-1);
 
             normal.push(0);
             normal.push(0);
-            normal.push(1);
+            normal.push(-1);
         }
 
         let trianglesVerticeBuffer = gl.createBuffer();

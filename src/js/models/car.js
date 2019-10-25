@@ -3,6 +3,7 @@ import TreeNode from './tree_node'
 import Chair from './chair'
 import CarBody from './carbody'
 import CarCap from './carcap';
+import FrontCarCap from './front_car_cap'
 import colors from '../constants/colors';
 
 export default class Car extends TreeNode {
@@ -11,8 +12,8 @@ export default class Car extends TreeNode {
         this.chairOne = new Chair(colors.carChairGreen);
         this.chairTwo = new Chair(colors.carChairGreen);
         this.carBody = new CarBody();
-        this.carCapOne = new CarCap();
-        this.carCapTwo = new CarCap();
+        this.carCap1 = new CarCap();
+        this.carCap2 = new FrontCarCap();
     }
 
     color() {
@@ -44,11 +45,11 @@ export default class Car extends TreeNode {
         childModelMatrix = mat4.clone(carBodyPartsMatrix);
         mat4.translate(childModelMatrix, childModelMatrix, [0, 0, -7.77]);
         mat4.scale(childModelMatrix, childModelMatrix, [1.03, 1.03, 2]);
-        this.carCapOne.draw(childModelMatrix, viewMatrix, projMatrix);
+        this.carCap1.draw(childModelMatrix, viewMatrix, projMatrix);
 
         mat4.translate(childModelMatrix, childModelMatrix, [0, 0, 4.47])
         mat4.rotate(childModelMatrix, childModelMatrix, Math.PI, [1, 0, 0]);
-        this.carCapTwo.draw(childModelMatrix, viewMatrix, projMatrix);
+        this.carCap2.draw(childModelMatrix, viewMatrix, projMatrix);
 
     }
 

@@ -42,6 +42,7 @@ export default class Sphere extends TreeNode {
         var n=vec3.create();
         vec3.cross(n, v1, v2);
         vec3.scale(n, n, -1);
+        if (beta <= 0.05) return vec3.fromValues(0, 0, 1)
         return n;
     }
 

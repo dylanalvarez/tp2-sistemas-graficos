@@ -1,5 +1,7 @@
 # TP2 - [Sistemas Gráficos](https://www.sistemasgraficos.xyz/)
 
+Se agregan texturas, reflexión e iluminación puntual al [TP1](https://github.com/dylanalvarez/tp1-sistemas-graficos)
+
 [Enunciado](https://drive.google.com/drive/folders/1yKkXdV7WE83JSo_ovEWvzz5-99GIEMD4?usp=sharing)
 
 ## Requirements

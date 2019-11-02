@@ -1,8 +1,6 @@
-# TP1 - [Sistemas Gráficos](https://www.sistemasgraficos.xyz/)
+# TP2 - [Sistemas Gráficos](https://www.sistemasgraficos.xyz/)
 
-[Probar en la web](https://tp1-sistemas-graficos.herokuapp.com)
-
-[Enunciado](https://www.sistemasgraficos.xyz/files/trabajospracticos/2019/tp1-c2-2019.pdf)
+[Enunciado](https://drive.google.com/drive/folders/1yKkXdV7WE83JSo_ovEWvzz5-99GIEMD4?usp=sharing)
 
 ## Requirements
 

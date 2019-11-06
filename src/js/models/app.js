@@ -75,6 +75,8 @@ export default class App {
 
         // use program
         gl.useProgram(glProgram);
+
+        glProgram.samplerUniform = gl.getUniformLocation(glProgram, "uSampler");
     }
 
     makeShader(src, type) {

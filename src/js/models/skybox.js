@@ -56,7 +56,7 @@ export default class Skybox extends Sphere {
         }
 
         // Armo de forma provisoria el vector de coordenadas UV
-        let times=64;
+        let times=64*256;
         for (let k=0; k<times+1; k++){
             uv.push(0);
             uv.push(0);

@@ -1,5 +1,6 @@
 import colors from '../constants/colors';
 import Sphere from './sphere'
+import sunsetImage from '../../assets/maps/sunset.jpg'
 
 export default class Skybox extends Sphere {
     color() {
@@ -9,10 +10,10 @@ export default class Skybox extends Sphere {
     initTexture(filePath) {
         this.texture = gl.createTexture();
         this.texture.image = new Image();
-
-		this.texture.image.onload = function () {
-            gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); 					// invierto el ejeY					
-            gl.bindTexture(gl.TEXTURE_2D, this.texture); 						// activo la textura
+        this.texture.image.src = filePath;
+        let texture = this.texture;
+		this.texture.image.onload = function () {			
+            gl.bindTexture(gl.TEXTURE_2D, texture); 						// activo la textura
                         
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);	// cargo el bitmap en la GPU
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);					// selecciono filtro de magnificacion
@@ -21,17 +22,18 @@ export default class Skybox extends Sphere {
             gl.generateMipmap(gl.TEXTURE_2D);		// genero los mipmaps
             gl.bindTexture(gl.TEXTURE_2D, null);
         }
-            this.texture.image.src = filePath;
+            
     }
     
     buildBuffers() {
         let pos = [];
         let normal = [];
+        let uv = [];
         let radius = 100;
         let rows = 128;
         let cols = 256;
 
-        this.initTexture('sunset.jpg');
+        this.initTexture(sunsetImage);
 
         for (let i = 0; i < rows; i++) {
             for (let j=0; j < cols; j++) {
@@ -52,17 +54,23 @@ export default class Skybox extends Sphere {
                 normal.push(-n[2]);
             }
         }
-        
-        let uv = [
-            0.0, 0.0,
-                    0.0, 1.0,
-                    1.2, 0.0,
-                    
-                    0.0, 1.0,
-                    1.2, 0.0,
-                    1.2, 1.0,
-        ]
 
+        // Armo de forma provisoria el vector de coordenadas UV
+        let times=64;
+        for (let k=0; k<times+1; k++){
+            uv.push(0);
+            uv.push(0);
+            uv.push(0);
+            uv.push(1);
+            uv.push(1);
+            uv.push(0);
+            uv.push(0);
+            uv.push(1);
+            uv.push(1);
+            uv.push(1);
+            uv.push(1);
+            uv.push(0);
+        }
         let trianglesVerticeBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesVerticeBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW);

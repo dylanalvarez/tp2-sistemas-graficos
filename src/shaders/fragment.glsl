@@ -16,7 +16,6 @@ void main(void) {
 
     
 	vec4 textureColor = texture2D(uSampler,vUv);
-    gl_FragColor = vec4(textureColor.xyz, 1.0);
 	colorFinal = mix(colorFinal, textureColor.xyz, 0.8);
 	gl_FragColor = vec4(colorFinal, 1.0);
 }

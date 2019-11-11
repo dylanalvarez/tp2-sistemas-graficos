@@ -16,7 +16,7 @@ export default class Camera {
             this.pressedKeys.delete(String.fromCharCode(event.keyCode));
         }
         window.onkeypress = (event) => {
-            if (String.fromCharCode(event.keyCode) !== 'c') return;
+            if (String.fromCharCode(event.keyCode) !== 'c' && String.fromCharCode(event.keyCode) !== 'C') return;
             if (this.mode === 'first_person') {
                 this.mode = 'general';
             } else if (this.mode === 'general') {

@@ -2,6 +2,12 @@ precision highp float;
 varying vec3 vNormal;
 varying vec3 vPosWorld;
 uniform vec3 uColor;
+uniform vec3 uLightOne;
+uniform vec3 uLightTwo;
+uniform vec3 uLightThree;
+uniform vec3 uLightFour;
+uniform vec3 uLightFive;
+uniform vec3 uLightSix;
 
 void main(void) {
 

@@ -13,8 +13,8 @@ export default class Sphere extends TreeNode {
 
     getPosInSphere(alpha, beta, radius) {
         var x = radius * Math.sin(beta) * Math.sin(alpha);
-        var y = radius * Math.sin(beta) * Math.cos(alpha);
-        var z = radius * Math.cos(beta);
+        var y = radius * Math.cos(beta);
+        var z = radius * Math.sin(beta) * Math.cos(alpha);
 
         return [x, y, z];
     }

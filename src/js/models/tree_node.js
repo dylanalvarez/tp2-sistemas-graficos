@@ -20,6 +20,10 @@ export default class TreeNode {
         return window.buffers[this.constructor.name]['indexBuffer'];
     }
 
+    uVBuffer() {
+        return window.buffers[this.constructor.name]['uVBuffer'];
+    }
+
     draw(modelMatrix, viewMatrix, projMatrix) {
         //let normalMatrix = mat4.create()
         let normalMatrix = mat4.clone(modelMatrix); // absolute normals, not relative to viewMatrix
@@ -47,6 +51,20 @@ export default class TreeNode {
         let indexBuffer = this.indexBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
+
+        let trianglesUvBuffer = this.uVBuffer();
+        if (trianglesUvBuffer) {
+            let vertexUvAttribute = gl.getAttribLocation(glProgram, "aVertexUv");
+            gl.enableVertexAttribArray(vertexUvAttribute);
+            gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+            gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
+
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, this.texture);
+            gl.uniform1i(glProgram.samplerUniform, 0);
+                    
+            gl.drawArrays(gl.TRIANGLES, 0,trianglesUvBuffer.number_points);
+        }
     }
 
     setWebGLUniformColor(key, color) {

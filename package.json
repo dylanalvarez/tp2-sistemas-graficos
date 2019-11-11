@@ -28,5 +28,8 @@
     "@types/gl-matrix": "^2.4.5",
     "dat.gui": "^0.7.6",
     "gl-matrix": "^3.1.0"
+  },
+  "devDependencies": {
+    "file-loader": "^4.2.0"
   }
 }

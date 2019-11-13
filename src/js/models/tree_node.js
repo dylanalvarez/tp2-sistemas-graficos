@@ -25,6 +25,8 @@ export default class TreeNode {
     }
 
     initTexture(filePath) {
+        // Generar no una sino todas las texturas de una sola pasada
+        // https://webglfundamentals.org/webgl/lessons/webgl-2-textures.html
         this.texture = gl.createTexture();
         this.texture.image = new Image();
 

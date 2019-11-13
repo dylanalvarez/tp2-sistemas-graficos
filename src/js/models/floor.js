@@ -30,8 +30,8 @@ export default class Floor extends TreeNode {
                 normal.push(n[1]);
                 normal.push(n[2]);
 
-                //uv.push(j);
-                //uv.push(i);
+                uv.push(j);
+                uv.push(i);
             }
         }
 
@@ -43,19 +43,18 @@ export default class Floor extends TreeNode {
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesNormalBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
 
-        //let trianglesUvBuffer = gl.createBuffer();
-        //trianglesUvBuffer.number_points = uv.length;
-        //gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
-        //gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
+        let trianglesUvBuffer = gl.createBuffer();
+        trianglesUvBuffer.number_points = uv.length;
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 
         return {
             vertexBuffer: trianglesVerticeBuffer,
             normalBuffer: trianglesNormalBuffer,
             indexBuffer: this.buildIndexBuffer(rows, cols),
-            //uVBuffer: trianglesUvBuffer
+            uVBuffer: trianglesUvBuffer
         }
     }
-/*
     draw(modelMatrix, viewMatrix, projMatrix) {
         super.draw(modelMatrix, viewMatrix, projMatrix);
         let trianglesUvBuffer = this.uVBuffer();
@@ -64,11 +63,11 @@ export default class Floor extends TreeNode {
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
         gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
 
-        gl.activeTexture(gl.TEXTURE2);
+        gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
         gl.uniform1i(glProgram.samplerUniform, 0);
                     
         gl.drawArrays(gl.TRIANGLES, 0,trianglesUvBuffer.number_points);
-    }*/
+    }
 
 }

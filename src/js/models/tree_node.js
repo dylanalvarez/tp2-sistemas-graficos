@@ -62,8 +62,9 @@ export default class TreeNode {
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, this.texture);
             gl.uniform1i(glProgram.samplerUniform, 0);
-                    
             gl.drawArrays(gl.TRIANGLES, 0,trianglesUvBuffer.number_points);
+
+            gl.disableVertexAttribArray(vertexUvAttribute);
         }
     }
 

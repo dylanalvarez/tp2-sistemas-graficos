@@ -24,6 +24,26 @@ export default class TreeNode {
         return window.buffers[this.constructor.name]['uVBuffer'];
     }
 
+    initTexture(filePath) {
+        this.texture = gl.createTexture();
+        this.texture.image = new Image();
+
+        let texture = this.texture;
+        this.texture.image.onload = function () {
+
+            gl.bindTexture(gl.TEXTURE_2D, texture); 						// activo la textura
+
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);	// cargo el bitmap en la GPU
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);					// selecciono filtro de magnificacion
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);	// selecciono filtro de minificacion
+
+            gl.generateMipmap(gl.TEXTURE_2D);		// genero los mipmaps
+            gl.bindTexture(gl.TEXTURE_2D, null);
+        }
+        this.texture.image.src = filePath;
+
+    }
+
     draw(modelMatrix, viewMatrix, projMatrix) {
         //let normalMatrix = mat4.create()
         let normalMatrix = mat4.clone(modelMatrix); // absolute normals, not relative to viewMatrix
@@ -51,20 +71,6 @@ export default class TreeNode {
         let indexBuffer = this.indexBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
-
-        let trianglesUvBuffer = this.uVBuffer();
-        if (trianglesUvBuffer) {
-            let vertexUvAttribute = gl.getAttribLocation(glProgram, "aVertexUv");
-            gl.enableVertexAttribArray(vertexUvAttribute);
-            gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
-            gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
-
-            gl.activeTexture(gl.TEXTURE0);
-            gl.bindTexture(gl.TEXTURE_2D, this.texture);
-            gl.uniform1i(glProgram.samplerUniform, 0);
-                    
-            gl.drawArrays(gl.TRIANGLES, 0,trianglesUvBuffer.number_points);
-        }
     }
 
     setWebGLUniformColor(key, color) {

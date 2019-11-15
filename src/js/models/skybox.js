@@ -76,7 +76,7 @@ export default class Skybox extends Sphere {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
 
         let trianglesUvBuffer = gl.createBuffer();
-        trianglesUvBuffer.number_point = uv.length;
+        trianglesUvBuffer.number_points = uv.length;
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 

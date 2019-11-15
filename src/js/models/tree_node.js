@@ -3,8 +3,12 @@ import { mat4 } from "gl-matrix";
 export default class TreeNode {
     constructor() {
         window.buffers = window.buffers || {}
+        window.texture = window.texture || {}
         if (!window.buffers[this.constructor.name]) {
             window.buffers[this.constructor.name] = this.buildBuffers();
+        }
+        if (!window.texture[this.constructor.name]) {
+            window.texture[this.constructor.name] = this.initTexture();
         }
     }
 
@@ -24,6 +28,10 @@ export default class TreeNode {
         return window.buffers[this.constructor.name]['uVBuffer'];
     }
 
+    texture() {
+        return window.texture[this.constructor.name];
+    }
+
     draw(modelMatrix, viewMatrix, projMatrix) {
         //let normalMatrix = mat4.create()
         let normalMatrix = mat4.clone(modelMatrix); // absolute normals, not relative to viewMatrix
@@ -32,7 +40,7 @@ export default class TreeNode {
         mat4.invert(normalMatrix, normalMatrix);
         mat4.transpose(normalMatrix, normalMatrix);
 
-        if(!this.texture) {
+        if(!this.texture()) {
             gl.useProgram(glColorProgram);
 
             this.setWebGLUniformMatrix(glColorProgram, "modelMatrix", modelMatrix);
@@ -82,9 +90,12 @@ export default class TreeNode {
             gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
 
             gl.activeTexture(gl.TEXTURE0);
-            gl.bindTexture(gl.TEXTURE_2D, this.texture);
+            gl.bindTexture(gl.TEXTURE_2D, this.texture());
             gl.uniform1i(glTextureProgram.samplerUniform, 0);
-            gl.drawArrays(gl.TRIANGLES, 0, trianglesUvBuffer.number_points/2);
+
+            let indexBuffer = this.indexBuffer();
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
 
             gl.disableVertexAttribArray(vertexUvAttribute);
         }
@@ -101,6 +112,10 @@ export default class TreeNode {
 
     buildBuffers() {
         return {}
+    }
+
+    initTexture() {
+        return null;
     }
 
     color() {

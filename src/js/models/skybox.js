@@ -7,24 +7,22 @@ export default class Skybox extends Sphere {
         return colors.skyBlue;
     }
 
-    initTexture(filePath) {
-        this.texture = gl.createTexture();
-        this.texture.image = new Image();
-
-        let texture = this.texture;
-        this.texture.image.onload = function () {
+    initTexture() {
+        let texture = gl.createTexture();
+        texture.image = new Image();
+        texture.image.onload = () => {
 
             gl.bindTexture(gl.TEXTURE_2D, texture); 						// activo la textura
 
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);	// cargo el bitmap en la GPU
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, texture.image);	// cargo el bitmap en la GPU
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);					// selecciono filtro de magnificacion
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);	// selecciono filtro de minificacion
 
             gl.generateMipmap(gl.TEXTURE_2D);		// genero los mipmaps
             gl.bindTexture(gl.TEXTURE_2D, null);
         }
-        this.texture.image.src = filePath;
-
+        texture.image.src = sunsetImage;
+        return texture;
     }
 
     buildBuffers() {
@@ -34,8 +32,6 @@ export default class Skybox extends Sphere {
         let radius = 100;
         let rows = 128;
         let cols = 256;
-
-        this.initTexture(sunsetImage);
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {

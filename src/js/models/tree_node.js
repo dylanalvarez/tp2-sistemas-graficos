@@ -35,10 +35,10 @@ export default class TreeNode {
         if(!this.texture) {
             gl.useProgram(glColorProgram);
 
-            this.setWebGLUniformMatrix("modelMatrix", modelMatrix);
-            this.setWebGLUniformMatrix("viewMatrix", viewMatrix);
-            this.setWebGLUniformMatrix("projMatrix", projMatrix);
-            this.setWebGLUniformMatrix("normalMatrix", normalMatrix);
+            this.setWebGLUniformMatrix(glColorProgram, "modelMatrix", modelMatrix);
+            this.setWebGLUniformMatrix(glColorProgram, "viewMatrix", viewMatrix);
+            this.setWebGLUniformMatrix(glColorProgram, "projMatrix", projMatrix);
+            this.setWebGLUniformMatrix(glColorProgram, "normalMatrix", normalMatrix);
             this.setWebGLUniformColor("uColor", this.color());
 
             let vertexPositionAttribute = gl.getAttribLocation(glColorProgram, "aVertexPosition");
@@ -55,13 +55,14 @@ export default class TreeNode {
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
             gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
 
-        } else {
+        } else { // Quizas hacer que los modelos que usan textura en vez de color plano sobreescriban draw
+                // en vez de hacer este if-else
             gl.useProgram(glTextureProgram);
 
-            this.setWebGLUniformMatrix("modelMatrix", modelMatrix);
-            this.setWebGLUniformMatrix("viewMatrix", viewMatrix);
-            this.setWebGLUniformMatrix("projMatrix", projMatrix);
-            this.setWebGLUniformMatrix("normalMatrix", normalMatrix);
+            this.setWebGLUniformMatrix(glTextureProgram, "modelMatrix", modelMatrix);
+            this.setWebGLUniformMatrix(glTextureProgram, "viewMatrix", viewMatrix);
+            this.setWebGLUniformMatrix(glTextureProgram, "projMatrix", projMatrix);
+            this.setWebGLUniformMatrix(glTextureProgram, "normalMatrix", normalMatrix);
 
             let vertexPositionAttribute = gl.getAttribLocation(glColorProgram, "aVertexPosition");
             gl.enableVertexAttribArray(vertexPositionAttribute);
@@ -83,7 +84,7 @@ export default class TreeNode {
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, this.texture);
             gl.uniform1i(glTextureProgram.samplerUniform, 0);
-            gl.drawArrays(gl.TRIANGLES, 0,trianglesUvBuffer.number_points);
+            gl.drawArrays(gl.TRIANGLES, 0, trianglesUvBuffer.number_points/2);
 
             gl.disableVertexAttribArray(vertexUvAttribute);
         }
@@ -94,8 +95,8 @@ export default class TreeNode {
         gl.uniform3f(gl.getUniformLocation(glColorProgram, key), color[0], color[1], color[2]);
     }
 
-    setWebGLUniformMatrix(key, value) {
-        gl.uniformMatrix4fv(gl.getUniformLocation(glColorProgram, key), false, value);
+    setWebGLUniformMatrix(program, key, value) {
+        gl.uniformMatrix4fv(gl.getUniformLocation(program, key), false, value);
     }
 
     buildBuffers() {

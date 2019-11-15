@@ -1,4 +1,5 @@
-import fragmentShaderSource from '../../shaders/fragment.glsl'
+import colorFragmentShaderSource from '../../shaders/colorFragment.glsl'
+import textureFragmentShaderSource from '../../shaders/textureFragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
@@ -59,22 +60,35 @@ export default class App {
     initShaders() {
         // compile shaders    
         let vertexShader = this.makeShader(vertexShaderSource, gl.VERTEX_SHADER);
-        let fragmentShader = this.makeShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+        let colorFragmentShader = this.makeShader(colorFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let textureFragmentShader = this.makeShader(textureFragmentShaderSource, gl.FRAGMENT_SHADER);
 
         // create program
-        window.glProgram = gl.createProgram();
+        window.glColorProgram = gl.createProgram();
 
         // attach and link shaders to the program
-        gl.attachShader(glProgram, vertexShader);
-        gl.attachShader(glProgram, fragmentShader);
-        gl.linkProgram(glProgram);
+        gl.attachShader(glColorProgram, vertexShader);
+        gl.attachShader(glColorProgram, colorFragmentShader);
+        gl.linkProgram(glColorProgram);
 
-        if (!gl.getProgramParameter(glProgram, gl.LINK_STATUS)) {
-            alert("Unable to initialize the shader program.");
+        if (!gl.getProgramParameter(glColorProgram, gl.LINK_STATUS)) {
+            alert("Unable to initialize the colors shader program.");
         }
 
+        window.glTextureProgram = gl.createProgram();
+
+        gl.attachShader(glTextureProgram, vertexShader);
+        gl.attachShader(glTextureProgram, textureFragmentShader);
+        gl.linkProgram(glTextureProgram);
+
+        if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
+            alert("Unable to initialize the textures shader program.");
+        }
+        glTextureProgram.samplerUniform = gl.getUniformLocation(glTextureProgram, "uSampler");
         // use program
-        gl.useProgram(glProgram);
+        gl.useProgram(glColorProgram);
+
+        
     }
 
     makeShader(src, type) {

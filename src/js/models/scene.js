@@ -15,9 +15,7 @@ export default class Scene extends TreeNode {
         this.circularCoaster = new CircularRollercoaster();
         this.crossedCoaster = new CrossedRollercoaster();
         this.carousel = new Carousel();
-        this.lightpoleOne = new Lightpole();
-        this.lightpoleTwo = new Lightpole();
-        this.lightpoleThree = new Lightpole();
+        this.lightpoleOne = new Lightpole([0, 3, 0]);
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
@@ -35,15 +33,38 @@ export default class Scene extends TreeNode {
         this.carousel.draw(carouselModelMatrix, viewMatrix, projMatrix);
 
         let lightpoleOneModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [2, 0, -5]);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [3, 0, 0]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+        this.setWebGLUniformColor("uLightOne", [3, 3, 0]);
 
-        let lightpoleTwoModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(lightpoleTwoModelMatrix, lightpoleTwoModelMatrix, [-2, 0, -30]);
-        this.lightpoleOne.draw(lightpoleTwoModelMatrix, viewMatrix, projMatrix);
+        lightpoleOneModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [0, 0, -40]);
+        this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+        this.setWebGLUniformColor("uLightTwo", [0, 3, 40]);
 
-        let lightpoleThreeModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(lightpoleThreeModelMatrix, lightpoleThreeModelMatrix, [30, 0, -20]);
-        this.lightpoleOne.draw(lightpoleThreeModelMatrix, viewMatrix, projMatrix);
+        lightpoleOneModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [30, 0, -5]);
+        this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+        this.setWebGLUniformColor("uLightThree", [30, 3, -5]);
+
+        lightpoleOneModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [30, 0, -40]);
+        this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+        this.setWebGLUniformColor("uLightFour", [30, 3, -40]);
+
+        lightpoleOneModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [-15, 0, -7]);
+        this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+        this.setWebGLUniformColor("uLightFive", [-15, 3, -7]);
+
+        lightpoleOneModelMatrix = mat4.clone(modelMatrix);
+        mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [-5, 0, -25]);
+        this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
+        this.setWebGLUniformColor("uLightSix", [-5, 3, -25]);
+
+    }
+
+    setWebGLUniformLightSource(key, lightSource) {
+        gl.uniform3f(gl.getUniformLocation(glProgram, key), lightSource[0], lightSource[1], lightSource[2]);
     }
 }

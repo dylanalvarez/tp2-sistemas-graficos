@@ -5,10 +5,11 @@ import Sphere from './sphere'
 import colors from '../constants/colors';
 
 export default class Lightpole extends TreeNode {
-    constructor() {
+    constructor(lightSource) {
         super();
         this.pole = new Cylinder(colors.poleDarkGrey);
         this.bulb = new Sphere(colors.bulbYellow);
+        this.lightSource = lightSource;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

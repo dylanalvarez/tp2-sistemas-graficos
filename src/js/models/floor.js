@@ -1,6 +1,7 @@
 import TreeNode from './tree_node'
 import colors from '../constants/colors';
 import grassImage from '../../assets/maps/pasto.jpg'
+import factors from '../constants/factors';
 
 export default class Floor extends TreeNode {
     color() {
@@ -48,8 +49,8 @@ export default class Floor extends TreeNode {
                 normal.push(n[1]);
                 normal.push(n[2]);
 
-                uv.push(j*500);
-                uv.push(i*500);
+                uv.push(j*factors.ground_texture_factor);
+                uv.push(i*factors.ground_texture_factor);
             }
         }
 

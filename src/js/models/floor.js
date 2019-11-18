@@ -34,8 +34,6 @@ export default class Floor extends TreeNode {
         let rows = 25;
         let cols = 25;
 
-        this.initTexture(grassImage);
-
         let n = [0, 1, 0];
         
         for (let i = 0; i < rows; i++) {

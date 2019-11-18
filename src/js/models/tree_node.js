@@ -1,4 +1,5 @@
 import { mat4 } from "gl-matrix";
+import { isNullOrUndefined } from "util";
 
 export default class TreeNode {
     constructor() {
@@ -30,6 +31,27 @@ export default class TreeNode {
 
     texture() {
         return window.texture[this.constructor.name];
+    }
+
+    initTexture() {
+        let imageSource = this.imageSource();
+        if(!imageSource) return null;
+
+        let texture = gl.createTexture();
+        texture.image = new Image();
+        texture.image.onload = () => {
+
+            gl.bindTexture(gl.TEXTURE_2D, texture); 						// activo la textura
+
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, texture.image);	// cargo el bitmap en la GPU
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);					// selecciono filtro de magnificacion
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);	// selecciono filtro de minificacion
+
+            gl.generateMipmap(gl.TEXTURE_2D);		// genero los mipmaps
+            gl.bindTexture(gl.TEXTURE_2D, null);
+        }
+        texture.image.src = imageSource;
+        return texture;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {
@@ -97,7 +119,6 @@ export default class TreeNode {
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
             gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
 
-            gl.disableVertexAttribArray(vertexUvAttribute);
         }
         
     }
@@ -114,7 +135,7 @@ export default class TreeNode {
         return {}
     }
 
-    initTexture() {
+    imageSource() {
         return null;
     }
 

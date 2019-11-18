@@ -8,22 +8,8 @@ export default class Floor extends TreeNode {
         return colors.grassGreen;
     }
 
-    initTexture() {
-        let texture = gl.createTexture();
-        texture.image = new Image();
-        texture.image.onload = () => {
-
-            gl.bindTexture(gl.TEXTURE_2D, texture); 						// activo la textura
-
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, texture.image);	// cargo el bitmap en la GPU
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);					// selecciono filtro de magnificacion
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);	// selecciono filtro de minificacion
-
-            gl.generateMipmap(gl.TEXTURE_2D);		// genero los mipmaps
-            gl.bindTexture(gl.TEXTURE_2D, null);
-        }
-        texture.image.src = grassImage;
-        return texture;
+    imageSource() {
+        return grassImage;
     }
 
     buildBuffers() {

@@ -11,22 +11,23 @@ export default class Cylinder extends TreeNode {
         return this.colors;
     }
 
+    getPos(alfa, height) {
+        let r = 2;
+        let x = r * Math.cos(alfa);
+        let y = r * Math.sin(alfa);
+        return [x, y, height];
+    }
+
+    getNrm(alfa) {
+        let position = this.getPos(alfa, 0);
+        let v1 = vec3.fromValues(...position);
+        vec3.normalize(v1, v1);
+        return v1;
+    }
+
     buildBuffers(lowerLidOffset, upperLidOffset) {
         lowerLidOffset = lowerLidOffset || 0;
         upperLidOffset = upperLidOffset || 0;
-        function getPos(alfa, height) {
-            let r = 2;
-            let x = r * Math.cos(alfa);
-            let y = r * Math.sin(alfa);
-            return [x, y, height];
-        }
-
-        function getNrm(alfa) {
-            let position = getPos(alfa, 0);
-            let v1 = vec3.fromValues(...position);
-            vec3.normalize(v1, v1);
-            return v1;
-        }
 
         let pos = [];
         let normal = [];
@@ -52,14 +53,14 @@ export default class Cylinder extends TreeNode {
                 let z = (i - 2) / 2;
 
                 // evaluo la posición sobre la superficie de la esfera a partir de latitud y longitud
-                let p = getPos(alfa, z);
+                let p = this.getPos(alfa, z);
 
                 pos.push(p[0]);			// lleno el buffer de vértices
                 pos.push(p[1]);
                 pos.push(p[2]);
 
                 // evaluo el vector normal sobre la superficie de la esfera a partir de latitud y longitud
-                let n = getNrm(alfa);
+                let n = this.getNrm(alfa);
 
                 normal.push(n[0]);		// lleno el buffer de normales
                 normal.push(n[1]);

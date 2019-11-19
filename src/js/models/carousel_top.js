@@ -3,7 +3,8 @@ import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import colors from '../constants/colors';
 import ChairWithRope from './chair_with_rope';
-import carouselTopImage from '../../assets/maps/patron1.png'
+import factors from '../constants/factors';
+import carouselTopImage from '../../assets/maps/patron2.png'
 
 export default class CarouselTop extends Cylinder {
     constructor() {
@@ -16,7 +17,7 @@ export default class CarouselTop extends Cylinder {
         this.speed = speed;
     }
 
-    iamgeSource() {
+    imageSource() {
         return carouselTopImage;
     }
 
@@ -44,11 +45,10 @@ export default class CarouselTop extends Cylinder {
 
         // lid
         for (let i = 0; i < cols; i++) {
-            let alfa = i / (cols - 1) * Math.PI * 2;
-            let v = this.getPos(alfa, 0)[0];
+            let u = i / (cols - 1)
 
-            uv.push(0);
-            uv.push(v)
+            uv.push(u*factors.carousel_top_u_factor);
+            uv.push(factors.carousel_top_v_factor);
         }
 
         // center
@@ -56,21 +56,21 @@ export default class CarouselTop extends Cylinder {
             for (let j = 0; j < cols; j++) {
                 let alfa = j / (cols - 1) * Math.PI * 2;
                 let z = (i - 2) / 2;
-
                 let pos = this.getPos(alfa, z);
 
-                uv.push(pos[0]);
-                uv.push(pos[1]);
+                let u = j / (cols - 1);
+                let v = i / (rows - 1);
+                uv.push(u*factors.carousel_top_u_factor);
+                uv.push(0.07 * pos[2]);
             }
         }
 
         // lid
         for (let i = 0; i < cols; i++) {
-            let alfa = i / (cols - 1) * Math.PI * 2;
-            let v = this.getPos(alfa, 0)[0];
+            let u = i / (cols - 1)
 
-            uv.push(0);
-            uv.push(v)
+            uv.push(u*factors.carousel_top_u_factor);
+            uv.push(factors.carousel_top_v_factor);
         }
 
         let trianglesUvBuffer = gl.createBuffer();

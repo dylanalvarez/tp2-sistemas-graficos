@@ -41,7 +41,7 @@ export default class Carousel extends TreeNode {
         mat4.scale(baseModelMatrix, baseModelMatrix, [0.18, 0.18, 0.45]);
         mat4.translate(baseModelMatrix, baseModelMatrix, [0, 0, -1]);
         this.supportTop.draw(baseModelMatrix, viewMatrix, projMatrix);
-
+        
         this.time += this.random1.nextValue() * 0.01;
         let speed = Math.pow(Math.sin(this.time), 2) / 12 + 0.01
         this.yAngle -= speed;

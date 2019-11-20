@@ -1,6 +1,6 @@
 import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
-import Cylinder from './cylinder'
+import BaseCylinder from './base_cylinder'
 import SupportCylinder from './support_cylinder'
 import CarouselTop from './carousel_top';
 import colors from '../constants/colors';
@@ -10,7 +10,7 @@ import SupportTopCylinder from './support_top_cylinder';
 export default class Carousel extends TreeNode {
     constructor() {
         super();
-        this.base = new Cylinder(colors.white);
+        this.base = new BaseCylinder(colors.white);
         this.support = new SupportCylinder(colors.lightBlue);
         this.supportTop = new SupportTopCylinder(colors.lightBlue);
         this.top = new CarouselTop();

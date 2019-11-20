@@ -43,35 +43,30 @@ export default class CarouselTop extends Cylinder {
         let rows = 5;	// filas	
         let cols = 256;	// columnas
 
-        // lid
-        for (let i = 0; i < cols; i++) {
-            let u = i / (cols - 1)
-
-            uv.push(u*factors.carousel_top_u_factor);
-            uv.push(factors.carousel_top_v_factor);
+        let createLidUVVertices = function(factor) {
+            for (let i = 0; i < cols; i++) {
+                let u = i / (cols - 1)
+    
+                uv.push(u*factors.carousel_top_u_factor);
+                uv.push(1*factor);
+            }
         }
+        // lid
+        createLidUVVertices(1);
 
         // center
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-                let alfa = j / (cols - 1) * Math.PI * 2;
-                let z = (i - 2) / 2;
-                let pos = this.getPos(alfa, z);
-
                 let u = j / (cols - 1);
-                let v = i / (rows - 1);
+                let v = Math.abs((2 - i) / 28);
+
                 uv.push(u*factors.carousel_top_u_factor);
-                uv.push(0.07 * pos[2]);
+                uv.push(v);
             }
         }
 
         // lid
-        for (let i = 0; i < cols; i++) {
-            let u = i / (cols - 1)
-
-            uv.push(u*factors.carousel_top_u_factor);
-            uv.push(factors.carousel_top_v_factor);
-        }
+        createLidUVVertices(-1);
 
         let trianglesUvBuffer = gl.createBuffer();
         trianglesUvBuffer.number_points = uv.length;

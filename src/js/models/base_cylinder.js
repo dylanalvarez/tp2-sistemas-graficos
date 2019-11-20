@@ -24,10 +24,6 @@ export default class BaseCylinder extends Cylinder {
         // center
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-                let alfa = j / (cols - 1) * Math.PI * 2;
-                let z = (i - 2) / 2;
-                let pos = this.getPos(alfa, z);
-
                 let u = j / (cols - 1);
                 let v = i / (rows - 1);
                 uv.push(u);

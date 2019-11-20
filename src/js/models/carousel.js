@@ -1,6 +1,6 @@
 import { mat4 } from 'gl-matrix'
 import TreeNode from './tree_node'
-import BaseCylinder from './base_cylinder'
+import BaseCylinder from './carousel_base_cylinder'
 import SupportCylinder from './support_cylinder'
 import CarouselTop from './carousel_top';
 import colors from '../constants/colors';

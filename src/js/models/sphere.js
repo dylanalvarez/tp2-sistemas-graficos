@@ -1,4 +1,4 @@
-import { vec3 } from 'gl-matrix'
+import { vec3, vec4 } from 'gl-matrix'
 import TreeNode from './tree_node'
 
 export default class Sphere extends TreeNode {
@@ -20,6 +20,8 @@ export default class Sphere extends TreeNode {
     }
 
     getNrm(alpha, beta, radius) {
+        if (beta < 0.01) return vec3.fromValues(0, 1, 0)
+
         var p=this.getPosInSphere(alpha, beta, radius);
         var v=vec3.create();
         vec3.normalize(v, p);
@@ -41,8 +43,7 @@ export default class Sphere extends TreeNode {
         
         var n=vec3.create();
         vec3.cross(n, v1, v2);
-        vec3.scale(n, n, -1);
-        if (beta <= 0.01) return vec3.fromValues(0, 0, 1)
+        vec3.normalize(n, n);
         return n;
     }
 
@@ -57,7 +58,6 @@ export default class Sphere extends TreeNode {
 
                 let alpha = j / (cols - 1) * Math.PI * 2;
                 let beta = i / (rows - 1) * Math.PI;
-
                 let p = this.getPosInSphere(alpha, beta, radius);
 
                 pos.push(p[0]);

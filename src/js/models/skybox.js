@@ -8,7 +8,7 @@ export default class Skybox extends Sphere {
     }
 
     imageSource() {
-        return sunsetImage;
+        //return sunsetImage;
     }
 
     buildBuffers() {
@@ -25,7 +25,7 @@ export default class Skybox extends Sphere {
                 let betaStep = i / (rows - 1);
 
                 let alpha = alphaStep * Math.PI * 2;
-                let beta = -betaStep * Math.PI;
+                let beta = betaStep * Math.PI;
 
                 let p = this.getPosInSphere(alpha, beta, radius);
                 pos.push(p[0]);
@@ -34,9 +34,9 @@ export default class Skybox extends Sphere {
 
                 let n = this.getNrm(alpha, beta, radius);
 
-                normal.push(-n[0]);
-                normal.push(-n[1]);
-                normal.push(-n[2]);
+                normal.push(n[0]);
+                normal.push(n[1]);
+                normal.push(n[2]);
 
                 let u = alphaStep;
                 let v = (i + 17) / (rows - 1);

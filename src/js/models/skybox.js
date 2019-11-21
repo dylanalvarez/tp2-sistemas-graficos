@@ -8,7 +8,7 @@ export default class Skybox extends Sphere {
     }
 
     imageSource() {
-        //return sunsetImage;
+        return sunsetImage;
     }
 
     buildBuffers() {

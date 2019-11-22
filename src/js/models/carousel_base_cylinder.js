@@ -3,8 +3,8 @@ import baseCylinderImage from '../../assets/maps/patron1.png'
 
 export default class BaseCylinder extends Cylinder {
 
-    imageSource() {
-        return baseCylinderImage;
+    imageSources() {
+        return [baseCylinderImage];
     }
 
     buildBuffers() {

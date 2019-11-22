@@ -17,8 +17,8 @@ export default class CarouselTop extends Cylinder {
         this.speed = speed;
     }
 
-    imageSource() {
-        return carouselTopImage;
+    imageSources() {
+        return [carouselTopImage];
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

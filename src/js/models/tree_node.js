@@ -5,12 +5,12 @@ import TextureMaterial from "./texture_material";
 export default class TreeNode {
     constructor() {
         window.buffers = window.buffers || {}
-        window.texture = window.texture || {}
+        window.textures = window.textures || {}
         if (!window.buffers[this.constructor.name]) {
             window.buffers[this.constructor.name] = this.buildBuffers();
         }
-        if (!window.texture[this.constructor.name]) {
-            window.texture[this.constructor.name] = this.initTexture();
+        if (!window.textures[this.constructor.name]) {
+            window.textures[this.constructor.name] = this.initTextures();
         }
     }
 
@@ -30,14 +30,19 @@ export default class TreeNode {
         return window.buffers[this.constructor.name]['uVBuffer'];
     }
 
-    texture() {
-        return window.texture[this.constructor.name];
+    textures() {
+        return window.textures[this.constructor.name];
     }
 
-    initTexture() {
-        let imageSource = this.imageSource();
-        if(!imageSource) return null;
+    initTextures() {
+        let textures = [];
+        for (let source of this.imageSources()) {
+            textures.push(this.initTexture(source));
+        }
+        return textures;
+    }
 
+    initTexture(imageSource) {
         let texture = gl.createTexture();
         texture.image = new Image();
         texture.image.onload = () => {
@@ -63,12 +68,12 @@ export default class TreeNode {
         mat4.invert(normalMatrix, normalMatrix);
         mat4.transpose(normalMatrix, normalMatrix);
 
-        let plainColor = !this.texture();
+        let textureCount = this.textures().length;
         let material;
-        if (plainColor) {
+        if (textureCount === 0) {
             material = new ColorMaterial(this.color());
-        } else {
-            material = new TextureMaterial(this.uVBuffer(), this.texture());
+        } else if (textureCount === 1) {
+            material = new TextureMaterial(this.uVBuffer(), this.textures()[0]);
         }
         let program = material.program();
         gl.useProgram(program);
@@ -111,8 +116,8 @@ export default class TreeNode {
         return {}
     }
 
-    imageSource() {
-        return null;
+    imageSources() {
+        return [];
     }
 
     color() {

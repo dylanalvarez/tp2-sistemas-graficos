@@ -8,8 +8,8 @@ export default class Floor extends TreeNode {
         return colors.grassGreen;
     }
 
-    imageSource() {
-        return grassImage;
+    imageSources() {
+        return [grassImage];
     }
 
     buildBuffers() {

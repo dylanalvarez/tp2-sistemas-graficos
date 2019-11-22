@@ -7,8 +7,8 @@ export default class Skybox extends Sphere {
         return colors.skyBlue;
     }
 
-    imageSource() {
-        return sunsetImage;
+    imageSources() {
+        return [sunsetImage];
     }
 
     buildBuffers() {

@@ -98,11 +98,15 @@ export default class TreeNode {
             gl.uniform1i(program.samplerUniform, 0);
         }
 
+        this.drawElements();
+
+        if (!plainColor) gl.disableVertexAttribArray(vertexUvAttribute);
+    }
+
+    drawElements() {
         let indexBuffer = this.indexBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-        gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);   
-        
-        if (!plainColor) gl.disableVertexAttribArray(vertexUvAttribute);
+        gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
     }
 
     setWebGLUniformColor(key, color) {

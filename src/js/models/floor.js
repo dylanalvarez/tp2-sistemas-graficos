@@ -1,6 +1,7 @@
 import TreeNode from './tree_node'
 import colors from '../constants/colors';
 import grassImage from '../../assets/maps/pasto.jpg'
+import dirtImage from '../../assets/maps/tierra.jpg'
 import factors from '../constants/factors';
 
 export default class Floor extends TreeNode {
@@ -9,7 +10,7 @@ export default class Floor extends TreeNode {
     }
 
     imageSources() {
-        return [grassImage];
+        return [grassImage, dirtImage];
     }
 
     buildBuffers() {

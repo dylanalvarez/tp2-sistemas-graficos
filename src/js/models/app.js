@@ -1,5 +1,6 @@
 import colorFragmentShaderSource from '../../shaders/colorFragment.glsl'
 import textureFragmentShaderSource from '../../shaders/textureFragment.glsl'
+import multiTextureFragmentShaderSource from '../../shaders/multiTextureFragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
@@ -62,6 +63,7 @@ export default class App {
         let vertexShader = this.makeShader(vertexShaderSource, gl.VERTEX_SHADER);
         let colorFragmentShader = this.makeShader(colorFragmentShaderSource, gl.FRAGMENT_SHADER);
         let textureFragmentShader = this.makeShader(textureFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let multiTextureFragmentShader = this.makeShader(multiTextureFragmentShaderSource, gl.FRAGMENT_SHADER);
 
         // create program
         window.glColorProgram = gl.createProgram();
@@ -84,7 +86,20 @@ export default class App {
         if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
             alert("Unable to initialize the textures shader program.");
         }
-        glTextureProgram.samplerUniform = gl.getUniformLocation(glTextureProgram, "uSampler");        
+        glTextureProgram.samplerUniform0 = gl.getUniformLocation(glTextureProgram, "uSampler0");        
+
+
+        window.glMultiTextureProgram = gl.createProgram();
+
+        gl.attachShader(glMultiTextureProgram, vertexShader);
+        gl.attachShader(glMultiTextureProgram, multiTextureFragmentShader);
+        gl.linkProgram(glMultiTextureProgram);
+
+        if (!gl.getProgramParameter(glMultiTextureProgram, gl.LINK_STATUS)) {
+            alert("Unable to initialize the textures shader program.");
+        }
+        glTextureProgram.samplerUniform0 = gl.getUniformLocation(glTextureProgram, "uSampler0");
+        glTextureProgram.samplerUniform1 = gl.getUniformLocation(glTextureProgram, "uSampler1");
     }
 
     makeShader(src, type) {

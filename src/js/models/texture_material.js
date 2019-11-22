@@ -1,7 +1,7 @@
 export default class TextureMaterial {
-    constructor(uVBuffer, texture) {
+    constructor(uVBuffer, textures) {
         this.uVBuffer = uVBuffer;
-        this.texture = texture;
+        this.textures = textures;
     }
 
     program() {
@@ -15,9 +15,13 @@ export default class TextureMaterial {
         gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
         gl.vertexAttribPointer(this.vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
 
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, this.texture);
-        gl.uniform1i(this.program().samplerUniform, 0);
+        let index = 0;
+        for (let texture of this.textures) {
+            gl.activeTexture(gl[`TEXTURE${index}`]);
+            gl.bindTexture(gl.TEXTURE_2D, texture);
+            gl.uniform1i(this.program()[`samplerUniform${index}`], index);
+            index += 1;
+        }
     }
 
     disableColors() {

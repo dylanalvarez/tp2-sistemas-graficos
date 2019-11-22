@@ -1,6 +1,7 @@
 import { mat4 } from "gl-matrix";
 import ColorMaterial from "./color_material";
 import TextureMaterial from "./texture_material";
+import MultiTextureMaterial from "./multi_texture_material";
 
 export default class TreeNode {
     constructor() {
@@ -73,7 +74,9 @@ export default class TreeNode {
         if (textureCount === 0) {
             material = new ColorMaterial(this.color());
         } else if (textureCount === 1) {
-            material = new TextureMaterial(this.uVBuffer(), this.textures()[0]);
+            material = new TextureMaterial(this.uVBuffer(), this.textures());
+        } else if (textureCount === 2) { 
+            material = new MultiTextureMaterial(this.uVBuffer(), this.textures());
         }
         let program = material.program();
         gl.useProgram(program);

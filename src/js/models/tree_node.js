@@ -62,65 +62,47 @@ export default class TreeNode {
         mat4.invert(normalMatrix, normalMatrix);
         mat4.transpose(normalMatrix, normalMatrix);
 
-        if(!this.texture()) {
-            gl.useProgram(glColorProgram);
+        let plainColor = !this.texture();
 
-            this.setWebGLUniformMatrix(glColorProgram, "modelMatrix", modelMatrix);
-            this.setWebGLUniformMatrix(glColorProgram, "viewMatrix", viewMatrix);
-            this.setWebGLUniformMatrix(glColorProgram, "projMatrix", projMatrix);
-            this.setWebGLUniformMatrix(glColorProgram, "normalMatrix", normalMatrix);
+        let program = plainColor ? glColorProgram : glTextureProgram;
+        gl.useProgram(program);
+
+        this.setWebGLUniformMatrix(program, "modelMatrix", modelMatrix);
+        this.setWebGLUniformMatrix(program, "viewMatrix", viewMatrix);
+        this.setWebGLUniformMatrix(program, "projMatrix", projMatrix);
+        this.setWebGLUniformMatrix(program, "normalMatrix", normalMatrix);
+
+        let vertexPositionAttribute = gl.getAttribLocation(program, "aVertexPosition");
+        gl.enableVertexAttribArray(vertexPositionAttribute);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer());
+        gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+
+        let vertexNormalAttribute = gl.getAttribLocation(program, "aVertexNormal");
+        gl.enableVertexAttribArray(vertexNormalAttribute);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer());
+        gl.vertexAttribPointer(vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
+
+        let vertexUvAttribute;
+
+        if (plainColor) {
             this.setWebGLUniformColor("uColor", this.color());
-
-            let vertexPositionAttribute = gl.getAttribLocation(glColorProgram, "aVertexPosition");
-            gl.enableVertexAttribArray(vertexPositionAttribute);
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer());
-            gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
-
-            let vertexNormalAttribute = gl.getAttribLocation(glColorProgram, "aVertexNormal");
-            gl.enableVertexAttribArray(vertexNormalAttribute);
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer());
-            gl.vertexAttribPointer(vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
-
-            let indexBuffer = this.indexBuffer();
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-            gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
-
-        } else { // Quizas hacer que los modelos que usan textura en vez de color plano sobreescriban draw
-                // en vez de hacer este if-else
-            gl.useProgram(glTextureProgram);
-
-            this.setWebGLUniformMatrix(glTextureProgram, "modelMatrix", modelMatrix);
-            this.setWebGLUniformMatrix(glTextureProgram, "viewMatrix", viewMatrix);
-            this.setWebGLUniformMatrix(glTextureProgram, "projMatrix", projMatrix);
-            this.setWebGLUniformMatrix(glTextureProgram, "normalMatrix", normalMatrix);
-
-            let vertexPositionAttribute = gl.getAttribLocation(glColorProgram, "aVertexPosition");
-            gl.enableVertexAttribArray(vertexPositionAttribute);
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer());
-            gl.vertexAttribPointer(vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
-
-            let vertexNormalAttribute = gl.getAttribLocation(glColorProgram, "aVertexNormal");
-            gl.enableVertexAttribArray(vertexNormalAttribute);
-            gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer());
-            gl.vertexAttribPointer(vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
-
-                
+        } else {
             let trianglesUvBuffer = this.uVBuffer();
-            let vertexUvAttribute = gl.getAttribLocation(glTextureProgram, "aVertexUv");
+            vertexUvAttribute = gl.getAttribLocation(program, "aVertexUv");
             gl.enableVertexAttribArray(vertexUvAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
             gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
 
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, this.texture());
-            gl.uniform1i(glTextureProgram.samplerUniform, 0);
-
-            let indexBuffer = this.indexBuffer();
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-            gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
-
+            gl.uniform1i(program.samplerUniform, 0);
         }
+
+        let indexBuffer = this.indexBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+        gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);   
         
+        if (!plainColor) gl.disableVertexAttribArray(vertexUvAttribute);
     }
 
     setWebGLUniformColor(key, color) {

@@ -84,11 +84,7 @@ export default class App {
         if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
             alert("Unable to initialize the textures shader program.");
         }
-        glTextureProgram.samplerUniform = gl.getUniformLocation(glTextureProgram, "uSampler");
-        // use program
-        gl.useProgram(glColorProgram);
-
-        
+        glTextureProgram.samplerUniform = gl.getUniformLocation(glTextureProgram, "uSampler");        
     }
 
     makeShader(src, type) {

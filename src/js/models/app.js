@@ -98,8 +98,8 @@ export default class App {
         if (!gl.getProgramParameter(glMultiTextureProgram, gl.LINK_STATUS)) {
             alert("Unable to initialize the textures shader program.");
         }
-        glTextureProgram.samplerUniform0 = gl.getUniformLocation(glTextureProgram, "uSampler0");
-        glTextureProgram.samplerUniform1 = gl.getUniformLocation(glTextureProgram, "uSampler1");
+        glMultiTextureProgram.samplerUniform0 = gl.getUniformLocation(glMultiTextureProgram, "uSampler0");
+        glMultiTextureProgram.samplerUniform1 = gl.getUniformLocation(glMultiTextureProgram, "uSampler1");
     }
 
     makeShader(src, type) {

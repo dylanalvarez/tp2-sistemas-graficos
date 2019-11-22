@@ -68,7 +68,8 @@ export default class CarCap extends ScanningSurfaceTreeNode {
         return matrices;
     }
 
-    buildBuffers() {
+    buildBuffers(normalScaling) {
+        let normalScale = normalScaling || 1;
         let pos = [];
         let normal = [];
 
@@ -106,13 +107,15 @@ export default class CarCap extends ScanningSurfaceTreeNode {
                 pos.push(vec_pos[1]);
                 pos.push(vec_pos[2]);
 
-                let n = vec3.fromValues(curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2]);
+                let vec_norm = vec4.fromValues(curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2], 1);
                 
-                vec3.normalize(n, n);
+                vec4.transformMat4(vec_norm, vec_norm, controlPointMatrix);
+                vec4.scale(vec_norm, vec_norm, normalScale);
+                vec3.normalize(vec_norm, vec_norm);
 
-                normal.push(n[0]);		// lleno el buffer de normales
-                normal.push(n[1]);
-                normal.push(n[2]);
+                normal.push(vec_norm[0]);		// lleno el buffer de normales
+                normal.push(vec_norm[1]);
+                normal.push(vec_norm[2]);
             }
             scale+=0.03;
         }

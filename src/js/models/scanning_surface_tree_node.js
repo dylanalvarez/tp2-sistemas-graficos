@@ -22,7 +22,7 @@ export default class ScanningSurfaceTreeNode extends TreeNode {
             let controlPointMatrix = controlCurveMatrices[i];
 
             for (let j = 0; j < cols; j++) {
-
+                
                 let curvePointMatrix = levelCurveMatrices[j];
                 
                 let vec_pos = vec4.fromValues(curvePointMatrix[12], curvePointMatrix[13], curvePointMatrix[14], 1);
@@ -33,13 +33,15 @@ export default class ScanningSurfaceTreeNode extends TreeNode {
                 pos.push(vec_pos[1]);
                 pos.push(vec_pos[2]);
 
-                let n = vec3.fromValues(curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2]);
-                
-                vec3.normalize(n, n);
+                let vec_norm = vec4.fromValues(curvePointMatrix[0], curvePointMatrix[1], curvePointMatrix[2], 0);
 
-                normal.push(n[0]);		// lleno el buffer de normales
-                normal.push(n[1]);
-                normal.push(n[2]);
+                vec4.transformMat4(vec_norm, vec_norm, controlPointMatrix);
+                
+                vec3.normalize(vec_norm, vec_norm);
+
+                normal.push(vec_norm[0]);		// lleno el buffer de normales
+                normal.push(vec_norm[1]);
+                normal.push(vec_norm[2]);
             }
         }
 

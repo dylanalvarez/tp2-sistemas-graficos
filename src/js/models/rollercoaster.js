@@ -72,7 +72,7 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
                 // Al tratarse de una curva 2D, puedo orientar la binormal siempre en Z
                 let b = vec3.fromValues(0, 0, 1);
 
-                let n = vec3.fromValues(0, 1, 0);
+                let n = vec3.create();
                 vec3.cross(n, t, b);
                 vec3.normalize(n, n);
                 

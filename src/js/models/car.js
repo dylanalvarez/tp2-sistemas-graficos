@@ -24,7 +24,7 @@ export default class Car extends TreeNode {
         window.camera.updateCarPosition(mat4.clone(modelMatrix));
 
         childModelMatrix = mat4.clone(modelMatrix);
-        // Los ejes de la silla estan rotados por la aplicacion que se le aplica a todo el auto
+        // Los ejes de la silla estan rotados por la transformacion que se le aplica a todo el auto
         // en Rollercoaster
         let childModelMatrix = mat4.clone(modelMatrix);
         mat4.scale(childModelMatrix, childModelMatrix, [0.6, 0.6, 0.7]);

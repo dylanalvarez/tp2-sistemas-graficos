@@ -1,5 +1,6 @@
 import { mat4 } from "gl-matrix";
-import { isNullOrUndefined } from "util";
+import ColorMaterial from "./color_material";
+import TextureMaterial from "./texture_material";
 
 export default class TreeNode {
     constructor() {
@@ -63,8 +64,13 @@ export default class TreeNode {
         mat4.transpose(normalMatrix, normalMatrix);
 
         let plainColor = !this.texture();
-
-        let program = plainColor ? glColorProgram : glTextureProgram;
+        let material;
+        if (plainColor) {
+            material = new ColorMaterial(this.color());
+        } else {
+            material = new TextureMaterial(this.uVBuffer(), this.texture());
+        }
+        let program = material.program();
         gl.useProgram(program);
 
         this.setWebGLUniformMatrix(program, "modelMatrix", modelMatrix);
@@ -82,25 +88,9 @@ export default class TreeNode {
         gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer());
         gl.vertexAttribPointer(vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
 
-        let vertexUvAttribute;
-
-        if (plainColor) {
-            this.setWebGLUniformColor("uColor", this.color());
-        } else {
-            let trianglesUvBuffer = this.uVBuffer();
-            vertexUvAttribute = gl.getAttribLocation(program, "aVertexUv");
-            gl.enableVertexAttribArray(vertexUvAttribute);
-            gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
-            gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
-
-            gl.activeTexture(gl.TEXTURE0);
-            gl.bindTexture(gl.TEXTURE_2D, this.texture());
-            gl.uniform1i(program.samplerUniform, 0);
-        }
-
+        material.enableColors(this.color());
         this.drawElements();
-
-        if (!plainColor) gl.disableVertexAttribArray(vertexUvAttribute);
+        material.disableColors();
     }
 
     drawElements() {
@@ -110,9 +100,9 @@ export default class TreeNode {
     }
 
     setWebGLUniformColor(key, color) {
-        gl.uniform3f(gl.getUniformLocation(glColorProgram, key), color[0], color[1], color[2]);
+        new ColorMaterial(color).setWebGLUniformColor(key);
     }
-
+   
     setWebGLUniformMatrix(program, key, value) {
         gl.uniformMatrix4fv(gl.getUniformLocation(program, key), false, value);
     }

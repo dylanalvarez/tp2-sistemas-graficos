@@ -75,7 +75,7 @@ export default class TreeNode {
             material = new ColorMaterial(this.color());
         } else if (textureCount === 1) {
             material = new TextureMaterial(this.uVBuffer(), this.textures());
-        } else if (textureCount === 2) { 
+        } else if (textureCount > 1) { 
             material = new MultiTextureMaterial(this.uVBuffer(), this.textures());
         }
         let program = material.program();

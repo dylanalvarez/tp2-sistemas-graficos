@@ -100,6 +100,7 @@ export default class App {
         }
         glMultiTextureProgram.samplerUniform0 = gl.getUniformLocation(glMultiTextureProgram, "uSampler0");
         glMultiTextureProgram.samplerUniform1 = gl.getUniformLocation(glMultiTextureProgram, "uSampler1");
+        glMultiTextureProgram.samplerUniform2 = gl.getUniformLocation(glMultiTextureProgram, "uSampler2");
     }
 
     makeShader(src, type) {

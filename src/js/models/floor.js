@@ -2,6 +2,7 @@ import TreeNode from './tree_node'
 import colors from '../constants/colors';
 import grassImage from '../../assets/maps/pasto.jpg'
 import dirtImage from '../../assets/maps/tierra.jpg'
+import dryDirtImage from '../../assets/maps/tierraseca.jpg'
 import factors from '../constants/factors';
 
 export default class Floor extends TreeNode {
@@ -10,7 +11,7 @@ export default class Floor extends TreeNode {
     }
 
     imageSources() {
-        return [grassImage, dirtImage];
+        return [grassImage, dirtImage, dryDirtImage];
     }
 
     buildBuffers() {
@@ -18,17 +19,17 @@ export default class Floor extends TreeNode {
         let pos = [];
         let normal = [];
         let uv = [];
-        let rows = 25;
-        let cols = 25;
+        let rows = 4;
+        let cols = 4;
 
         let n = [0, 1, 0];
         
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
 
-                pos.push(1000 * Math.trunc(i - rows / 2));
+                pos.push(100 * ((2*i - (rows-1)) / 2));
                 pos.push(0);
-                pos.push(1000 * Math.trunc(- j + cols / 2));
+                pos.push(100 * ((2*j - (cols-1)) / 2));
 
                 normal.push(n[0]);
                 normal.push(n[1]);

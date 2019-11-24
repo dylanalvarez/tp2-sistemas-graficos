@@ -96,17 +96,21 @@ float cnoise(vec3 P)
 	return 2.2 * n_xyz;
 }
 
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 void main(void) {
 	// uSampler0: pasto
 	// uSampler1: tierra
 	// uSampler2: tierra seca
-
-	vec4 texture0 = texture2D(uSampler0,vUv);
+	
+	vec4 texture0 = texture2D(uSampler0,vUv*2.0);
 	vec4 texture1 = texture2D(uSampler1,vUv);
 	vec4 texture2 = texture2D(uSampler2,vUv);
-			   
-	float c=cnoise(vUv.xyx*20.0);
-	vec4 finalColor = mix(texture2, texture1, c);
-	finalColor = finalColor * texture0;
+
+	float c=cnoise(vUv.xyx*0.7);
+	vec4 mixedDirts = mix(texture1, texture2, 0.3);
+	vec4 finalColor = mix(texture0, mixedDirts, c);
     gl_FragColor = vec4(finalColor.xyz,1.0);
 }

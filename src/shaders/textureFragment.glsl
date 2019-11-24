@@ -2,6 +2,8 @@ precision highp float;
 
 uniform sampler2D uSampler0;
 
+uniform vec3 uViewerPosition;
+
 varying highp vec2 vUv;
 
 void main(void) {

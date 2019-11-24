@@ -4,6 +4,8 @@ uniform sampler2D uSampler0;
 uniform sampler2D uSampler1;
 uniform sampler2D uSampler2;
 
+uniform vec3 uViewerPosition;
+
 varying highp vec2 vUv;
 
 vec3 mod289(vec3 x){

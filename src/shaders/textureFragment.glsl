@@ -18,13 +18,13 @@ vec3 phongReflection() {
 
 	// Iluminacion difusa de Phong
 	vec3 kd = vec3(1.0, 1.0, 1.0); // Valor constante por ahora, cambiara al definir materiales
-	vec3 id = vec3(0.2, 0.2, 0.2); // Intensidad de iluminacion difusa
+	vec3 id = vec3(0.8, 0.8, 0.8); // Intensidad de iluminacion difusa
 	vec3 diffuseIllumination = clamp(dot(lightVec, vNormal), 0.0, 1.0)*kd*id;
 
 	// Iluminacion especular de Phong
 	vec3 ks = vec3(1.0, 1.0, 1.0); // Valor constante por ahora, cambiara al definir materiales
-	vec3 is = vec3(0.2, 0.2, 0.2); // Intensidad de iluminacion especular
-	float glossiness = 300.0;
+	vec3 is = vec3(1.0, 1.0, 1.0); // Intensidad de iluminacion especular
+	float glossiness = 500.0;
 	vec3 viewerVector = normalize(uViewerPosition-vPosWorld);
 	vec3 reflectionVector = normalize(2.0*vNormal*dot(lightVec, vNormal) - lightVec);
 	float RdotV = clamp(dot(reflectionVector, viewerVector), 0.0, 1.0);

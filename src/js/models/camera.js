@@ -206,9 +206,7 @@ export default class Camera {
 
     setWebGLViewerPositionUniform(position) {
         let key = 'uViewerPosition';
-        gl.uniform3f(gl.getUniformLocation(glColorProgram, key), position[0], position[1], position[2]);
-        gl.uniform3f(gl.getUniformLocation(glTextureProgram, key), position[0], position[1], position[2]);
-        gl.uniform3f(gl.getUniformLocation(glMultiTextureProgram, key), position[0], position[1], position[2]);
+        gl.uniform3f(gl.getUniformLocation(gl.getParameter(gl.CURRENT_PROGRAM), key), position[0], position[1], position[2]);
     }
 
     setViewMatrix(viewMatrix) {

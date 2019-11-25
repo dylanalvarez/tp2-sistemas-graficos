@@ -8,6 +8,7 @@ export default class Camera {
         this.setDefaults();
         this.lastMouseX = 0;
         this.lastMouseY = 0;
+        this.eyePosition = [0, 0, 0];
 
         window.onkeydown = (event) => {
             this.pressedKeys.add(String.fromCharCode(event.keyCode));
@@ -49,6 +50,10 @@ export default class Camera {
             this.lastMouseX = event.x;
             this.lastMouseY = event.y;
         }
+    }
+
+    cameraSpeed() {
+        return this.step * window['Veloc. camara'] / 10;
     }
 
     setDefaults() {
@@ -137,7 +142,7 @@ export default class Camera {
     }
 
     updateOrbitalRadius() {
-        this.orbitalRadius += this.offset('W', 'S') * this.step;
+        this.orbitalRadius += this.offset('W', 'S') * this.cameraSpeed();
         if (this.orbitalRadius < this.minOrbitalRadius) this.orbitalRadius = this.minOrbitalRadius;
         if (this.orbitalRadius > this.maxOrbitalRadius) this.orbitalRadius = this.maxOrbitalRadius;
     }
@@ -165,9 +170,9 @@ export default class Camera {
             x = z = 0;
         }
 
-        this.offsetX += x * this.step;
-        this.offsetY = Math.max(this.offsetY + this.offset('E', 'Q') * this.step, 0.2);
-        this.offsetZ += z * this.step;
+        this.offsetX += x * this.cameraSpeed();
+        this.offsetY = Math.max(this.offsetY + this.offset('E', 'Q') * this.cameraSpeed(), 0.2);
+        this.offsetZ += z * this.cameraSpeed();
     }
 
     updateCarPosition(position) {
@@ -204,22 +209,26 @@ export default class Camera {
         mat4.rotateX(this.eye, this.eye, this.yAngle);
     }
 
+    getPosition() {
+        return this.eyePosition;
+    }
+
     setViewMatrix(viewMatrix) {
         this.updateEye();
 
-        let eyePosition = this.position(this.eye);
+        this.eyePosition = this.position(this.eye);
         let eyeTangent = this.tangent(this.eye);
 
         let centerPosition = [
-            eyePosition[0] - eyeTangent[0],
-            eyePosition[1] - eyeTangent[1],
-            eyePosition[2] - eyeTangent[2],
+            this.eyePosition[0] - eyeTangent[0],
+            this.eyePosition[1] - eyeTangent[1],
+            this.eyePosition[2] - eyeTangent[2],
         ]
 
         if (this.mode === 'first_person' || this.mode === 'car') {
             mat4.lookAt(
                 viewMatrix,
-                eyePosition,
+                this.eyePosition,
                 centerPosition,
                 [0, 1, 0]
             )
@@ -231,9 +240,11 @@ export default class Camera {
             mat4.rotateX(eye, eye, this.yAngle);
             mat4.translate(eye, eye, [0, 0, this.orbitalRadius]);
 
+            this.eyePosition = this.position(eye);
+
             mat4.lookAt(
                 viewMatrix,
-                this.position(eye),
+                this.eyePosition,
                 [this.offsetX, this.offsetY, this.offsetZ],
                 [0, 1, 0]
             )    

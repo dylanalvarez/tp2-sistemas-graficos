@@ -5,6 +5,8 @@ import Cylinder from './cylinder'
 import colors from '../constants/colors'
 import bezierPoints from '../constants/bezier_points'
 import Bezier from '../utils/cubic_bezier'
+import ReflectiveMaterial from './reflective_material';
+import sunsetImage from '../../assets/maps/sunset.jpg'
 
 export default class Rollercoaster extends ScanningSurfaceTreeNode {
     constructor() {
@@ -18,6 +20,14 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
 
     color() {
         return colors.rollerCoasterGrey;
+    }
+
+    materialClass() {
+        return ReflectiveMaterial;
+    }
+
+    imageSources() {
+        return [sunsetImage];
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

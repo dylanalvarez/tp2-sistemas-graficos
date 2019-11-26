@@ -44,7 +44,7 @@ export default class Skybox extends Sphere {
                 normal.push(n[2]);
 
                 let u = alphaStep;
-                let v = (i + 17) / (rows - 1);
+                let v = (i + 15) / (rows - 1);
 
                 uv.push(u);
                 uv.push(v);

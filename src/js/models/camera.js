@@ -232,7 +232,6 @@ export default class Camera {
                 centerPosition,
                 [0, 1, 0]
             );
-            this.setWebGLViewerPositionUniform(eyePosition);
         } else {
             let eye = mat4.create();
 
@@ -248,8 +247,7 @@ export default class Camera {
                 this.eyePosition,
                 [this.offsetX, this.offsetY, this.offsetZ],
                 [0, 1, 0]
-            );
-            this.setWebGLViewerPositionUniform(eyePosition);   
+            ); 
         }
     }
 }

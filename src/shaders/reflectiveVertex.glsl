@@ -22,11 +22,13 @@ void main(void) {
 	gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aVertexPosition, 1.0);
 
 	vPosWorld=(modelMatrix*vec4(aVertexPosition,1.0)).xyz;    //la posicion en coordenadas de mundo
-	vNormal=(normalMatrix*vec4(aVertexNormal,1.0)).xyz;       //la normal en coordenadas de mundo                
+	vNormal=(normalMatrix*vec4(aVertexNormal,1.0)).xyz;       //la normal en coordenadas de mundo         
 	
-	vec3 cameraRelativeToVertex = uCameraPosition - vPosWorld;
-	vec3 reflectionVector = normalize(cameraRelativeToVertex - vec3(2.0, 2.0, 2.0) * (cameraRelativeToVertex * vNormal) * vNormal);
-	float longitude = atan(sqrt(pow(reflectionVector.x, 2.0) + pow(reflectionVector.y, 2.0) + pow(reflectionVector.z, 2.0)), reflectionVector.z); // de -pi a pi
-	float latitude = atan(reflectionVector.y, reflectionVector.x); // de -pi a pi
-	vUv = vec2(longitude / (2.0 * M_PI) + 0.5, latitude / (2.0 * M_PI) + 0.5);
+	vec3 cameraRelativeToVertex = normalize(uCameraPosition - vPosWorld);
+	//vec3 reflectionVector = normalize(cameraRelativeToVertex - vec3(2.0, 2.0, 2.0) * (cameraRelativeToVertex * vNormal) * vNormal);
+	vec3 reflectionVector = normalize(2.0*vNormal*dot(cameraRelativeToVertex, vNormal) - cameraRelativeToVertex);
+
+	float latitude = acos(reflectionVector.z/sqrt(pow(reflectionVector.x, 2.0) + pow(reflectionVector.y, 2.0) + pow(reflectionVector.z, 2.0))); // de -pi a pi
+	float longitude = atan(reflectionVector.y, reflectionVector.x); // de -pi a pi
+	vUv = vec2(latitude / (2.0 * M_PI), longitude / (M_PI));
 }

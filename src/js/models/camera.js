@@ -204,6 +204,11 @@ export default class Camera {
         mat4.rotateX(this.eye, this.eye, this.yAngle);
     }
 
+    setWebGLViewerPositionUniform(position) {
+        let key = 'uViewerPosition';
+        gl.uniform3f(gl.getUniformLocation(gl.getParameter(gl.CURRENT_PROGRAM), key), position[0], position[1], position[2]);
+    }
+
     setViewMatrix(viewMatrix) {
         this.updateEye();
 
@@ -222,7 +227,8 @@ export default class Camera {
                 eyePosition,
                 centerPosition,
                 [0, 1, 0]
-            )
+            );
+            this.setWebGLViewerPositionUniform(eyePosition);
         } else {
             let eye = mat4.create();
 
@@ -230,13 +236,15 @@ export default class Camera {
             mat4.rotateY(eye, eye, this.xAngle);
             mat4.rotateX(eye, eye, this.yAngle);
             mat4.translate(eye, eye, [0, 0, this.orbitalRadius]);
-
+            
+            let eyePosition = this.position(eye);
             mat4.lookAt(
                 viewMatrix,
-                this.position(eye),
+                eyePosition,
                 [this.offsetX, this.offsetY, this.offsetZ],
                 [0, 1, 0]
-            )    
+            );
+            this.setWebGLViewerPositionUniform(eyePosition);   
         }
     }
 }

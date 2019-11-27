@@ -35,32 +35,26 @@ export default class Scene extends TreeNode {
         let lightpoleOneModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [3, 0, 0]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
-        this.setWebGLUniformColor("uLightOne", [3, 3, 0]);
 
         lightpoleOneModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [0, 0, -40]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
-        this.setWebGLUniformColor("uLightTwo", [0, 3, 40]);
 
         lightpoleOneModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [30, 0, -5]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
-        this.setWebGLUniformColor("uLightThree", [30, 3, -5]);
 
         lightpoleOneModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [30, 0, -40]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
-        this.setWebGLUniformColor("uLightFour", [30, 3, -40]);
 
         lightpoleOneModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [-15, 0, -7]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
-        this.setWebGLUniformColor("uLightFive", [-15, 3, -7]);
 
         lightpoleOneModelMatrix = mat4.clone(modelMatrix);
         mat4.translate(lightpoleOneModelMatrix, lightpoleOneModelMatrix, [-5, 0, -25]);
         this.lightpoleOne.draw(lightpoleOneModelMatrix, viewMatrix, projMatrix);
-        this.setWebGLUniformColor("uLightSix", [-5, 3, -25]);
 
     }
 

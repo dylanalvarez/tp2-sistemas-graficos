@@ -109,6 +109,13 @@ void main(void) {
 	float c=cnoise(vUv.xyx*0.7);
 	vec4 mixedDirts = mix(texture1, texture2, 0.3);
 	vec4 mixedTexures = mix(texture0, mixedDirts, c);
-	vec3 finalTexture = mixedTexures.xyz * phongReflection();
+
+	vec3 BRIGHTNESS = phongReflection(uLightOne) + 
+         			phongReflection(uLightTwo) + 
+					phongReflection(uLightThree) + 
+					phongReflection(uLightFour) + 
+					phongReflection(uLightFive) + 
+					phongReflection(uLightSix);
+	vec3 finalTexture = mixedTexures.xyz * BRIGHTNESS;
     gl_FragColor = vec4(finalTexture, 1.0);
 }

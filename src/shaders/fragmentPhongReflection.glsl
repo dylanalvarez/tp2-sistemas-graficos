@@ -4,13 +4,13 @@ varying vec3 vPosWorld;
 varying vec3 vNormal;
 uniform vec3 uViewerPosition;
 
-vec3 phongReflection() {
-	vec3 lightVec = normalize(vec3(0.0, 1.0, 0.0) - vPosWorld);
+vec3 phongReflection(vec3 lightSourcePosition) {
+	vec3 lightVec = normalize(lightSourcePosition - vPosWorld);
 
 	// Iluminacion ambiental de Phong
 	vec3 ka = vec3(1.0, 1.0, 1.0); // Valor constante por ahora, cambiara al definir materiales
 	vec3 ia = vec3(0.6, 0.6, 0.6); // Intensidad de iluminacion ambiente
-	vec3 ambientIllumination = ka * ia;
+	vec3 ambientIllumination = ka * ia * 1.0 / 10.0;
 
 	// Iluminacion difusa de Phong
 	vec3 kd = vec3(1.0, 1.0, 1.0); // Valor constante por ahora, cambiara al definir materiales
@@ -26,7 +26,14 @@ vec3 phongReflection() {
 	float RdotV = clamp(dot(reflectionVector, viewerVector), 0.0, 1.0);
 	vec3 specularIllumination = pow(RdotV, glossiness)*ks*is;
 
-	float linearDecay = clamp(1.0 - length(vPosWorld) / 20.0, 0.0, 1.0);
-	vec3 phongIllumination = (ambientIllumination + diffuseIllumination + specularIllumination) * linearDecay;
+	float linearDecay = clamp(3.0 - length(lightSourcePosition - vPosWorld) / 10.0, 0.0, 99999.0);
+	vec3 phongIllumination = ambientIllumination + (diffuseIllumination + specularIllumination) * linearDecay;
 	return phongIllumination;
 }
+
+uniform vec3 uLightOne;
+uniform vec3 uLightTwo;
+uniform vec3 uLightThree;
+uniform vec3 uLightFour;
+uniform vec3 uLightFive;
+uniform vec3 uLightSix;

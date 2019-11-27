@@ -1,5 +1,6 @@
 import TreeNode from './tree_node'
 import chairPoints from '../constants/chair_points'
+import PlasticProperties from './plastic_properties';
 
 export default class Chair extends TreeNode {
     constructor(color) {
@@ -9,6 +10,10 @@ export default class Chair extends TreeNode {
 
     color() {
         return this.colors;
+    }
+
+    phongProperties() {
+        return PlasticProperties;
     }
 
     buildBuffers() {

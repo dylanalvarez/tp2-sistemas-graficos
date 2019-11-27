@@ -1,10 +1,11 @@
 import ScanningSurfaceTreeNode from './scanning_surface_tree_node';
 import { vec3, mat4 } from 'gl-matrix';
 import Car from './car'
-import Cylinder from './cylinder'
 import colors from '../constants/colors'
 import bezierPoints from '../constants/bezier_points'
 import Bezier from '../utils/cubic_bezier'
+import MetallicProperties from './metalic_properties';
+import RollerCoasterColumn from './roller_coaster_column';
 
 export default class Rollercoaster extends ScanningSurfaceTreeNode {
     constructor() {
@@ -13,11 +14,15 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         this.matrices = this.controlCurveMatrices(1000);
         this.car = new Car();
         this.carPosition = 0;
-        this.column = new Cylinder(colors.pillarRed);
+        this.column = new RollerCoasterColumn(colors.pillarRed);
     }
 
     color() {
         return colors.rollerCoasterGrey;
+    }
+
+    phongProperties() {
+        return MetallicProperties;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

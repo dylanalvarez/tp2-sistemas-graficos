@@ -1,6 +1,7 @@
 import colors from '../constants/colors';
 import Sphere from './sphere'
 import sunsetImage from '../../assets/maps/sunset.jpg'
+import BrightProperties from './bright_properties';
 
 export default class Skybox extends Sphere {
     color() {
@@ -9,6 +10,10 @@ export default class Skybox extends Sphere {
 
     imageSources() {
         return [sunsetImage];
+    }
+
+    phongProperties() {
+        return BrightProperties;
     }
 
     buildBuffers() {

@@ -4,6 +4,7 @@ import grassImage from '../../assets/maps/pasto.jpg'
 import dirtImage from '../../assets/maps/tierra.jpg'
 import dryDirtImage from '../../assets/maps/tierraseca.jpg'
 import factors from '../constants/factors';
+import GrassyProperties from './grassy_properties';
 
 export default class Floor extends TreeNode {
     color() {
@@ -12,6 +13,10 @@ export default class Floor extends TreeNode {
 
     imageSources() {
         return [grassImage, dirtImage, dryDirtImage];
+    }
+
+    phongProperties() {
+        return GrassyProperties;
     }
 
     buildBuffers() {

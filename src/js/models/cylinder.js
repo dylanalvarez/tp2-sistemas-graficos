@@ -1,5 +1,6 @@
 import { vec3 } from 'gl-matrix'
 import TreeNode from './tree_node'
+import PlasticProperties from './plastic_properties';
 
 export default class Cylinder extends TreeNode {
     constructor(color) {

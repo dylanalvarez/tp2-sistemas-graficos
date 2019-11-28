@@ -5,6 +5,7 @@ import colors from '../constants/colors';
 import ChairWithRope from './chair_with_rope';
 import factors from '../constants/factors';
 import carouselTopImage from '../../assets/maps/patron2.png'
+import TextureMaterial from "./texture_material";
 import PlasticProperties from './plastic_properties';
 
 export default class CarouselTop extends Cylinder {
@@ -22,6 +23,10 @@ export default class CarouselTop extends Cylinder {
         return [carouselTopImage];
     }
 
+    materialClass() {
+        return TextureMaterial;
+    }
+    
     phongProperties() {
         return PlasticProperties;
     }

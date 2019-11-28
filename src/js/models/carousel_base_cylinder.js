@@ -1,11 +1,16 @@
 import Cylinder from "./cylinder";
 import baseCylinderImage from '../../assets/maps/patron1.png'
+import TextureMaterial from "./texture_material";
 import PlasticProperties from "./plastic_properties";
 
 export default class BaseCylinder extends Cylinder {
 
     imageSources() {
         return [baseCylinderImage];
+    }
+
+    materialClass() {
+        return TextureMaterial;
     }
 
     phongProperties() {

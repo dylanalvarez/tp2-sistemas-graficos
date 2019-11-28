@@ -1,6 +1,7 @@
 import colors from '../constants/colors';
 import Sphere from './sphere'
 import sunsetImage from '../../assets/maps/sunset.jpg'
+import TextureMaterial from "./texture_material";
 import BrightProperties from './bright_properties';
 
 export default class Skybox extends Sphere {
@@ -12,6 +13,10 @@ export default class Skybox extends Sphere {
         return [sunsetImage];
     }
 
+    materialClass() {
+        return TextureMaterial;
+    }
+    
     phongProperties() {
         return BrightProperties;
     }
@@ -44,7 +49,7 @@ export default class Skybox extends Sphere {
                 normal.push(n[2]);
 
                 let u = alphaStep;
-                let v = (i + 17) / (rows - 1);
+                let v = (i + 15) / (rows - 1);
 
                 uv.push(u);
                 uv.push(v);

@@ -62,6 +62,10 @@ export default class TreeNode {
         return texture;
     }
 
+    materialClass() {
+        return ColorMaterial;
+    }
+
     draw(modelMatrix, viewMatrix, projMatrix) {
         //let normalMatrix = mat4.create()
         let normalMatrix = mat4.clone(modelMatrix); // absolute normals, not relative to viewMatrix
@@ -73,11 +77,11 @@ export default class TreeNode {
         let textureCount = this.textures().length;
         let material;
         if (textureCount === 0) {
-            material = new ColorMaterial(this.color());
-        } else if (textureCount === 1) {
-            material = new TextureMaterial(this.uVBuffer(), this.textures());
-        } else if (textureCount > 1) { 
-            material = new MultiTextureMaterial(this.uVBuffer(), this.textures());
+            let materialClass = this.materialClass();
+            material = new materialClass(this.color());
+        } else {
+            let materialClass = this.materialClass();
+            material = new materialClass(this.uVBuffer(), this.textures());
         }
         let program = material.program();
         gl.useProgram(program);

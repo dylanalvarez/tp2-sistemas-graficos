@@ -4,6 +4,8 @@ import Car from './car'
 import colors from '../constants/colors'
 import bezierPoints from '../constants/bezier_points'
 import Bezier from '../utils/cubic_bezier'
+import ReflectiveMaterial from './reflective_material';
+import sunsetImage from '../../assets/maps/sunset.jpg'
 import MetallicProperties from './metalic_properties';
 import RollerCoasterColumn from './roller_coaster_column';
 
@@ -21,6 +23,14 @@ export default class Rollercoaster extends ScanningSurfaceTreeNode {
         return colors.rollerCoasterGrey;
     }
 
+    materialClass() {
+        return ReflectiveMaterial;
+    }
+
+    imageSources() {
+        return [sunsetImage];
+    }
+            
     phongProperties() {
         return MetallicProperties;
     }

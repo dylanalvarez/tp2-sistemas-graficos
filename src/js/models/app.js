@@ -1,7 +1,9 @@
 import colorFragmentShaderSource from '../../shaders/colorFragment.glsl'
 import textureFragmentShaderSource from '../../shaders/textureFragment.glsl'
 import multiTextureFragmentShaderSource from '../../shaders/multiTextureFragment.glsl'
+import reflectiveFragmentShaderSource from '../../shaders/reflectiveFragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
+import reflectiveVertexShaderSource from '../../shaders/reflectiveVertex.glsl'
 import commonFragmentShaderSource from '../../shaders/fragmentPhongReflection.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
@@ -10,6 +12,7 @@ import * as dat from 'dat.gui';
 
 // dat.gui global variables
 window['Velocidad carro'] = 20;
+window['Veloc. camara'] = 10;
 window['Tipo de camino'] = 'No cruzado'
 window['Altura sillas'] = 1.5
 window['Cant. sillas'] = 8
@@ -37,6 +40,7 @@ export default class App {
 
         this.gui = new dat.GUI({hideable: false});
         this.gui.add(window, 'Velocidad carro', 1, 60);
+        this.gui.add(window, 'Veloc. camara', 1, 30);
         this.gui.add(window, 'Tipo de camino', ['No cruzado', 'Cruzado']);
         this.gui.add(window, 'Altura sillas', 1, 4, 0.01);
         this.gui.add(window, 'Cant. sillas', 0, 30, 1);
@@ -65,6 +69,8 @@ export default class App {
         let colorFragmentShader = this.makeShader(commonFragmentShaderSource + colorFragmentShaderSource, gl.FRAGMENT_SHADER);
         let textureFragmentShader = this.makeShader(commonFragmentShaderSource + textureFragmentShaderSource, gl.FRAGMENT_SHADER);
         let multiTextureFragmentShader = this.makeShader(commonFragmentShaderSource + multiTextureFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let reflectiveVertexShader = this.makeShader(reflectiveVertexShaderSource, gl.VERTEX_SHADER);
+        let reflectiveFragmentShader = this.makeShader(commonFragmentShaderSource + reflectiveFragmentShaderSource, gl.FRAGMENT_SHADER);
 
         // create program
         window.glColorProgram = gl.createProgram();
@@ -102,6 +108,16 @@ export default class App {
         glMultiTextureProgram.samplerUniform0 = gl.getUniformLocation(glMultiTextureProgram, "uSampler0");
         glMultiTextureProgram.samplerUniform1 = gl.getUniformLocation(glMultiTextureProgram, "uSampler1");
         glMultiTextureProgram.samplerUniform2 = gl.getUniformLocation(glMultiTextureProgram, "uSampler2");
+
+
+        window.glReflectiveProgram = gl.createProgram();
+        gl.attachShader(glReflectiveProgram, reflectiveVertexShader);
+        gl.attachShader(glReflectiveProgram, reflectiveFragmentShader);
+        gl.linkProgram(glReflectiveProgram);
+        if (!gl.getProgramParameter(glReflectiveProgram, gl.LINK_STATUS)) {
+            alert("Unable to initialize the textures shader program.");
+        }
+        glReflectiveProgram.samplerUniform0 = gl.getUniformLocation(glReflectiveProgram, "uSampler0");
     }
 
     makeShader(src, type) {

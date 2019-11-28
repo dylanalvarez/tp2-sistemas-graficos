@@ -28,7 +28,7 @@ void main(void) {
 	//vec3 reflectionVector = normalize(cameraRelativeToVertex - vec3(2.0, 2.0, 2.0) * (cameraRelativeToVertex * vNormal) * vNormal);
 	vec3 reflectionVector = normalize(2.0*vNormal*dot(cameraRelativeToVertex, vNormal) - cameraRelativeToVertex);
 
-	float latitude = acos(reflectionVector.z/sqrt(pow(reflectionVector.x, 2.0) + pow(reflectionVector.y, 2.0) + pow(reflectionVector.z, 2.0))); // de -pi a pi
-	float longitude = atan(reflectionVector.y, reflectionVector.x); // de -pi a pi
-	vUv = vec2(latitude / (2.0 * M_PI), longitude / (M_PI));
+	float latitude = acos(reflectionVector.y/sqrt(pow(reflectionVector.x, 2.0) + pow(reflectionVector.y, 2.0) + pow(reflectionVector.z, 2.0)));
+	float longitude = atan(reflectionVector.z, reflectionVector.x); // de -pi a pi
+	vUv = vec2((longitude) / (2.0 * M_PI), (latitude) / (1.0 * M_PI));
 }

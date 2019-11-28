@@ -2,7 +2,7 @@
 
 Se agregan texturas, reflexión e iluminación puntual al [TP1](https://github.com/dylanalvarez/tp1-sistemas-graficos)
 
-[Enunciado](https://drive.google.com/drive/folders/1yKkXdV7WE83JSo_ovEWvzz5-99GIEMD4?usp=sharing)
+**[PROBAR EN LA WEB](https://tp2-sistemas-graficos.herokuapp.com)**
 
 ## Requirements
 

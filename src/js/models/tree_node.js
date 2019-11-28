@@ -2,6 +2,7 @@ import { mat4 } from "gl-matrix";
 import ColorMaterial from "./color_material";
 import TextureMaterial from "./texture_material";
 import MultiTextureMaterial from "./multi_texture_material";
+import PlasticProperties from "./plastic_properties";
 
 export default class TreeNode {
     constructor() {
@@ -85,6 +86,12 @@ export default class TreeNode {
         let program = material.program();
         gl.useProgram(program);
 
+        if(this.phongProperties) {
+            let phongPropertiesClass = this.phongProperties();
+            let properties = new phongPropertiesClass();
+            properties.setPhongParameters(program);
+        }
+
         this.setWebGLUniformMatrix(program, "modelMatrix", modelMatrix);
         this.setWebGLUniformMatrix(program, "viewMatrix", viewMatrix);
         this.setWebGLUniformMatrix(program, "projMatrix", projMatrix);
@@ -101,6 +108,14 @@ export default class TreeNode {
         gl.vertexAttribPointer(vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
 
         material.enableColors(this.color());
+
+        gl.uniform3fv(gl.getUniformLocation(program, 'uLightOne'), [3, 3, 0]);
+        gl.uniform3fv(gl.getUniformLocation(program, 'uLightTwo'), [0, 3, -40]);
+        gl.uniform3fv(gl.getUniformLocation(program, 'uLightThree'), [30, 3, -5]);
+        gl.uniform3fv(gl.getUniformLocation(program, 'uLightFour'), [30, 3, -40]);
+        gl.uniform3fv(gl.getUniformLocation(program, 'uLightFive'), [-15, 3, -7]);
+        gl.uniform3fv(gl.getUniformLocation(program, 'uLightSix'), [-5, 3, -25]);
+
         this.drawElements();
         material.disableColors();
     }
@@ -109,10 +124,6 @@ export default class TreeNode {
         let indexBuffer = this.indexBuffer();
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
         gl.drawElements(gl.TRIANGLE_STRIP, indexBuffer.number_vertex_point, gl.UNSIGNED_SHORT, 0);
-    }
-
-    setWebGLUniformColor(key, color) {
-        new ColorMaterial(color).setWebGLUniformColor(key);
     }
    
     setWebGLUniformMatrix(program, key, value) {

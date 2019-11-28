@@ -5,6 +5,7 @@ import dirtImage from '../../assets/maps/tierra.jpg'
 import dryDirtImage from '../../assets/maps/tierraseca.jpg'
 import factors from '../constants/factors';
 import MultiTextureMaterial from './multi_texture_material';
+import GrassyProperties from './grassy_properties';
 
 export default class Floor extends TreeNode {
     color() {
@@ -17,6 +18,10 @@ export default class Floor extends TreeNode {
 
     materialClass() {
         return MultiTextureMaterial;
+    }
+    
+    phongProperties() {
+        return GrassyProperties;
     }
 
     buildBuffers() {

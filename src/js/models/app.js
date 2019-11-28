@@ -4,6 +4,7 @@ import multiTextureFragmentShaderSource from '../../shaders/multiTextureFragment
 import reflectiveFragmentShaderSource from '../../shaders/reflectiveFragment.glsl'
 import vertexShaderSource from '../../shaders/vertex.glsl'
 import reflectiveVertexShaderSource from '../../shaders/reflectiveVertex.glsl'
+import commonFragmentShaderSource from '../../shaders/fragmentPhongReflection.glsl'
 import { mat4 } from 'gl-matrix'
 import Camera from './camera'
 import Scene from './scene'
@@ -65,11 +66,11 @@ export default class App {
     initShaders() {
         // compile shaders    
         let vertexShader = this.makeShader(vertexShaderSource, gl.VERTEX_SHADER);
-        let colorFragmentShader = this.makeShader(colorFragmentShaderSource, gl.FRAGMENT_SHADER);
-        let textureFragmentShader = this.makeShader(textureFragmentShaderSource, gl.FRAGMENT_SHADER);
-        let multiTextureFragmentShader = this.makeShader(multiTextureFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let colorFragmentShader = this.makeShader(commonFragmentShaderSource + colorFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let textureFragmentShader = this.makeShader(commonFragmentShaderSource + textureFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let multiTextureFragmentShader = this.makeShader(commonFragmentShaderSource + multiTextureFragmentShaderSource, gl.FRAGMENT_SHADER);
         let reflectiveVertexShader = this.makeShader(reflectiveVertexShaderSource, gl.VERTEX_SHADER);
-        let reflectiveFragmentShader = this.makeShader(reflectiveFragmentShaderSource, gl.FRAGMENT_SHADER);
+        let reflectiveFragmentShader = this.makeShader(commonFragmentShaderSource + reflectiveFragmentShaderSource, gl.FRAGMENT_SHADER);
 
         // create program
         window.glColorProgram = gl.createProgram();

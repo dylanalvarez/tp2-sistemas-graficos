@@ -1,6 +1,7 @@
 import Cylinder from "./cylinder";
 import baseCylinderImage from '../../assets/maps/patron1.png'
 import TextureMaterial from "./texture_material";
+import PlasticProperties from "./plastic_properties";
 
 export default class BaseCylinder extends Cylinder {
 
@@ -10,6 +11,10 @@ export default class BaseCylinder extends Cylinder {
 
     materialClass() {
         return TextureMaterial;
+    }
+
+    phongProperties() {
+        return PlasticProperties;
     }
 
     buildBuffers() {

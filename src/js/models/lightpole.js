@@ -3,6 +3,7 @@ import TreeNode from './tree_node'
 import Cylinder from './cylinder'
 import Sphere from './sphere'
 import colors from '../constants/colors';
+import MetallicProperties from './metalic_properties';
 
 export default class Lightpole extends TreeNode {
     constructor(lightSource) {
@@ -10,6 +11,10 @@ export default class Lightpole extends TreeNode {
         this.pole = new Cylinder(colors.poleDarkGrey);
         this.bulb = new Sphere(colors.bulbYellow);
         this.lightSource = lightSource;
+    }
+
+    phongProperties() {
+        return MetallicProperties;
     }
 
     draw(modelMatrix, viewMatrix, projMatrix) {

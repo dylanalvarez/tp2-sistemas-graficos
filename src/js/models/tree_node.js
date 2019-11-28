@@ -2,6 +2,7 @@ import { mat4 } from "gl-matrix";
 import ColorMaterial from "./color_material";
 import TextureMaterial from "./texture_material";
 import MultiTextureMaterial from "./multi_texture_material";
+import PlasticProperties from "./plastic_properties";
 
 export default class TreeNode {
     constructor() {
@@ -80,6 +81,12 @@ export default class TreeNode {
         }
         let program = material.program();
         gl.useProgram(program);
+
+        if(this.phongProperties) {
+            let phongPropertiesClass = this.phongProperties();
+            let properties = new phongPropertiesClass();
+            properties.setPhongParameters(program);
+        }
 
         this.setWebGLUniformMatrix(program, "modelMatrix", modelMatrix);
         this.setWebGLUniformMatrix(program, "viewMatrix", viewMatrix);

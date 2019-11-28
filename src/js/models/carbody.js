@@ -3,10 +3,15 @@ import carBodyPoints from '../constants/car_body_points'
 import ScanningSurfaceTreeNode from "./scanning_surface_tree_node";
 import { mat4, vec3 } from "gl-matrix";
 import Bezier from '../utils/cubic_bezier';
+import PlasticProperties from './plastic_properties';
 
 export default class CarBody extends ScanningSurfaceTreeNode {
     color() {
         return colors.carYellow;
+    }
+
+    phongProperties() {
+        return PlasticProperties;
     }
 
     levelCurveMatrices() {

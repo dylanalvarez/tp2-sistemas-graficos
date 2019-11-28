@@ -3,6 +3,13 @@ precision highp float;
 varying vec3 vPosWorld;
 varying vec3 vNormal;
 uniform vec3 uViewerPosition;
+uniform vec3 uKa;
+uniform vec3 uIa;
+uniform vec3 uKd;
+uniform vec3 uId;
+uniform vec3 uKs;
+uniform vec3 uIs;
+uniform vec3 uGlossiness;
 
 vec3 phongReflection(vec3 lightSourcePosition) {
 	vec3 lightVec = normalize(lightSourcePosition - vPosWorld);

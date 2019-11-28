@@ -81,7 +81,7 @@ export default class TreeNode {
             material = new materialClass(this.color());
         } else {
             let materialClass = this.materialClass();
-            material = new materialClass(this.uVBuffer(), this.textures());
+            material = new materialClass(this.uVBuffer(), this.textures(), this.color());
         }
         let program = material.program();
         gl.useProgram(program);

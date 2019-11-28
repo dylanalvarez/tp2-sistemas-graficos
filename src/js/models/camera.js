@@ -101,9 +101,9 @@ export default class Camera {
             this.orbitalRadius = 10;
             this.maxOrbitalRadius = 25;
             this.minOrbitalRadius = 3;
-            this.offsetX = -2.9;
+            this.offsetX = -6.9;
             this.offsetY = 0.7;
-            this.offsetZ = -10;
+            this.offsetZ = -15;
             this.xAngle = -1;
             this.yAngle = -0.1;
             this.step = 0.1;

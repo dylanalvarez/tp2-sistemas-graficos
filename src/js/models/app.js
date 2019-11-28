@@ -13,7 +13,7 @@ import * as dat from 'dat.gui';
 // dat.gui global variables
 window['Velocidad carro'] = 20;
 window['Veloc. camara'] = 10;
-window['Tipo de camino'] = 'No cruzado'
+window['Tipo de camino'] = 'Cruzado'
 window['Altura sillas'] = 1.5
 window['Cant. sillas'] = 8
 window['Cant. columnas'] = 20;

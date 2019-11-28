@@ -28,8 +28,8 @@ export default class Scene extends TreeNode {
         if (window['Tipo de camino'] === "Cruzado") this.crossedCoaster.draw(coasterModelMatrix, viewMatrix, projMatrix);
 
         let carouselModelMatrix = mat4.clone(modelMatrix);
-        mat4.translate(carouselModelMatrix, carouselModelMatrix, [-3, 0, -10]);
-
+        mat4.translate(carouselModelMatrix, carouselModelMatrix, [-7, 0, -15]);
+        mat4.scale(carouselModelMatrix, carouselModelMatrix, [1.5, 1.5, 1.5]);
         this.carousel.draw(carouselModelMatrix, viewMatrix, projMatrix);
 
         let lightpoleOneModelMatrix = mat4.clone(modelMatrix);

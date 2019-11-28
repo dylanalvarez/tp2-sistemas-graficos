@@ -7,6 +7,6 @@ void main(void) {
 					  phongReflection(uLightFour) + 
 					  phongReflection(uLightFive) + 
 					  phongReflection(uLightSix);
-	vec3 colorFinal= uColor * BRIGHTNESS;
+	vec3 colorFinal= mix(uColor, BRIGHTNESS, 0.2);
 	gl_FragColor = vec4(colorFinal, 1.0);
 }

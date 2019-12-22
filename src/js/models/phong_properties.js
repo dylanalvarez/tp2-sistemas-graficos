@@ -6,7 +6,7 @@ export default class PhongProperties {
         gl.uniform3f(gl.getUniformLocation(program, 'uId'), this.id(), this.id(), this.id());
         gl.uniform3f(gl.getUniformLocation(program, 'uKs'), this.ks(), this.ks(), this.ks());
         gl.uniform3f(gl.getUniformLocation(program, 'uIs'), this.is(), this.is(), this.is());
-        gl.uniform3f(gl.getUniformLocation(program, 'uGlossiness'), this.glossiness(), this.glossiness(), this.glossiness());
+        gl.uniform1f(gl.getUniformLocation(program, 'uGlossiness'), this.glossiness());
     }
 
 }

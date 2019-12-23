@@ -25,7 +25,7 @@ export default class Skybox extends Sphere {
         let pos = [];
         let normal = [];
         let uv = [];
-        let radius = 100;
+        let radius = 500;
         let rows = 128;
         let cols = 256;
 

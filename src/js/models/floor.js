@@ -29,8 +29,8 @@ export default class Floor extends TreeNode {
         let pos = [];
         let normal = [];
         let uv = [];
-        let rows = 4;
-        let cols = 4;
+        let rows = 40;
+        let cols = 40;
 
         let n = [0, 1, 0];
         
